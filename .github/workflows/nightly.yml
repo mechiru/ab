@@ -1,0 +1,43 @@
+name: nightly
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 0,6,12,18 * * *'
+
+jobs:
+
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
+
+    - name: Update proto packages
+      run: make proto
+
+    - name: Build
+      run: make build
+
+    - name: Test
+      run: make test
+
+    - name: Sync with the origin repository
+      run: |
+        git config --local user.name "mechiru"
+        git config --local user.email "$(git config user.name)@users.noreply.github.com"
+        if [ $(git diff HEAD --name-only proto/openrtb | wc -l) -gt 0 ]; then
+          git add proto/openrtb
+          git commit -m "Update proto/openrtb package"
+          git push origin master
+        fi
+        if [ $(git diff HEAD --name-only proto/networkbid | wc -l) -gt 0 ]; then
+          git add proto/networkbid
+          git commit -m "Update proto/networkbid package"
+          git push origin master
+        fi
