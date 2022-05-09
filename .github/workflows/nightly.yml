@@ -30,8 +30,6 @@ jobs:
 
     - name: Sync with the origin repository
       run: |
-        git config --local user.name "mechiru"
-        git config --local user.email "$(git config user.name)@users.noreply.github.com"
         if [ $(git diff HEAD --name-only proto/openrtb | wc -l) -gt 0 ]; then
           git add proto/openrtb
           git commit -m "Update proto/openrtb package"
