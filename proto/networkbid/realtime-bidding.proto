@@ -74,9 +74,7 @@ message BidRequest {
   // request. Certain data may be redacted or replaced.
   optional string user_agent = 6;
 
-  // Privacy treatments. Some fields in the bid request can be coarsened or
-  // redacted in order to protect user privacy. This message provides
-  // information about privacy treatments that apply to an ad opportunity
+  // Information about privacy treatments that apply to an ad opportunity
   // offered via this request.
   message PrivacyTreatments {
 
@@ -106,6 +104,7 @@ message BidRequest {
     optional bool allow_user_data_collection = 7;
   }
   optional PrivacyTreatments privacy_treatments = 71;
+
 
   // User Agent information. This will be populated with information about the
   // user agent, extracted from the User-Agent header or from Sec-CH-UA headers

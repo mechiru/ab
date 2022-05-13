@@ -3509,9 +3509,7 @@ func (x *BidResponse) GetNoBidReason() int32 {
 	return 0
 }
 
-// Privacy treatments. Some fields in the bid request can be coarsened or
-// redacted in order to protect user privacy. This message provides
-// information about privacy treatments that apply to an ad opportunity
+// Information about privacy treatments that apply to an ad opportunity
 // offered via this request.
 type BidRequest_PrivacyTreatments struct {
 	state         protoimpl.MessageState
