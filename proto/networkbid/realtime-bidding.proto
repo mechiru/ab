@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.237
+// Protocol version: v.238
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -97,6 +97,13 @@ message BidRequest {
     repeated NonPersonalizedAdsReason non_personalized_ads_reason = 6
         [packed = true];
 
+    // True if publisher grants the permission to allow the bidder to use
+    // user visitation information from the publisher's site to create
+    // interest categories that can be used to serve ads based on those
+    // categories. To use this data to create interest categories, a bidder must
+    // also win a given impression.
+    // https://support.google.com/admanager/answer/11956152
+    optional bool allow_user_data_collection = 7;
   }
   optional PrivacyTreatments privacy_treatments = 71;
 
