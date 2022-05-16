@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 CURR_DIR := $(shell pwd)
-MODULES := $(shell go work edit -json | jq ".Use[].DiskPath")
+MODULES := $(shell go work edit -json .go.work | jq ".Use[].DiskPath")
 
 build:
 	@for dir in $(MODULES); do \
