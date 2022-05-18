@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.239
+// Protocol version: v.240
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2225,6 +2225,10 @@ message BidResponse {
           // document should conform to the VAST 2.0 or 3.0 standard.
           string video_vast_xml = 5;
 
+          // The content of a native ad. Native ads consist of multiple building
+          // blocks (such as image and text), which are rendered by the buyer
+          // SDK.
+          NativeAd native_ad = 6;
         }
 
         // The final landing pages of the SDK-rendered ad.
