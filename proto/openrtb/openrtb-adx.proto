@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.106
+// Protocol version: v.107
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -934,7 +934,8 @@ message DeviceExt {
       repeated string version = 2;
     }
     // Identifies the browser. Prefer using the new field: browsers.
-    optional BrandVersion browser = 1;
+    // WARNING: This field is deprecated and will be removed on 2022-06-20.
+    optional BrandVersion DEPRECATED_browser = 1 [deprecated = true];
     // Identifies the browser.
     repeated BrandVersion browsers = 8;
     // Identifies the platform.
