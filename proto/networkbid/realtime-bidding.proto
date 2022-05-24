@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.240
+// Protocol version: v.241
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -118,7 +118,8 @@ message BidRequest {
       repeated string version = 2;
     }
     // Identifies the browser. Prefer using the new field: browsers.
-    optional BrandVersion browser = 1;
+    // WARNING: This field is deprecated and will be removed on 2022-06-20.
+    optional BrandVersion DEPRECATED_browser = 1 [deprecated = true];
     // Identifies the browser.
     repeated BrandVersion browsers = 8;
     // Identifies the platform.
