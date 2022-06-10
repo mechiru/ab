@@ -2290,12 +2290,12 @@ type BidRequest_AdSlot_CreativeEnforcementSettings_PolicyEnforcement int32
 
 const (
 	BidRequest_AdSlot_CreativeEnforcementSettings_POLICY_ENFORCEMENT_UNKNOWN BidRequest_AdSlot_CreativeEnforcementSettings_PolicyEnforcement = 0
-	// Baseline policy for all ads serving through any of Google’s ads
+	// Baseline policy for all ads serving through any of Google's ads
 	// platform products. Learn more at:
 	// https://support.google.com/platformspolicy/answer/3013851.
 	BidRequest_AdSlot_CreativeEnforcementSettings_POLICY_ENFORCEMENT_PLATFORM_POLICY BidRequest_AdSlot_CreativeEnforcementSettings_PolicyEnforcement = 1
-	// Policy for ads serving through Google’s ad network. This includes the
-	// baseline policy for all ads serving through any of Google’s ads
+	// Policy for ads serving through Google's ad network. This includes the
+	// baseline policy for all ads serving through any of Google's ads
 	// platform products. Learn more at:
 	// https://support.google.com/authorizedbuyers/answer/1325008.
 	BidRequest_AdSlot_CreativeEnforcementSettings_POLICY_ENFORCEMENT_NETWORK_AND_PLATFORM_POLICY BidRequest_AdSlot_CreativeEnforcementSettings_PolicyEnforcement = 2
@@ -2938,7 +2938,10 @@ type BidRequest struct {
 	// request. Certain data may be redacted or replaced.
 	UserAgent         *string                       `protobuf:"bytes,6,opt,name=user_agent,json=userAgent" json:"user_agent,omitempty"`
 	PrivacyTreatments *BidRequest_PrivacyTreatments `protobuf:"bytes,71,opt,name=privacy_treatments,json=privacyTreatments" json:"privacy_treatments,omitempty"`
-	// User Agent information.
+	// Structured user agent information. If both BidRequest.ua and
+	// BidRequest.sua are present, BidRequest.sua should be considered the
+	// more accurate representation of the device attributes. This is because
+	// BidRequest.ua may contain a frozen or reduced user agent string.
 	UserAgentData *BidRequest_UserAgent `protobuf:"bytes,63,opt,name=user_agent_data,json=userAgentData" json:"user_agent_data,omitempty"`
 	// The billing address country of the publisher. This may be different from
 	// the detected country of the user in geo_criteria_id or the hosting country
@@ -3572,33 +3575,44 @@ func (x *BidRequest_PrivacyTreatments) GetAllowUserDataCollection() bool {
 	return false
 }
 
-// User Agent information. This will be populated with information about the
-// user agent, extracted from the User-Agent header or from Sec-CH-UA headers
-// (https://wicg.github.io/ua-client-hints/).
+// Structured user agent information, which can be used when a client
+// supports User-Agent Client Hints: https://wicg.github.io/ua-client-hints/
+//
+// Note: When available, fields are sourced from Client Hints HTTP headers
+// or equivalent JavaScript accessors from the NavigatorUAData interface.
+// For agents that have no support for User-Agent Client Hints, an exchange
+// can also extract information from the parsed User-Agent header, so this
+// object can always be used as the source of the user agent information.
 type BidRequest_UserAgent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Identifies the browser. Prefer using the new field: browsers.
-	// WARNING: This field is deprecated and will be removed on 2022-06-20.
+	// Identifies the browser. Use the new field browsers.
 	//
 	// Deprecated: Do not use.
 	DEPRECATEDBrowser *BidRequest_UserAgent_BrandVersion `protobuf:"bytes,1,opt,name=DEPRECATED_browser,json=DEPRECATEDBrowser" json:"DEPRECATED_browser,omitempty"`
-	// Identifies the browser.
+	// Each BrandVersion object identifies a browser or similar software
+	// component. Exchanges should send brands and versions derived from
+	// the Sec-CH-UA-Full-Version-List header.
 	Browsers []*BidRequest_UserAgent_BrandVersion `protobuf:"bytes,8,rep,name=browsers" json:"browsers,omitempty"`
-	// Identifies the platform.
+	// Identifies the user agent's execution platform / OS. Exchanges should
+	// send a brand derived from the Sec-CH-UA-Platform header, and version
+	// derived from the Sec-CH-UAPlatform-Version header.
 	Platform *BidRequest_UserAgent_BrandVersion `protobuf:"bytes,2,opt,name=platform" json:"platform,omitempty"`
-	// True if the agent prefers "mobile-optimized" content. Refer to the
-	// BidRequest.device field for specific information about the device, which
-	// may or may not be consistent with this field (for example, a smartphone's
-	// browser can be requesting "Desktop site").
+	// True if the agent prefers a "mobile" version of the content if
+	// available, i.e. optimized for small screens or touch input. False if
+	// the agent prefers the "desktop" or "full" content. Exchanges should
+	// derive this value from the Sec-CH-UAMobile header.
 	Mobile *bool `protobuf:"varint,3,opt,name=mobile" json:"mobile,omitempty"`
-	// Device architecture, e.g. "x86" or "arm".
+	// Device's major binary architecture, e.g. "x86" or "arm". Exchanges
+	// should retrieve this value from the Sec-CH-UA-Arch header.
 	Architecture *string `protobuf:"bytes,4,opt,name=architecture" json:"architecture,omitempty"`
-	// Device's bitness, e.g. "64" for 64-bit architecture.
+	// Device's bitness, e.g. "64" for 64-bit architecture. Exchanges should
+	// retrieve this value from the Sec-CH-UA-Bitness header.
 	Bitness *string `protobuf:"bytes,9,opt,name=bitness" json:"bitness,omitempty"`
-	// Device model.
+	// Device model. Exchanges should retrieve this value from the
+	// Sec-CH-UAModel header.
 	Model *string `protobuf:"bytes,5,opt,name=model" json:"model,omitempty"`
 }
 
@@ -5468,8 +5482,8 @@ type BidRequest_SupplyChain struct {
 	// request.
 	Nodes []*BidRequest_SupplyChain_SupplyChainNode `protobuf:"bytes,2,rep,name=nodes" json:"nodes,omitempty"`
 	// Version of the supply chain specification in use, in the format of
-	// “major.minor”. For example, for version 1.0 of the spec, use the string
-	// “1.0”.
+	// "major.minor". For example, for version 1.0 of the spec, use the string
+	// "1.0".
 	Version *string `protobuf:"bytes,3,opt,name=version" json:"version,omitempty"`
 }
 
@@ -5526,15 +5540,20 @@ func (x *BidRequest_SupplyChain) GetVersion() string {
 	return ""
 }
 
-// A tuple of (brand, version) for the user agent or platform.
+// Identifies a device's browser or similar software component, and the
+// user agent's execution platform or operating system.
 type BidRequest_UserAgent_BrandVersion struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Brand identifier, e.g., "Chrome" or "Windows".
+	// A brand identifier, for example, "Chrome" or "Windows". The value may
+	// be sourced from the User-Agent Client Hints headers, representing
+	// either the user agent brand (from the Sec-CH-UA-Full-Version header)
+	// or the platform brand (from the Sec-CH-UA-Platform header).
 	Brand *string `protobuf:"bytes,1,opt,name=brand" json:"brand,omitempty"`
-	// Version, split in components if needed, e.g., {"85", "1"} = v85.1.
+	// A sequence of version components, in descending hierarchical order
+	// (major, minor, micro, ...).
 	Version []string `protobuf:"bytes,2,rep,name=version" json:"version,omitempty"`
 }
 
@@ -5804,7 +5823,7 @@ type BidRequest_Mobile_SKAdNetworkRequest struct {
 	// List of SKAdNetwork versions supported, depending on the OS version
 	// and the SDK version.
 	Versions []string `protobuf:"bytes,4,rep,name=versions" json:"versions,omitempty"`
-	// ID of publisher app in Apple’s App Store.
+	// ID of publisher app in Apple's App Store.
 	Sourceapp *string `protobuf:"bytes,2,opt,name=sourceapp" json:"sourceapp,omitempty"`
 	// SKAdNetworkIdentifier entries in the publisher app's Info.plist.
 	Skadnetids []string `protobuf:"bytes,3,rep,name=skadnetids" json:"skadnetids,omitempty"`
@@ -6155,7 +6174,7 @@ type BidRequest_AdSlot_ConsentedProvidersSettings struct {
 	// publisher has specified to Google that its EEA users have given legally
 	// valid consent to: 1) the use of cookies or other local storage where
 	// legally required; and 2) the collection, sharing, and use of personal
-	// data for personalization of ads by an ATP in accordance with Google’s
+	// data for personalization of ads by an ATP in accordance with Google's
 	// EU User Consent Policy.
 	//
 	// If a publisher is using the IAB Transparency and Consent Framework
@@ -6185,11 +6204,11 @@ type BidRequest_AdSlot_ConsentedProvidersSettings struct {
 	// Google Ad Tech Providers (ATPs). These ATPs are not registered with IAB
 	// TCF v2, but publishers or their Consent Management Providers (CMPs)
 	// have ensured that certain disclosures are given to, and consents are
-	// obtained from, end users, as required by Google’s EU User Consent
+	// obtained from, end users, as required by Google's EU User Consent
 	// Policy. This field is only populated with the use of CMPs that are
 	// integrated with IAB TCF v2. Such CMPs use the raw Additional Consent
 	// string to indicate vendors that are not registered with IAB, and
-	// communicate end users’ CMP choices to those vendors. The
+	// communicate end users' CMP choices to those vendors. The
 	// consented_providers field contains the set of vendors that mirrors the
 	// one represented by the additional_consent_string field, which is in the
 	// raw form. Vendors or any other third-party service providers must not

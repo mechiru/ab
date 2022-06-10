@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.241
+// Protocol version: v.242
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -106,38 +106,59 @@ message BidRequest {
   optional PrivacyTreatments privacy_treatments = 71;
 
 
-  // User Agent information. This will be populated with information about the
-  // user agent, extracted from the User-Agent header or from Sec-CH-UA headers
-  // (https://wicg.github.io/ua-client-hints/).
+  // Structured user agent information, which can be used when a client
+  // supports User-Agent Client Hints: https://wicg.github.io/ua-client-hints/
+  //
+  // Note: When available, fields are sourced from Client Hints HTTP headers
+  // or equivalent JavaScript accessors from the NavigatorUAData interface.
+  // For agents that have no support for User-Agent Client Hints, an exchange
+  // can also extract information from the parsed User-Agent header, so this
+  // object can always be used as the source of the user agent information.
   message UserAgent {
-    // A tuple of (brand, version) for the user agent or platform.
+    // Identifies a device's browser or similar software component, and the
+    // user agent's execution platform or operating system.
     message BrandVersion {
-      // Brand identifier, e.g., "Chrome" or "Windows".
+      // A brand identifier, for example, "Chrome" or "Windows". The value may
+      // be sourced from the User-Agent Client Hints headers, representing
+      // either the user agent brand (from the Sec-CH-UA-Full-Version header)
+      // or the platform brand (from the Sec-CH-UA-Platform header).
       optional string brand = 1;
-      // Version, split in components if needed, e.g., {"85", "1"} = v85.1.
+      // A sequence of version components, in descending hierarchical order
+      // (major, minor, micro, ...).
       repeated string version = 2;
     }
-    // Identifies the browser. Prefer using the new field: browsers.
-    // WARNING: This field is deprecated and will be removed on 2022-06-20.
+
+    // Identifies the browser. Use the new field browsers.
     optional BrandVersion DEPRECATED_browser = 1 [deprecated = true];
-    // Identifies the browser.
+    // Each BrandVersion object identifies a browser or similar software
+    // component. Exchanges should send brands and versions derived from
+    // the Sec-CH-UA-Full-Version-List header.
     repeated BrandVersion browsers = 8;
-    // Identifies the platform.
+    // Identifies the user agent's execution platform / OS. Exchanges should
+    // send a brand derived from the Sec-CH-UA-Platform header, and version
+    // derived from the Sec-CH-UAPlatform-Version header.
     optional BrandVersion platform = 2;
-    // True if the agent prefers "mobile-optimized" content. Refer to the
-    // BidRequest.device field for specific information about the device, which
-    // may or may not be consistent with this field (for example, a smartphone's
-    // browser can be requesting "Desktop site").
+    // True if the agent prefers a "mobile" version of the content if
+    // available, i.e. optimized for small screens or touch input. False if
+    // the agent prefers the "desktop" or "full" content. Exchanges should
+    // derive this value from the Sec-CH-UAMobile header.
     optional bool mobile = 3;
-    // Device architecture, e.g. "x86" or "arm".
+    // Device's major binary architecture, e.g. "x86" or "arm". Exchanges
+    // should retrieve this value from the Sec-CH-UA-Arch header.
     optional string architecture = 4;
-    // Device's bitness, e.g. "64" for 64-bit architecture.
+    // Device's bitness, e.g. "64" for 64-bit architecture. Exchanges should
+    // retrieve this value from the Sec-CH-UA-Bitness header.
     optional string bitness = 9;
-    // Device model.
+    // Device model. Exchanges should retrieve this value from the
+    // Sec-CH-UAModel header.
     optional string model = 5;
+
   }
 
-  // User Agent information.
+  // Structured user agent information. If both BidRequest.ua and
+  // BidRequest.sua are present, BidRequest.sua should be considered the
+  // more accurate representation of the device attributes. This is because
+  // BidRequest.ua may contain a frozen or reduced user agent string.
   optional UserAgent user_agent_data = 63;
 
   // The billing address country of the publisher. This may be different from
@@ -573,7 +594,7 @@ message BidRequest {
       // and the SDK version.
       repeated string versions = 4;
 
-      // ID of publisher app in Apple’s App Store.
+      // ID of publisher app in Apple's App Store.
       optional string sourceapp = 2;
 
       // SKAdNetworkIdentifier entries in the publisher app's Info.plist.
@@ -889,7 +910,7 @@ message BidRequest {
       // publisher has specified to Google that its EEA users have given legally
       // valid consent to: 1) the use of cookies or other local storage where
       // legally required; and 2) the collection, sharing, and use of personal
-      // data for personalization of ads by an ATP in accordance with Google’s
+      // data for personalization of ads by an ATP in accordance with Google's
       // EU User Consent Policy.
       //
       // If a publisher is using the IAB Transparency and Consent Framework
@@ -921,11 +942,11 @@ message BidRequest {
       // Google Ad Tech Providers (ATPs). These ATPs are not registered with IAB
       // TCF v2, but publishers or their Consent Management Providers (CMPs)
       // have ensured that certain disclosures are given to, and consents are
-      // obtained from, end users, as required by Google’s EU User Consent
+      // obtained from, end users, as required by Google's EU User Consent
       // Policy. This field is only populated with the use of CMPs that are
       // integrated with IAB TCF v2. Such CMPs use the raw Additional Consent
       // string to indicate vendors that are not registered with IAB, and
-      // communicate end users’ CMP choices to those vendors. The
+      // communicate end users' CMP choices to those vendors. The
       // consented_providers field contains the set of vendors that mirrors the
       // one represented by the additional_consent_string field, which is in the
       // raw form. Vendors or any other third-party service providers must not
@@ -1171,13 +1192,13 @@ message BidRequest {
       enum PolicyEnforcement {
         POLICY_ENFORCEMENT_UNKNOWN = 0;
 
-        // Baseline policy for all ads serving through any of Google’s ads
+        // Baseline policy for all ads serving through any of Google's ads
         // platform products. Learn more at:
         // https://support.google.com/platformspolicy/answer/3013851.
         POLICY_ENFORCEMENT_PLATFORM_POLICY = 1;
 
-        // Policy for ads serving through Google’s ad network. This includes the
-        // baseline policy for all ads serving through any of Google’s ads
+        // Policy for ads serving through Google's ad network. This includes the
+        // baseline policy for all ads serving through any of Google's ads
         // platform products. Learn more at:
         // https://support.google.com/authorizedbuyers/answer/1325008.
         POLICY_ENFORCEMENT_NETWORK_AND_PLATFORM_POLICY = 2;
@@ -1776,8 +1797,8 @@ message BidRequest {
     repeated SupplyChainNode nodes = 2;
 
     // Version of the supply chain specification in use, in the format of
-    // “major.minor”. For example, for version 1.0 of the spec, use the string
-    // “1.0”.
+    // "major.minor". For example, for version 1.0 of the spec, use the string
+    // "1.0".
     optional string version = 3;
   }
 
