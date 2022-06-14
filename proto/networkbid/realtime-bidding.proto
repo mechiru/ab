@@ -1433,20 +1433,18 @@ message BidRequest {
         IS_STICKY = 1;
       }
 
-      // Whether the request originated from an ad slot that scrolls along with
-      // the contents of the page vertically.
+      // Whether the ad slot is a sidebar that sticks on screen when user
+      // scrolls.
       optional Stickiness vertical_stickiness = 1
           [default = UNKNOWN_STICKINESS];
 
-      // Whether the request originated from an ad slot that scrolls along with
-      // the contents of the page horizontally, and is located at the top of the
-      // page.
+      // Whether the ad slot is a horizontal slot that sticks on the top of the
+      // screen when user scrolls.
       optional Stickiness top_horizontal_stickiness = 2
           [default = UNKNOWN_STICKINESS];
 
-      // Whether the request originated from an ad slot that scrolls along with
-      // the contents of the page horizontally, and is located at the bottom of
-      // the page.
+      // Whether the ad slot is a horizontal slot that sticks on the bottom of
+      // the screen when user scrolls.
       optional Stickiness bottom_horizontal_stickiness = 3
           [default = UNKNOWN_STICKINESS];
     }

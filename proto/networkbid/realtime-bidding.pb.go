@@ -6849,16 +6849,14 @@ type BidRequest_AdSlot_StickySettings struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Whether the request originated from an ad slot that scrolls along with
-	// the contents of the page vertically.
+	// Whether the ad slot is a sidebar that sticks on screen when user
+	// scrolls.
 	VerticalStickiness *BidRequest_AdSlot_StickySettings_Stickiness `protobuf:"varint,1,opt,name=vertical_stickiness,json=verticalStickiness,enum=com.google.protos.adx.BidRequest_AdSlot_StickySettings_Stickiness,def=0" json:"vertical_stickiness,omitempty"`
-	// Whether the request originated from an ad slot that scrolls along with
-	// the contents of the page horizontally, and is located at the top of the
-	// page.
+	// Whether the ad slot is a horizontal slot that sticks on the top of the
+	// screen when user scrolls.
 	TopHorizontalStickiness *BidRequest_AdSlot_StickySettings_Stickiness `protobuf:"varint,2,opt,name=top_horizontal_stickiness,json=topHorizontalStickiness,enum=com.google.protos.adx.BidRequest_AdSlot_StickySettings_Stickiness,def=0" json:"top_horizontal_stickiness,omitempty"`
-	// Whether the request originated from an ad slot that scrolls along with
-	// the contents of the page horizontally, and is located at the bottom of
-	// the page.
+	// Whether the ad slot is a horizontal slot that sticks on the bottom of
+	// the screen when user scrolls.
 	BottomHorizontalStickiness *BidRequest_AdSlot_StickySettings_Stickiness `protobuf:"varint,3,opt,name=bottom_horizontal_stickiness,json=bottomHorizontalStickiness,enum=com.google.protos.adx.BidRequest_AdSlot_StickySettings_Stickiness,def=0" json:"bottom_horizontal_stickiness,omitempty"`
 }
 
