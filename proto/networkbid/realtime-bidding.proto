@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.242
+// Protocol version: v.241
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -813,6 +813,7 @@ message BidRequest {
     // stream (0 = is not live, 1 = is live).
     //
     optional bool is_livestream = 18 [default = false];
+
   }
   optional Video video = 29;
 
@@ -2171,6 +2172,7 @@ message BidResponse {
         optional int32 max_impressions = 4;
       }
       repeated FrequencyCap frequency_cap = 16;
+
 
     }
     repeated AdSlot adslot = 3;
