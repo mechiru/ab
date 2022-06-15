@@ -1583,7 +1583,8 @@ const (
 	AdPosition_DEPRECATED_LIKELY_BELOW_THE_FOLD AdPosition = 2
 	AdPosition_BELOW_THE_FOLD                   AdPosition = 3
 	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
-	// Equivalent to `sticky_settings.top_horizontal_stickiness` in Authorized
+	// Equivalent to
+	// `sticky_settings.top_horizontal_stickiness` in Authorized
 	// Buyers RTB protocol.
 	AdPosition_HEADER AdPosition = 4
 	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]

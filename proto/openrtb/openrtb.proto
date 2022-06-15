@@ -2395,7 +2395,8 @@ enum AdPosition {
   BELOW_THE_FOLD = 3;
 
   // [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
-  // Equivalent to `sticky_settings.top_horizontal_stickiness` in Authorized
+  // Equivalent to
+  // `sticky_settings.top_horizontal_stickiness` in Authorized
   // Buyers RTB protocol.
   HEADER = 4;
 
