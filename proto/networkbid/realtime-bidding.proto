@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.241
+// Protocol version: v.242
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2072,6 +2072,22 @@ message BidResponse {
       // 3. If billing_id is empty, the currency of the buyer account indicated
       // by the sole billing ID in the bid request.
       optional int64 min_cpm_micros = 3;
+
+      // The currency in which max_cpm_micros and min_cpm_micros are given,
+      // using ISO-4217 alpha codes. This field will be required starting in Q4
+      // 2022. If this field is populated and differs from the bidding currency,
+      // the bid will be filtered. If this field is not populated, the currency
+      // will be assumed to be the bidding currency. The bidding currency is
+      // determined by:
+      // 1. The bidder-level currency, if configured in RTB account settings.
+      // 2. Otherwise, the currency of the buyer account indicated by the
+      // billing ID in the billing_id field of the bid response.
+      // 3. Otherwise, if billing_id is not populated in the bid response, the
+      // currency of the buyer account indicated by the sole billing ID in the
+      // bid request.
+      // The currency of the buyer account is set on account creation and can be
+      // checked by contacting a Technical Account Manager.
+      optional string currency = 15;
 
       // Billing id to attribute this impression to. The value must be in the
       // set of billing ids for this slot that were sent in the
