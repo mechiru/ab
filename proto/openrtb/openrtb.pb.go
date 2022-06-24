@@ -4151,7 +4151,19 @@ type BidResponse struct {
 	Seatbid []*BidResponse_SeatBid `protobuf:"bytes,2,rep,name=seatbid" json:"seatbid,omitempty"`
 	// Bidder generated response ID to assist with logging/tracking.
 	Bidid *string `protobuf:"bytes,3,opt,name=bidid" json:"bidid,omitempty"`
-	// Bid currency using ISO-4217 alpha codes.
+	// Bid currency using ISO-4217 alpha codes. This field will be required
+	// starting in Q4 2022. If this field is populated and differs from the
+	// bidding currency, the bid will be filtered. If this field is not populated,
+	// the currency will be assumed to be the bidding currency. The bidding
+	// currency is determined by:
+	// 1. The bidder-level currency, if configured in RTB account settings.
+	// 2. Otherwise, the currency of the buyer account indicated by the
+	// billing ID in the cid field of the bid response.
+	// 3. Otherwise, if cid is not populated in the bid response, the
+	// currency of the buyer account indicated by the sole billing ID in the
+	// bid request.
+	// The currency of the buyer account is set on account creation and can be
+	// checked by contacting a Technical Account Manager.
 	Cur *string `protobuf:"bytes,4,opt,name=cur" json:"cur,omitempty"`
 	// Optional feature to allow a bidder to set data in the exchange's cookie.
 	// The string must be in base85 cookie safe characters and be in any format.
