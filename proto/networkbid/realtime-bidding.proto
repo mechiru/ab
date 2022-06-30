@@ -1231,9 +1231,14 @@ message BidRequest {
       }
       optional PublisherBlocksEnforcement publisher_blocks_enforcement = 3;
 
+      // Deprecated. This will be removed in August 2022.
+      //
       // Indicates whether the policy, scan and publisher blocks level
-      // combination is the default combination for this bidder.
-      optional bool is_default = 4;
+      // combination is the default combination for this bidder. Please use
+      // policy_enforcement and publisher_blocks_enforcement in
+      // CreativeEnforcementSettings to learn which creative policy and
+      // publisher blocks apply to the request.
+      optional bool is_default = 4 [deprecated = true];
     }
 
     optional CreativeEnforcementSettings creative_enforcement_settings = 58;
