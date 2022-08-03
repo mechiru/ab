@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.242
+// Protocol version: v.244
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -1677,6 +1677,7 @@ message BidRequest {
     // Specifies where the ad auction runs.
     optional AuctionEnvironment auction_environment = 61
         [default = SERVER_SIDE_AUCTION];
+
 
   }
   repeated AdSlot adslot = 14;
