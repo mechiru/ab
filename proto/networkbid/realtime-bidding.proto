@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.244
+// Protocol version: v.245
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -512,6 +512,11 @@ message BidRequest {
     // For a mobile web request, this field indicates whether the page is
     // optimized for mobile browsers on high-end mobile phones.
     optional bool is_mobile_web_optimized = 17 [default = false];
+
+    // Indicates whether a mobile app bid request is for an app open ad.
+    // See App open ad guidance at
+    // https://support.google.com/admob/answer/9341964 for more information.
+    optional bool is_app_open_ad = 36 [default = false];
 
     // This field is used for advertising identifiers for
     // 1) iOS devices (This is called Identifier for Advertising, or IDFA, as
