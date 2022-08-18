@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.245
+// Protocol version: v.246
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -1684,6 +1684,12 @@ message BidRequest {
         [default = SERVER_SIDE_AUCTION];
 
 
+    // The expected time period when an impression can occur in seconds
+    // following a winning bid. The impression may be billable only if it serves
+    // within this time. To learn more about impression expiration, see the
+    // following guide:
+    // https://developers.google.com/authorized-buyers/rtb/billing-event-guide
+    optional int32 impression_expiration_seconds = 63;
   }
   repeated AdSlot adslot = 14;
 
