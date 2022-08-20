@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.111
+// Protocol version: v.112
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -810,6 +810,34 @@ message BidRequestExt {
   // information about privacy treatments that apply to an ad opportunity
   // offered via this request.
   message PrivacyTreatments {
+
+    // Generalization that can be applied to the BidRequest.device.ua field.
+    enum UserAgentGeneralization {
+      // The user_agent field is provided in full (the complete User-Agent
+      // header).
+      USER_AGENT_FULL = 0;
+      // The user_agent field is generalized, which can include limiting
+      // browser and OS version information to major versions only and other
+      // changes to protect user privacy.
+      USER_AGENT_COARSENED = 1;
+    }
+    // Generalization that was applied to the BidRequest.device.ua field,
+    // if any.
+    optional UserAgentGeneralization user_agent = 2;
+
+    // Generalization that can be applied to the
+    // BidRequest.device.ext.user_agent_data field.
+    enum UserAgentDataGeneralization {
+      // The user_agent_data field is provided in full.
+      USER_AGENT_DATA_FULL = 0;
+      // The user_agent_data field is generalized, which can include limiting
+      // browser and OS version information to major versions only and other
+      // changes to protect user privacy.
+      USER_AGENT_DATA_COARSENED = 1;
+    }
+    // Generalization that was applied to the
+    // BidRequest.device.ext.user_agent_data field, if any.
+    optional UserAgentDataGeneralization user_agent_data = 3;
 
     // Specifies the reasons that ads returned in response to this request
     // should not be personalized.
