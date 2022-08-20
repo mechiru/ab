@@ -498,14 +498,6 @@ message BidRequest {
       // Video bid response protocol.
       optional Protocol protocol = 5 [deprecated = true];
 
-      // OpenRTB 2.1 compatibility.
-      message CompanionAd {
-        repeated Banner banner = 1;
-        extensions 100 to 9999;
-      }
-      // REMOVED in OpenRTB 2.2+. Prefer the field <code>companionad</code>.
-      optional CompanionAd companionad_21 = 22 [deprecated = true];
-
       // Extensions.
       extensions 100 to 9999;
     }
@@ -752,10 +744,6 @@ message BidRequest {
     optional Content content = 12;
 
     // Comma separated list of keywords about this site.
-    // Note: OpenRTB 2.2 allowed an array-of-strings as alternate implementation
-    // but this was fixed in 2.3+ where it's definitely a single string with CSV
-    // content again. Compatibility with some OpenRTB 2.2 exchanges that adopted
-    // the alternate representation may require custom handling of the JSON.
     optional string keywords = 13;
 
     // Indicates if the site has been programmed to optimize layout
@@ -920,10 +908,6 @@ message BidRequest {
     optional QAGMediaRating qagmediarating = 17;
 
     // Comma separated list of keywords describing the content.
-    // Note: OpenRTB 2.2 allowed an array-of-strings as alternate implementation
-    // but this was fixed in 2.3+ where it's definitely a single string with CSV
-    // content again. Compatibility with some OpenRTB 2.2 exchanges that adopted
-    // the alternate representation may require custom handling of the JSON.
     optional string keywords = 9;
 
     // false = not live, true = content is live (e.g., stream, live blog).
@@ -948,9 +932,6 @@ message BidRequest {
     // DEPRECATED in OpenRTB 2.4+. Prefer the field <code>prodq</code>.
     // Video quality per IAB's classification.
     optional ProductionQuality videoquality = 8 [deprecated = true];
-
-    // REMOVED in OpenRTB 2.3+. Prefer the field <code>context</code>.
-    optional string context_22 = 12 [deprecated = true];
 
     // Extensions.
     extensions 100 to 9999;
@@ -1179,10 +1160,6 @@ message BidRequest {
     optional string gender = 4;
 
     // Comma separated list of keywords, interests, or intent.
-    // Note: OpenRTB 2.2 allowed an array-of-strings as alternate implementation
-    // but this was fixed in 2.3+ where it's definitely a single string with CSV
-    // content again. Compatibility with some OpenRTB 2.2 exchanges that adopted
-    // the alternate representation may require custom handling of the JSON.
     optional string keywords = 5;
 
     // Optional feature to pass bidder data set in the exchange's cookie.
@@ -2381,7 +2358,7 @@ enum AdPosition {
   // DEPRECATED in OpenRTB 2.1+. No replacement.
   // May or may not be immediately visible depending on screen size and
   // resolution.
-  DEPRECATED_LIKELY_BELOW_THE_FOLD = 2 [deprecated = true];
+  LIKELY_BELOW_THE_FOLD = 2 [deprecated = true];
 
   BELOW_THE_FOLD = 3;
 
