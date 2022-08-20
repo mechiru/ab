@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.246
+// Protocol version: v.247
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -77,6 +77,31 @@ message BidRequest {
   // Information about privacy treatments that apply to an ad opportunity
   // offered via this request.
   message PrivacyTreatments {
+
+    // Generalization that can be applied to the user_agent field.
+    enum UserAgentGeneralization {
+      // The user_agent field is provided in full (the complete User-Agent
+      // header).
+      USER_AGENT_FULL = 0;
+      // The user_agent field is generalized, which can include limiting
+      // browser and OS version information to major versions only and other
+      // changes to protect user privacy.
+      USER_AGENT_COARSENED = 1;
+    }
+    // Generalization that was applied to the user_agent field, if any.
+    optional UserAgentGeneralization user_agent = 2;
+
+    // Generalization that can be applied to the user_agent_data field.
+    enum UserAgentDataGeneralization {
+      // The user_agent_data field is provided in full.
+      USER_AGENT_DATA_FULL = 0;
+      // The user_agent_data field is generalized, which can include limiting
+      // browser and OS version information to major versions only and other
+      // changes to protect user privacy.
+      USER_AGENT_DATA_COARSENED = 1;
+    }
+    // Generalization that was applied to the user_agent_data field, if any.
+    optional UserAgentDataGeneralization user_agent_data = 3;
 
     // Specifies the reasons that ads returned in response to this request
     // should not be personalized.
@@ -744,22 +769,27 @@ message BidRequest {
     // should support at least one of them.
     enum VideoFormat {
       UNKNOWN_VIDEO_FORMAT = -1;
-      VIDEO_FLV = 0;  // Flash video files are accepted (FLV).
+      // Flash video files are accepted (FLV).
+      VIDEO_FLV = 0;
       VIDEO_MP4 = 1;
-      YT_HOSTED = 2;    // Valid VAST ads with at least one media file hosted
-                        // on youtube.com.
-      VPAID_FLASH = 3;  // Flash VPAID (SWF).
-      VPAID_JS = 4;     // JavaScript VPAID.
+      // Valid VAST ads with at least one media file hosted on youtube.com.
+      YT_HOSTED = 2;
+      // Flash VPAID (SWF).
+      VPAID_FLASH = 3;
+      // JavaScript VPAID.
+      VPAID_JS = 4;
       AUDIO_MP3 = 5;
       AUDIO_OGG = 6;
-      AUDIO_MP3_OGG = 7;  // Requires both MP3 & OGG as Google does not know
-                          // which codecs are installed on the player.
+      // Requires both MP3 & OGG as Google does not know
+      // which codecs are installed on the player.
+      AUDIO_MP3_OGG = 7;
       VIDEO_WEBM = 8;
       VIDEO_MOV = 9;
       VIDEO_3GPP = 10;
       VIDEO_HLS = 11;
       VIDEO_DASH = 12;
-      AUDIO_MP4A = 13;  // Audio version of MP4.
+      // Audio version of MP4.
+      AUDIO_MP4A = 13;
     }
     repeated VideoFormat allowed_video_formats = 6;
 
@@ -792,15 +822,19 @@ message BidRequest {
     // chooses one which best matches the device screen size. End cap is
     // supported only on mobile video interstitial inventory.
     enum EndCapSupport {
-      END_CAP_NOT_ENABLED = 0;  // Companion ad won't be rendered as end cap.
-      END_CAP_OPTIONAL = 1;     // End cap will be rendered if response contains
-                                // eligible companion banner, but companion
-                                // banner is not required.
+      // Companion ad won't be rendered as end cap.
+      END_CAP_NOT_ENABLED = 0;
+      // End cap will be rendered if response contains
+      // eligible companion banner, but companion
+      // banner is not required.
+      END_CAP_OPTIONAL = 1;
 
       // Not used at this time.
-      END_CAP_FORBIDDEN = 2;  // Response with companion ad is filtered.
+      // Response with companion ad is filtered.
+      END_CAP_FORBIDDEN = 2;
       // Not used at this time.
-      END_CAP_REQUIRED = 3;  // Response without companion ad is filtered.
+      // Response without companion ad is filtered.
+      END_CAP_REQUIRED = 3;
     }
     optional EndCapSupport end_cap_support = 13 [default = END_CAP_NOT_ENABLED];
 
@@ -1409,12 +1443,15 @@ message BidRequest {
       message AutoRefreshSettings {
         enum AutoRefreshType {
           UNKNOWN_AUTO_REFRESH_TYPE = 0;
-          USER_ACTION = 1;  // Refresh triggered by user-initiated action such
-                            // as scrolling.
-          EVENT = 2;  // Event-driven content change. For example, ads refresh
-                      // when the football game score changes on the page.
-          TIME = 3;   // Time-based refresh. Ads refresh on a predefined time
-                      // interval even without user activity.
+          // Refresh triggered by user-initiated action such
+          // as scrolling.
+          USER_ACTION = 1;
+          // Event-driven content change. For example, ads refresh
+          // when the football game score changes on the page.
+          EVENT = 2;
+          // Time-based refresh. Ads refresh on a predefined time
+          // interval even without user activity.
+          TIME = 3;
         }
         // The type of the declared auto refresh.
         optional AutoRefreshType refresh_type = 1
