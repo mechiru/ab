@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.247
+// Protocol version: v.248
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -130,7 +130,6 @@ message BidRequest {
   }
   optional PrivacyTreatments privacy_treatments = 71;
 
-
   // Structured user agent information, which can be used when a client
   // supports User-Agent Client Hints: https://wicg.github.io/ua-client-hints/
   //
@@ -177,7 +176,6 @@ message BidRequest {
     // Device model. Exchanges should retrieve this value from the
     // Sec-CH-UAModel header.
     optional string model = 5;
-
   }
 
   // Structured user agent information. If both BidRequest.ua and
@@ -852,7 +850,6 @@ message BidRequest {
     // stream (0 = is not live, 1 = is live).
     //
     optional bool is_livestream = 18 [default = false];
-
   }
   optional Video video = 29;
 
@@ -1720,7 +1717,6 @@ message BidRequest {
     optional AuctionEnvironment auction_environment = 61
         [default = SERVER_SIDE_AUCTION];
 
-
     // The expected time period when an impression can occur in seconds
     // following a winning bid. The impression may be billable only if it serves
     // within this time. To learn more about impression expiration, see the
@@ -1745,7 +1741,6 @@ message BidRequest {
     // The status code for the ad. See creative-status-codes.txt in the
     // technical documentation for a list of ids.
     optional int32 creative_status_code = 3;
-
 
     // If the bid won the auction, this is the price paid in your account
     // currency. If the bid participated in the auction but was out-bid, this
@@ -2242,8 +2237,6 @@ message BidResponse {
         optional int32 max_impressions = 4;
       }
       repeated FrequencyCap frequency_cap = 16;
-
-
     }
     repeated AdSlot adslot = 3;
 
@@ -2438,7 +2431,6 @@ message BidResponse {
   // https://developers.google.com/authorized-buyers/rtb/downloads/no-bid-reasons.txt
   // for the full set of no-bid reason codes.
   optional int32 no_bid_reason = 6;
-
 }
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
