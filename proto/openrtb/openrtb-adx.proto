@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.112
+// Protocol version: v.113
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -253,7 +253,6 @@ message ImpExt {
   // https://support.google.com/admob/answer/9341964 for more information.
   // [AdX: BidRequest.Mobile.is_app_open_ad]
   optional bool is_app_open_ad = 19;
-
 }
 
 extend com.google.openrtb.BidRequest.Imp {
@@ -284,7 +283,6 @@ message AppExt {
     optional Version adapter_version = 3;
   }
   repeated InstalledSdk installed_sdk = 1;
-
 }
 
 extend com.google.openrtb.BidRequest.App {
@@ -296,7 +294,6 @@ extend com.google.openrtb.BidRequest.App {
 message BidResponseExt {
   // [AdX: BidResponse.processing_time_ms]
   optional int32 processing_time_ms = 1;
-
 }
 
 extend com.google.openrtb.BidResponse {
@@ -572,8 +569,6 @@ message BidExt {
 
   // [AdX: BidResponse.Ad.skadn]
   optional SKAdNetworkResponse skadn = 19;
-
-
 }
 
 extend com.google.openrtb.BidResponse.SeatBid.Bid {
@@ -703,7 +698,6 @@ message SiteExt {
   // be provided.  This decision is made by the publisher, see
   // https://support.google.com/admanager/answer/4584891#urls for context.
   optional bool is_semi_transparent_request = 3;
-
 }
 
 extend com.google.openrtb.BidRequest.Site {
@@ -723,7 +717,6 @@ message BidRequestExt {
     // The status code for the ad. See creative-status-codes.txt in the
     // technical documentation for a list of ids.
     optional int32 creative_status_code = 2;
-
 
     // If the bid won the auction, this is the price paid in your account
     // currency.  If the bid participated in the auction but was out-bid, this
@@ -1022,7 +1015,6 @@ message DeviceExt {
   // For more information about iOS's app tracking authorization status, see:
   // https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/authorizationstatus
   optional int32 atts = 3;
-
 }
 
 extend com.google.openrtb.BidRequest.Device {
