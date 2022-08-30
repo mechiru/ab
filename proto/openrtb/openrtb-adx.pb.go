@@ -249,7 +249,7 @@ func (ImpExt_AuctionEnvironment) EnumDescriptor() ([]byte, []int) {
 // Creative policy enforcement level that applies to this request.
 // Creatives that don't adhere to the specified policy will be filtered
 // before the auction. The status of the creatives with their respective
-// policies can be retrieved via Creative API.
+// policies can be retrieved through Creative API.
 // https://developers.google.com/authorized-buyers/apis/guides/rtb-api/creatives
 // Bids on deals may override the policy enforcement applicable to the
 // request.
@@ -322,7 +322,7 @@ func (ImpExt_CreativeEnforcementSettings_PolicyEnforcement) EnumDescriptor() ([]
 // Creative publisher blocks enforcement level that applies to this
 // request. Publisher blocks allow publishers to control which creatives
 // can be shown on their properties.
-// Deals may also override publisher blocks. Please refer to Deals.adx_ext.
+// Deals may also override publisher blocks. Refer to Deals.adx_ext.
 // publisher_blocks_overridden field.
 type ImpExt_CreativeEnforcementSettings_PublisherBlocksEnforcement int32
 
@@ -1219,7 +1219,7 @@ type ImpExt struct {
 	AllowedVendorType []int32 `protobuf:"varint,3,rep,packed,name=allowed_vendor_type,json=allowedVendorType" json:"allowed_vendor_type,omitempty"`
 	// Creatives that are disallowed for the impression. Submitting a bid with
 	// one of the creatives in this list will result in such bid being filtered
-	// before the auction. Please contact your account manager if you would like
+	// before the auction. Contact your account manager if you would like
 	// to enable this feature.
 	ExcludedCreatives []*ImpExt_ExcludedCreative `protobuf:"bytes,10,rep,name=excluded_creatives,json=excludedCreatives" json:"excluded_creatives,omitempty"`
 	// [AdX: BidRequest.AdSlot.dfp_ad_unit_code]
@@ -1230,8 +1230,8 @@ type ImpExt struct {
 	BuyerGeneratedRequestData []*ImpExt_BuyerGeneratedRequestData `protobuf:"bytes,9,rep,name=buyer_generated_request_data,json=buyerGeneratedRequestData" json:"buyer_generated_request_data,omitempty"`
 	// For ads rendered using a custom SDK only: multiplier applied to bid in
 	// the auction. The adjustment reflects the likelihood that your bid would
-	// generate a billable event (i.e. the ad renders successfully) if it won
-	// the auction, relative to the probability that other bids generate a
+	// generate a billable event (meaning the ad renders successfully) if it
+	// won the auction, relative to the probability that other bids generate a
 	// billable event if they won the auction. This adjustment can be larger or
 	// smaller than 1. This affects the final ranking in the auction only; in
 	// particular, this multiplier does not affect the payment.
@@ -1864,7 +1864,7 @@ type PublisherExt struct {
 
 	// The billing address country code of the publisher. This may be different
 	// from the hosting country of the website. For a complete list of country
-	// codes, please refer to
+	// codes, refer to
 	// https://developers.google.com/adwords/api/docs/appendix/codes-formats#country-codes
 	Country *string `protobuf:"bytes,1,opt,name=country" json:"country,omitempty"`
 	// The ID of the host publisher. When populated, indicates that the host
@@ -2753,7 +2753,7 @@ type ImpExt_CreativeEnforcementSettings struct {
 	// Deprecated. This will be removed in August 2022.
 	//
 	// Indicates whether the policy, scan and publisher blocks level
-	// combination is the default combination for this bidder. Please use
+	// combination is the default combination for this bidder. Use
 	// policy_enforcement and publisher_blocks_enforcement in
 	// CreativeEnforcementSettings to learn which creative policy and
 	// publisher blocks apply to the request.
@@ -3153,9 +3153,9 @@ type BidExt_FrequencyCap struct {
 	unknownFields protoimpl.UnknownFields
 
 	// An ID that can represent a bidder's use-case for frequency capping; for
-	// example, it could represent their campaign, ad, line item, etc. It should
-	// not contain any user-specific information or identifiers and should not
-	// be longer than 64 characters.
+	// example, it could represent their campaign, ad, line item, or some
+	// other entity. It should not contain any user-specific information or
+	// identifiers and should not be longer than 64 characters.
 	FcapId *string `protobuf:"bytes,1,opt,name=fcap_id,json=fcapId" json:"fcap_id,omitempty"`
 	// The unit of time used to specify the time window for which a frequency
 	// cap applies.
@@ -3615,7 +3615,7 @@ type BidExt_SKAdNetworkResponse_SKAdNetworkOptions struct {
 	// By default, SKAdNetwork attribution will only be initiated if the
 	// click-through URL lands on the app store, either as a direct link to
 	// the app store or as the final destination of a server-side redirect
-	// chain.  This flag enables GMA SDK to always initiate SKAdNetwork
+	// chain.  This option enables GMA SDK to always initiate SKAdNetwork
 	// attribution on-click regardless of the detected click's final
 	// destination URL. Note that enabling this will launch the app store
 	// even for clicks that are not meant to open the app store, for example
@@ -3765,8 +3765,8 @@ func (x *NativeRequestExt_MultiAdsCellInfo) GetGridId() int64 {
 }
 
 // Feedback on bids submitted in previous responses. This is only set if
-// real-time feedback is enabled for your bidder. Please contact your
-// account manager if you wish to enable real-time feedback.
+// real-time feedback is enabled for your bidder. Contact your
+// account manager if you want to enable real-time feedback.
 //
 type BidRequestExt_BidFeedback struct {
 	state         protoimpl.MessageState
@@ -3894,7 +3894,7 @@ func (x *BidRequestExt_BidFeedback) GetBuyerCreativeId() string {
 // Privacy treatments. Some fields in the bid request can be coarsened or
 // redacted in order to protect user privacy. This message provides
 // information about privacy treatments that apply to an ad opportunity
-// offered via this request.
+// offered through this request.
 type BidRequestExt_PrivacyTreatments struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4037,11 +4037,11 @@ type UserExt_ConsentedProvidersSettings struct {
 	// User Consent Policy.
 	//
 	// If a publisher is using the IAB Transparency and Consent Framework (TCF)
-	// v2 to manage user consent, this is the set of ATPs consented via the
+	// v2 to manage user consent, this is the set of ATPs consented through the
 	// Additional Consent string (see
 	// https://support.google.com/admanager/answer/9681920 for details about
-	// Google's Additional Consent mode). ATPs consented via the TCF v2 consent
-	// string are represented in the UserExt.consent field.
+	// Google's Additional Consent mode). ATPs consented through the TCF v2
+	// consent string are represented in the UserExt.consent field.
 	//
 	// A mapping of ATP ID to ATP name is posted at providers.csv.
 	ConsentedProviders []int64 `protobuf:"varint,2,rep,packed,name=consented_providers,json=consentedProviders" json:"consented_providers,omitempty"`
@@ -4240,15 +4240,15 @@ type DeviceExt_UserAgent struct {
 	// derived from the Sec-CH-UAPlatform-Version header.
 	Platform *DeviceExt_UserAgent_BrandVersion `protobuf:"bytes,2,opt,name=platform" json:"platform,omitempty"`
 	// True if the agent prefers a "mobile" version of the content if
-	// available, i.e. optimized for small screens or touch input. False if
-	// the agent prefers the "desktop" or "full" content. Exchanges should
+	// available, meaning optimized for small screens or touch input. False
+	// if the agent prefers the "desktop" or "full" content. Exchanges should
 	// derive this value from the Sec-CH-UAMobile header.
 	Mobile *bool `protobuf:"varint,3,opt,name=mobile" json:"mobile,omitempty"`
-	// Device's major binary architecture, e.g. "x86" or "arm". Exchanges
-	// should retrieve this value from the Sec-CH-UA-Arch header.
+	// Device's major binary architecture, for example, "x86" or "arm".
+	// Exchanges should retrieve this value from the Sec-CH-UA-Arch header.
 	Architecture *string `protobuf:"bytes,4,opt,name=architecture" json:"architecture,omitempty"`
-	// Device's bitness, e.g. "64" for 64-bit architecture. Exchanges should
-	// retrieve this value from the Sec-CH-UA-Bitness header.
+	// Device's bitness, for example, "64" for 64-bit architecture. Exchanges
+	// should retrieve this value from the Sec-CH-UA-Bitness header.
 	Bitness *string `protobuf:"bytes,9,opt,name=bitness" json:"bitness,omitempty"`
 	// Device model. Exchanges should retrieve this value from the
 	// Sec-CH-UAModel header.
@@ -4407,16 +4407,16 @@ type SourceExt_SupplyChain struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Flag indicating whether the chain contains all nodes involved in the
+	// Indicates whether the chain contains all nodes involved in the
 	// transaction leading back to the owner of the site, app or other medium
 	// of the inventory, where 0 = no, 1 = yes.
 	Complete *int32 `protobuf:"varint,1,opt,name=complete" json:"complete,omitempty"`
 	// Array of SupplyChainNode objects in the order of the chain.
 	// In a complete supply chain, the first node represents the initial
-	// advertising system and seller ID involved in the transaction, i.e. the
-	// owner of the site, app, or other medium. In an incomplete supply chain,
-	// it represents the first known node. The last node represents the entity
-	// sending this bid request.
+	// advertising system and seller ID involved in the transaction, for
+	// example, the owner of the site, app, or other medium. In an incomplete
+	// supply chain, it represents the first known node. The last node
+	// represents the entity sending this bid request.
 	Nodes []*SourceExt_SupplyChain_SupplyChainNode `protobuf:"bytes,2,rep,name=nodes" json:"nodes,omitempty"`
 	// Version of the supply chain specification in use, in the format of
 	// "major.minor". For example, for version 1.0 of the spec,
@@ -4491,10 +4491,10 @@ type SourceExt_SupplyChain_SupplyChainNode struct {
 	Asi *string `protobuf:"bytes,1,opt,name=asi" json:"asi,omitempty"`
 	// The identifier associated with the seller or reseller account within
 	// the advertising system. This must contain the same value used in
-	// transactions (i.e. OpenRTB bid requests) in the field specified by
-	// the SSP/exchange. Typically, in OpenRTB, this is publisher.id.
-	// For OpenDirect it is typically the publisher's organization ID.
-	// Should be limited to 64 characters in length.
+	// OpenRTB bid requests in the field specified
+	// by the SSP/exchange. Typically, in OpenRTB, this is publisher.id. For
+	// OpenDirect it is typically the publisher's organization ID. Should be
+	// limited to 64 characters in length.
 	Sid *string `protobuf:"bytes,2,opt,name=sid" json:"sid,omitempty"`
 	// The OpenRTB RequestId of the request as issued by this seller.
 	Rid *string `protobuf:"bytes,3,opt,name=rid" json:"rid,omitempty"`

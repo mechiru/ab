@@ -1396,7 +1396,7 @@ const (
 	CreativeAttribute_EXPANDABLE_ROLLOVER_INITIATED  CreativeAttribute = 5
 	CreativeAttribute_VIDEO_IN_BANNER_AUTO_PLAY      CreativeAttribute = 6
 	CreativeAttribute_VIDEO_IN_BANNER_USER_INITIATED CreativeAttribute = 7
-	CreativeAttribute_POP                            CreativeAttribute = 8 // Pop (e.g., Over, Under, or upon Exit).
+	CreativeAttribute_POP                            CreativeAttribute = 8 // Pop (for example, Over, Under, or upon Exit).
 	CreativeAttribute_PROVOCATIVE_OR_SUGGESTIVE      CreativeAttribute = 9
 	// Defined as "Shaky, Flashing, Flickering, Extreme Animation, Smileys".
 	CreativeAttribute_ANNOYING                      CreativeAttribute = 10
@@ -1963,7 +1963,7 @@ const (
 	VideoPlacementType_UNDEFINED_VIDEO_PLACEMENT VideoPlacementType = 0
 	// Played before, during or after the streaming video content
 	// that the consumer has requested.
-	// E.G.: Pre-roll, Mid-roll, Post-roll.
+	// For example: Pre-roll, Mid-roll, Post-roll.
 	VideoPlacementType_IN_STREAM_PLACEMENT VideoPlacementType = 1
 	// Exists within a web banner that leverages the banner space
 	// to deliver a video experience as opposed to another static
@@ -1979,8 +1979,8 @@ const (
 	// Interstitial/Slider/Floating.
 	// Covers the entire or a portion of screen area,
 	// but is always on screen while displayed
-	// (i.e. cannot be scrolled out of view).
-	// Note that a full-screen interstitial (e.g., in mobile)
+	// (for example, cannot be scrolled out of view).
+	// Note that a full-screen interstitial (for example, in mobile)
 	// can be distinguished from a floating/slider unit by the imp.instl field.
 	VideoPlacementType_FLOATING_PLACEMENT VideoPlacementType = 5
 )
@@ -2456,7 +2456,7 @@ const (
 	LocationType_GPS_LOCATION LocationType = 1
 	// IP Geolocation.
 	LocationType_IP LocationType = 2
-	// User-provided, e.g. registration data.
+	// User-provided, for example, registration data.
 	LocationType_USER_PROVIDED LocationType = 3
 )
 
@@ -3284,8 +3284,8 @@ func (AdUnitId) EnumDescriptor() ([]byte, []int) {
 // of content is surrounding the ad on the page at a high level.
 // This maps directly to the new Deep Dive on In-Feed Ad Units.
 // This denotes the primary context, but does not imply other content
-// may not exist on the page - for example it's expected that most
-// content platforms have some social components, etc.
+// may not exist on the page - for example, it's expected that most
+// content platforms have some social components.
 type ContextType int32
 
 const (
@@ -3455,7 +3455,8 @@ const (
 	// or single image page.
 	PlacementType_ATOMIC_UNIT PlacementType = 2
 	// Outside the core content - for example in the ads section on the
-	// right rail, as a banner-style placement near the content, etc.
+	// right rail, as a banner-style placement near the content, or another
+	// placement type.
 	PlacementType_OUTSIDE PlacementType = 3
 	// Recommendation widget, most commonly presented below
 	// the article content.
@@ -3865,14 +3866,12 @@ type BidRequest struct {
 	//	*BidRequest_Site_
 	//	*BidRequest_App_
 	DistributionchannelOneof isBidRequest_DistributionchannelOneof `protobuf_oneof:"distributionchannel_oneof"`
-	// Details via a Device object (Section 3.2.11) about the user's
-	// device to which the impression will be delivered.
+	// Information about the device the impression will be delivered to.
 	Device *BidRequest_Device `protobuf:"bytes,5,opt,name=device" json:"device,omitempty"`
 	// A Regs object (Section 3.2.16) that specifies any industry, legal,
 	// or governmental regulations in force for this request.
 	Regs *BidRequest_Regs `protobuf:"bytes,14,opt,name=regs" json:"regs,omitempty"`
-	// Details via a User object (Section 3.2.13) about the human
-	// user of the device; the advertising audience.
+	// Information about the user of the device or the advertising audience.
 	User *BidRequest_User `protobuf:"bytes,6,opt,name=user" json:"user,omitempty"`
 	// Auction type, where 1 = First Price, 2 = Second Price Plus.
 	// Exchange-specific auction types can be defined using values > 500.
@@ -3880,14 +3879,14 @@ type BidRequest struct {
 	// Maximum time in milliseconds to submit a bid to avoid timeout.
 	// This value is commonly communicated offline.
 	Tmax *int32 `protobuf:"varint,8,opt,name=tmax" json:"tmax,omitempty"`
-	// Allowlist of buyer seats (e.g., advertisers, agencies) that can bid on this
-	// impression. IDs of seats and knowledge of the buyer's customers to which
-	// they refer must be coordinated between bidders and the exchange a priori.
-	// Omission implies no seat restrictions.
+	// Allowlist of buyer seats (for example, advertisers, agencies) that can bid
+	// on this impression. IDs of seats and knowledge of the buyer's customers to
+	// which they refer must be coordinated between bidders and the exchange a
+	// priori. Omission implies no seat restrictions.
 	Wseat []string `protobuf:"bytes,9,rep,name=wseat" json:"wseat,omitempty"`
-	// Flag to indicate if Exchange can verify that the impressions offered
-	// represent all of the impressions available in context (e.g., all on the
-	// web page, all video spots such as pre/mid/post roll) to support
+	// Indicates if Exchange can verify that the impressions offered
+	// represent all of the impressions available in context (for example, all on
+	// the web page, all video spots such as pre/mid/post roll) to support
 	// road-blocking. false = no or unknown, true = yes, the impressions offered
 	// represent all that are available.
 	Allimps *bool `protobuf:"varint,10,opt,name=allimps,def=0" json:"allimps,omitempty"`
@@ -3897,17 +3896,17 @@ type BidRequest struct {
 	// Blocked advertiser categories using the IAB content categories.
 	// Refer to enum ContentCategory.
 	Bcat []string `protobuf:"bytes,12,rep,name=bcat" json:"bcat,omitempty"`
-	// Block list of advertisers by their domains (e.g., "ford.com").
+	// Block list of advertisers by their domains (for example, "ford.com").
 	Badv []string `protobuf:"bytes,13,rep,name=badv" json:"badv,omitempty"`
 	// Block list of applications by their platform-specific exchange
 	// independent application identifiers. On Android, these should
-	// be bundle or package names (e.g., com.foo.mygame).
+	// be bundle or package names (for example, com.foo.mygame).
 	// On iOS, these are numeric IDs.
 	Bapp []string `protobuf:"bytes,16,rep,name=bapp" json:"bapp,omitempty"`
 	// Indicator of test mode in which auctions are not billable,
 	// where false = live mode, true = test mode.
 	Test *bool `protobuf:"varint,15,opt,name=test,def=0" json:"test,omitempty"`
-	// Block list of buyer seats (e.g., advertisers, agencies) restricted
+	// Block list of buyer seats (for example, advertisers, agencies) restricted
 	// from bidding on this impression. IDs of seats and knowledge
 	// of the buyer's customers to which they refer must be
 	// coordinated between bidders and the exchange a priori.
@@ -4108,13 +4107,13 @@ type isBidRequest_DistributionchannelOneof interface {
 }
 
 type BidRequest_Site_ struct {
-	// Details via a Site object (Section 3.2.6) about the publisher's website.
-	// Only applicable and recommended for websites.
+	// Information about the publisher's website. Only applicable and
+	// recommended for websites.
 	Site *BidRequest_Site `protobuf:"bytes,3,opt,name=site,oneof"`
 }
 
 type BidRequest_App_ struct {
-	// Details via an App object (Section 3.2.7) about the publisher's app
+	// Information about the publisher's app
 	// (non-browser applications). Only applicable and recommended for apps.
 	App *BidRequest_App `protobuf:"bytes,4,opt,name=app,oneof"`
 }
@@ -4123,14 +4122,14 @@ func (*BidRequest_Site_) isBidRequest_DistributionchannelOneof() {}
 
 func (*BidRequest_App_) isBidRequest_DistributionchannelOneof() {}
 
-// OpenRTB 2.0: This object is the top-level bid response object (i.e., the
-// unnamed outer JSON object). The id attribute is a reflection of the bid
+// OpenRTB 2.0: This object is the top-level bid response object (for example,
+// the unnamed outer JSON object). The id attribute is a reflection of the bid
 // request ID for logging purposes. Similarly, bidid is an optional response
 // tracking ID for bidders. If specified, it can be included in the subsequent
 // win notice call if the bidder wins. At least one seatbid object is required,
 // which contains at least one bid for an impression. Other attributes are
 // optional. To express a "no-bid", the options are to return an empty response
-// with HTTP 204. Alternately if the bidder wishes to convey to the exchange a
+// with HTTP 204. Alternately if the bidder wants to convey to the exchange a
 // reason for not bidding, just a BidResponse object is returned with a
 // reason code in the nbr attribute.
 type BidResponse struct {
@@ -4243,7 +4242,7 @@ func (x *BidResponse) GetNbr() NoBidReason {
 }
 
 // OpenRTB Native 1.0: The Native Object defines the native advertising
-// opportunity available for bid via this bid request. It must be included
+// opportunity available for bid through this bid request. It must be included
 // directly in the impression object if the impression offered for auction
 // is a native ad format.
 type NativeRequest struct {
@@ -4603,7 +4602,7 @@ type BidRequest_Source struct {
 	// RECOMMENDED by the OpenRTB specification.
 	Fd *bool `protobuf:"varint,1,opt,name=fd" json:"fd,omitempty"`
 	// Transaction ID that must be common across all participants in
-	// this bid request (e.g., potentially multiple exchanges).
+	// this bid request (for example, potentially multiple exchanges).
 	// RECOMMENDED by the OpenRTB specification.
 	Tid *string `protobuf:"bytes,2,opt,name=tid" json:"tid,omitempty"`
 	// Payment ID chain string containing embedded syntax
@@ -4719,7 +4718,7 @@ type BidRequest_Imp struct {
 	// Note that the Safari View Controller in iOS 9.x devices is considered
 	// a native browser for purposes of this attribute.
 	Clickbrowser *bool `protobuf:"varint,16,opt,name=clickbrowser" json:"clickbrowser,omitempty"`
-	// Flag to indicate if the impression requires secure HTTPS URL creative
+	// Indicates if the impression requires secure HTTPS URL creative
 	// assets and markup.  If omitted, the secure state is unknown, but
 	// non-secure HTTP support can be assumed.
 	Secure *bool `protobuf:"varint,12,opt,name=secure" json:"secure,omitempty"`
@@ -5108,7 +5107,7 @@ type BidRequest_App struct {
 	Ver *string `protobuf:"bytes,7,opt,name=ver" json:"ver,omitempty"`
 	// A platform-specific application identifier intended to be
 	// unique to the app and independent of the exchange. On Android,
-	// this should be a bundle or package name (e.g., com.foo.mygame).
+	// this should be a bundle or package name (for example, com.foo.mygame).
 	// On iOS, it is a numeric ID. For SDK-less requests (mostly from connected
 	// TVs), it can be provided by the publisher directly in the request.
 	Bundle *string `protobuf:"bytes,8,opt,name=bundle" json:"bundle,omitempty"`
@@ -5272,7 +5271,7 @@ type BidRequest_Publisher struct {
 	// Array of IAB content categories that describe the publisher.
 	// See enum ContentCategory.
 	Cat []string `protobuf:"bytes,3,rep,name=cat" json:"cat,omitempty"`
-	// Highest level domain of the publisher (e.g., "publisher.com").
+	// Highest level domain of the publisher (for example, "publisher.com").
 	Domain *string `protobuf:"bytes,4,opt,name=domain" json:"domain,omitempty"`
 }
 
@@ -5365,11 +5364,11 @@ type BidRequest_Content struct {
 	// or "Arby 'N' The Chief" (made for web).
 	// Non-Video Example: "Ecocentric" (Time Magazine blog).
 	Series *string `protobuf:"bytes,4,opt,name=series" json:"series,omitempty"`
-	// Content season; typically for video content (e.g., "Season 3").
+	// Content season; typically for video content (for example, "Season 3").
 	Season *string `protobuf:"bytes,5,opt,name=season" json:"season,omitempty"`
 	// Artist credited with the content.
 	Artist *string `protobuf:"bytes,21,opt,name=artist" json:"artist,omitempty"`
-	// Genre that best describes the content (e.g., rock, pop, etc).
+	// Genre that best describes the content (for example, rock, pop, etc).
 	Genre *string `protobuf:"bytes,22,opt,name=genre" json:"genre,omitempty"`
 	// Album to which the content belongs; typically for audio.
 	Album *string `protobuf:"bytes,23,opt,name=album" json:"album,omitempty"`
@@ -5384,17 +5383,18 @@ type BidRequest_Content struct {
 	Cat []string `protobuf:"bytes,7,rep,name=cat" json:"cat,omitempty"`
 	// Production quality.
 	Prodq *ProductionQuality `protobuf:"varint,25,opt,name=prodq,enum=com.google.openrtb.ProductionQuality" json:"prodq,omitempty"`
-	// Type of content (game, video, text, etc.).
+	// Type of content (for example, game, video or text).
 	Context *ContentContext `protobuf:"varint,20,opt,name=context,enum=com.google.openrtb.ContentContext" json:"context,omitempty"`
-	// Content rating (e.g., MPAA).
+	// Content rating (for example, MPAA).
 	Contentrating *string `protobuf:"bytes,10,opt,name=contentrating" json:"contentrating,omitempty"`
-	// User rating of the content (e.g., number of stars, likes, etc.).
+	// User rating of the content (for example, number of stars or likes).
 	Userrating *string `protobuf:"bytes,11,opt,name=userrating" json:"userrating,omitempty"`
 	// Media rating per QAG guidelines.
 	Qagmediarating *QAGMediaRating `protobuf:"varint,17,opt,name=qagmediarating,enum=com.google.openrtb.QAGMediaRating" json:"qagmediarating,omitempty"`
 	// Comma separated list of keywords describing the content.
 	Keywords *string `protobuf:"bytes,9,opt,name=keywords" json:"keywords,omitempty"`
-	// false = not live, true = content is live (e.g., stream, live blog).
+	// false = not live, true = content is live (for example, stream, live
+	// blog).
 	Livestream *bool `protobuf:"varint,13,opt,name=livestream" json:"livestream,omitempty"`
 	// false = indirect, true = direct.
 	Sourcerelationship *bool `protobuf:"varint,14,opt,name=sourcerelationship" json:"sourcerelationship,omitempty"`
@@ -5402,7 +5402,7 @@ type BidRequest_Content struct {
 	Len *int32 `protobuf:"varint,16,opt,name=len" json:"len,omitempty"`
 	// Content language using ISO-639-1-alpha-2.
 	Language *string `protobuf:"bytes,19,opt,name=language" json:"language,omitempty"`
-	// Indicator of whether or not the content is embeddable (e.g., an
+	// Indicator of whether or not the content is embeddable (for example, an
 	// embeddable video player).
 	Embeddable *bool `protobuf:"varint,18,opt,name=embeddable" json:"embeddable,omitempty"`
 	// Additional content data. Each object represents a different data source.
@@ -5635,12 +5635,13 @@ type BidRequest_Producer struct {
 	// Content producer or originator ID. Useful if content is syndicated,
 	// and may be posted on a site using embed tags.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	// Content producer or originator name (e.g., "Warner Bros").
+	// Content producer or originator name (for example, "Warner Bros").
 	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	// Array of IAB content categories that describe the content producer.
 	// See enum ContentCategory.
 	Cat []string `protobuf:"bytes,3,rep,name=cat" json:"cat,omitempty"`
-	// Highest level domain of the content producer (e.g., "producer.com").
+	// Highest level domain of the content producer (for example,
+	// "producer.com").
 	Domain *string `protobuf:"bytes,4,opt,name=domain" json:"domain,omitempty"`
 }
 
@@ -5718,14 +5719,14 @@ type BidRequest_Device struct {
 	// by a Geo object (Section 3.2.12).
 	// RECOMMENDED by the OpenRTB specification.
 	Geo *BidRequest_Geo `protobuf:"bytes,4,opt,name=geo" json:"geo,omitempty"`
-	// Standard "Do Not Track" flag as set in the header by the browser,
+	// Standard "Do Not Track" option as set in the header by the browser,
 	// where false = tracking is unrestricted, true = do not track.
 	// RECOMMENDED by the OpenRTB specification.
 	Dnt *bool `protobuf:"varint,1,opt,name=dnt" json:"dnt,omitempty"`
-	// "Limit Ad Tracking" signal commercially endorsed (e.g., iOS, Android),
-	// where false = tracking is unrestricted, true = tracking must be limited
-	// per commercial guidelines.
-	// RECOMMENDED by the OpenRTB specification.
+	// "Limit Ad Tracking" signal commercially endorsed (for example, iOS,
+	// Android), where false = tracking is unrestricted, true = tracking must be
+	// limited per commercial guidelines. RECOMMENDED by the OpenRTB
+	// specification.
 	Lmt *bool `protobuf:"varint,23,opt,name=lmt" json:"lmt,omitempty"`
 	// Browser user agent string. Certain data may be redacted or replaced.
 	// RECOMMENDED by the OpenRTB specification.
@@ -5737,15 +5738,15 @@ type BidRequest_Device struct {
 	Ipv6 *string `protobuf:"bytes,9,opt,name=ipv6" json:"ipv6,omitempty"`
 	// The general type of device.
 	Devicetype *DeviceType `protobuf:"varint,18,opt,name=devicetype,enum=com.google.openrtb.DeviceType" json:"devicetype,omitempty"`
-	// Device make (e.g., "Apple").
+	// Device make (for example, "Apple").
 	Make *string `protobuf:"bytes,12,opt,name=make" json:"make,omitempty"`
-	// Device model (e.g., "iPhone").
+	// Device model (for example, "iPhone").
 	Model *string `protobuf:"bytes,13,opt,name=model" json:"model,omitempty"`
-	// Device operating system (e.g., "iOS").
+	// Device operating system (for example, "iOS").
 	Os *string `protobuf:"bytes,14,opt,name=os" json:"os,omitempty"`
-	// Device operating system version (e.g., "3.1.2").
+	// Device operating system version (for example, "3.1.2").
 	Osv *string `protobuf:"bytes,15,opt,name=osv" json:"osv,omitempty"`
-	// Hardware version of the device (e.g., "5S" for iPhone 5S).
+	// Hardware version of the device (for example, "5S" for iPhone 5S).
 	Hwv *string `protobuf:"bytes,24,opt,name=hwv" json:"hwv,omitempty"`
 	// Physical width of the screen in pixels.
 	W *int32 `protobuf:"varint,25,opt,name=w" json:"w,omitempty"`
@@ -5764,10 +5765,10 @@ type BidRequest_Device struct {
 	Flashver *string `protobuf:"bytes,19,opt,name=flashver" json:"flashver,omitempty"`
 	// Browser language using ISO-639-1-alpha-2.
 	Language *string `protobuf:"bytes,11,opt,name=language" json:"language,omitempty"`
-	// Carrier or ISP (e.g., "VERIZON") using exchange curated string
+	// Carrier or ISP (for example, "VERIZON") using exchange curated string
 	// names which should be published to bidders a priori.
 	Carrier *string `protobuf:"bytes,10,opt,name=carrier" json:"carrier,omitempty"`
-	// Mobile carrier as the concatenated MCC-MNC code (e.g.,
+	// Mobile carrier as the concatenated MCC-MNC code (for example,
 	// "310-005" identifies Verizon Wireless CDMA in the USA).
 	// Refer to https://en.wikipedia.org/wiki/Mobile_country_code
 	// for further examples. Note that the dash between the MCC
@@ -5775,19 +5776,19 @@ type BidRequest_Device struct {
 	Mccmnc *string `protobuf:"bytes,30,opt,name=mccmnc" json:"mccmnc,omitempty"`
 	// Network connection type.
 	Connectiontype *ConnectionType `protobuf:"varint,17,opt,name=connectiontype,enum=com.google.openrtb.ConnectionType" json:"connectiontype,omitempty"`
-	// ID sanctioned for advertiser use in the clear (i.e., not hashed).
+	// ID sanctioned for advertiser use in the clear (meaning, not hashed).
 	Ifa *string `protobuf:"bytes,20,opt,name=ifa" json:"ifa,omitempty"`
-	// Hardware device ID (e.g., IMEI); hashed via SHA1.
+	// Hardware device ID (for example, IMEI); hashed through SHA1.
 	Didsha1 *string `protobuf:"bytes,5,opt,name=didsha1" json:"didsha1,omitempty"`
-	// Hardware device ID (e.g., IMEI); hashed via MD5.
+	// Hardware device ID (for example, IMEI); hashed through MD5.
 	Didmd5 *string `protobuf:"bytes,6,opt,name=didmd5" json:"didmd5,omitempty"`
-	// Platform device ID (e.g., Android ID); hashed via SHA1.
+	// Platform device ID (for example, Android ID); hashed through SHA1.
 	Dpidsha1 *string `protobuf:"bytes,7,opt,name=dpidsha1" json:"dpidsha1,omitempty"`
-	// Platform device ID (e.g., Android ID); hashed via MD5.
+	// Platform device ID (for example, Android ID); hashed through MD5.
 	Dpidmd5 *string `protobuf:"bytes,8,opt,name=dpidmd5" json:"dpidmd5,omitempty"`
-	// MAC address of the device; hashed via SHA1.
+	// MAC address of the device; hashed through SHA1.
 	Macsha1 *string `protobuf:"bytes,21,opt,name=macsha1" json:"macsha1,omitempty"`
-	// MAC address of the device; hashed via MD5.
+	// MAC address of the device; hashed through MD5.
 	Macmd5 *string `protobuf:"bytes,22,opt,name=macmd5" json:"macmd5,omitempty"`
 }
 
@@ -6037,7 +6038,7 @@ func (x *BidRequest_Device) GetMacmd5() string {
 // geographic location. When subordinate to a Device object, it indicates the
 // location of the device which can also be interpreted as the user's current
 // location. When subordinate to a User object, it indicates the location of
-// the user's home base (i.e., not necessarily their current location).
+// the user's home base (for example, not necessarily their current location).
 //
 // The lat/lon attributes should only be passed if they conform to the
 // accuracy depicted in the type attribute. For example, the centroid of a
@@ -6073,16 +6074,16 @@ type BidRequest_Geo struct {
 	Type *LocationType `protobuf:"varint,9,opt,name=type,enum=com.google.openrtb.LocationType" json:"type,omitempty"`
 	// Estimated location accuracy in meters; recommended when lat/lon
 	// are specified and derived from a device's location services
-	// (i.e., type = 1). Note that this is the accuracy as reported
+	// (for example, type = 1). Note that this is the accuracy as reported
 	// from the device. Consult OS specific documentation
-	// (e.g., Android, iOS) for exact interpretation.
+	// (for example, Android, iOS) for exact interpretation.
 	Accuracy *int32 `protobuf:"varint,11,opt,name=accuracy" json:"accuracy,omitempty"`
 	// Number of seconds since this geolocation fix was established.
 	// Note that devices may cache location data across multiple fetches.
 	// Ideally, this value should be from the time the actual fix was taken.
 	Lastfix *int32 `protobuf:"varint,12,opt,name=lastfix" json:"lastfix,omitempty"`
 	// Service or provider used to determine geolocation from IP
-	// address if applicable (i.e., type = 2).
+	// address if applicable (for example, type = 2).
 	Ipservice *LocationService `protobuf:"varint,13,opt,name=ipservice,enum=com.google.openrtb.LocationService" json:"ipservice,omitempty"`
 	// Local time as the number +/- of minutes from UTC.
 	Utcoffset *int32 `protobuf:"varint,10,opt,name=utcoffset" json:"utcoffset,omitempty"`
@@ -6212,7 +6213,7 @@ func (x *BidRequest_Geo) GetUtcoffset() int32 {
 }
 
 // OpenRTB 2.0: This object contains information known or derived about
-// the human user of the device (i.e., the audience for advertising).
+// the human user of the device (for example, the audience for advertising).
 // The user id is an exchange artifact and may be subject to rotation or other
 // privacy policies. However, this user ID must be stable long enough to serve
 // reasonably as the basis for frequency capping and retargeting.
@@ -6414,7 +6415,7 @@ func (x *BidRequest_Data) GetSegment() []*BidRequest_Data_Segment {
 }
 
 // OpenRTB 2.2: This object contains any legal, governmental, or industry
-// regulations that apply to the request. The coppa flag signals whether
+// regulations that apply to the request. The coppa field signals whether
 // or not the request falls under the United States Federal Trade Commission's
 // regulations for the United States Children's Online Privacy Protection Act
 // ("COPPA"). Refer to Section 7.1 for more information.
@@ -6424,7 +6425,7 @@ type BidRequest_Regs struct {
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// Flag indicating if this request is subject to the COPPA regulations
+	// Indicates if this request is subject to the COPPA regulations
 	// established by the USA FTC.
 	Coppa *bool `protobuf:"varint,1,opt,name=coppa" json:"coppa,omitempty"`
 }
@@ -6471,8 +6472,8 @@ func (x *BidRequest_Regs) GetCoppa() bool {
 // OpenRTB 2.5: This object is associated with an impression as
 // an array of metrics. These metrics can offer insight into
 // the impression to assist with decisioning such as average recent
-// viewability, click-through rate, etc.  Each metric is identified
-// by its type, reports the value of the metric, and optionally
+// viewability, click-through rate, or another metric.  Each metric is
+// identified by its type, reports the value of the metric, and optionally
 // identifies the source or vendor measuring the value.
 type BidRequest_Imp_Metric struct {
 	state           protoimpl.MessageState
@@ -6826,8 +6827,8 @@ type BidRequest_Imp_Video struct {
 	H *int32 `protobuf:"varint,7,opt,name=h" json:"h,omitempty"`
 	// Placement type for the impression.
 	Placement *VideoPlacementType `protobuf:"varint,26,opt,name=placement,enum=com.google.openrtb.VideoPlacementType" json:"placement,omitempty"`
-	// Indicates if the impression must be linear, nonlinear, etc.
-	// If none specified, assume all are allowed.
+	// Indicates if the impression must be linear or nonlinear. If none
+	// specified, assume all are allowed.
 	Linearity *VideoLinearity `protobuf:"varint,2,opt,name=linearity,enum=com.google.openrtb.VideoLinearity" json:"linearity,omitempty"`
 	// Indicates if the player will allow the video to be skipped.
 	// If a bidder sends markup/creative that is itself skippable, the
@@ -6867,7 +6868,7 @@ type BidRequest_Imp_Video struct {
 	Playbackmethod []PlaybackMethod `protobuf:"varint,15,rep,packed,name=playbackmethod,enum=com.google.openrtb.PlaybackMethod" json:"playbackmethod,omitempty"`
 	// The event that causes playback to end.
 	Playbackend *PlaybackCessationMode `protobuf:"varint,27,opt,name=playbackend,enum=com.google.openrtb.PlaybackCessationMode" json:"playbackend,omitempty"`
-	// Supported delivery methods (e.g., streaming, progressive).
+	// Supported delivery methods (for example, streaming, progressive).
 	// If none specified, assume all are supported.
 	Delivery []ContentDeliveryMethod `protobuf:"varint,16,rep,packed,name=delivery,enum=com.google.openrtb.ContentDeliveryMethod" json:"delivery,omitempty"`
 	// Ad position on screen.
@@ -6878,7 +6879,7 @@ type BidRequest_Imp_Video struct {
 	// If an API is not explicitly listed, it is assumed not to be supported.
 	Api []APIFramework `protobuf:"varint,19,rep,packed,name=api,enum=com.google.openrtb.APIFramework" json:"api,omitempty"`
 	// Supported VAST companion ad types.  Recommended if companion Banner
-	// objects are included via the companionad array.
+	// objects are included through the companionad array.
 	Companiontype []CompanionType `protobuf:"varint,20,rep,packed,name=companiontype,enum=com.google.openrtb.CompanionType" json:"companiontype,omitempty"`
 	// DEPRECATED in OpenRTB 2.3+. Prefer the field <code>protocols</code>.
 	// Video bid response protocol.
@@ -7128,7 +7129,7 @@ type BidRequest_Imp_Audio struct {
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// Content MIME types supported (e.g., "audio/mp4").
+	// Content MIME types supported (for example, "audio/mp4").
 	// REQUIRED by the OpenRTB specification: at least 1 element.
 	Mimes []string `protobuf:"bytes,1,rep,name=mimes" json:"mimes,omitempty"`
 	// Minimum audio ad duration in seconds.
@@ -7161,7 +7162,7 @@ type BidRequest_Imp_Audio struct {
 	Minbitrate *int32 `protobuf:"varint,9,opt,name=minbitrate" json:"minbitrate,omitempty"`
 	// Maximum bit rate in Kbps.
 	Maxbitrate *int32 `protobuf:"varint,10,opt,name=maxbitrate" json:"maxbitrate,omitempty"`
-	// Supported delivery methods (e.g., streaming, progressive).
+	// Supported delivery methods (for example, streaming, progressive).
 	// If none specified, assume all are supported.
 	Delivery []ContentDeliveryMethod `protobuf:"varint,11,rep,packed,name=delivery,enum=com.google.openrtb.ContentDeliveryMethod" json:"delivery,omitempty"`
 	// Array of Banner objects if companion ads are available.
@@ -7170,7 +7171,7 @@ type BidRequest_Imp_Audio struct {
 	// If an API is not explicitly listed, it is assumed not to be supported.
 	Api []APIFramework `protobuf:"varint,13,rep,packed,name=api,enum=com.google.openrtb.APIFramework" json:"api,omitempty"`
 	// Supported DAAST companion ad types.  Recommended if companion Banner
-	// objects are included via the companionad array.
+	// objects are included through the companionad array.
 	Companiontype []CompanionType `protobuf:"varint,20,rep,packed,name=companiontype,enum=com.google.openrtb.CompanionType" json:"companiontype,omitempty"`
 	// The maximum number of ads that can be played in an ad pod.
 	Maxseq *int32 `protobuf:"varint,21,opt,name=maxseq" json:"maxseq,omitempty"`
@@ -7349,7 +7350,7 @@ func (x *BidRequest_Imp_Audio) GetNvol() VolumeNormalizationMode {
 
 // OpenRTB 2.3: This object represents a native type impression.
 // Native ad units are intended to blend seamlessly into the surrounding
-// content (e.g., a sponsored Twitter or Facebook post). As such, the
+// content (for example, a sponsored Twitter or Facebook post). As such, the
 // response must be well-structured to afford the publisher fine-grained
 // control over rendering.
 //
@@ -7553,7 +7554,7 @@ func (x *BidRequest_Imp_Pmp) GetDeals() []*BidRequest_Imp_Pmp_Deal {
 	return nil
 }
 
-// OpenRTB 2.4: This object represents an allowed size (i.e.,
+// OpenRTB 2.4: This object represents an allowed size (
 // height and width combination) for a banner impression.
 // These are typically used in an array for an impression where
 // multiple sizes are permitted.
@@ -7662,12 +7663,12 @@ type BidRequest_Imp_Pmp_Deal struct {
 	// from bid currency returned by bidder if this is allowed
 	// by the exchange.
 	Bidfloorcur *string `protobuf:"bytes,3,opt,name=bidfloorcur,def=USD" json:"bidfloorcur,omitempty"`
-	// Allowlist of buyer seats (e.g., advertisers, agencies) that can bid
-	// on this deal. IDs of seats and knowledge of the buyer's customers to
-	// which they refer must be coordinated between bidders and the exchange
-	// a priori. Omission implies no seat restrictions.
+	// Allowlist of buyer seats (for example, advertisers, agencies) that
+	// can bid on this deal. IDs of seats and knowledge of the buyer's
+	// customers to which they refer must be coordinated between bidders and
+	// the exchange a priori. Omission implies no seat restrictions.
 	Wseat []string `protobuf:"bytes,4,rep,name=wseat" json:"wseat,omitempty"`
-	// Array of advertiser domains (e.g., advertiser.com) allowed to
+	// Array of advertiser domains (for example, advertiser.com) allowed to
 	// bid on this deal. Omission implies no advertiser restrictions.
 	Wadomain []string `protobuf:"bytes,5,rep,name=wadomain" json:"wadomain,omitempty"`
 	// Optional override of the overall auction type of the bid request,
@@ -7844,7 +7845,7 @@ type BidResponse_SeatBid struct {
 	// Array of 1+ Bid objects (Section 4.2.3) each related to an impression.
 	// Multiple bids can relate to the same impression.
 	Bid []*BidResponse_SeatBid_Bid `protobuf:"bytes,1,rep,name=bid" json:"bid,omitempty"`
-	// ID of the buyer seat (e.g., advertiser, agency) on whose behalf
+	// ID of the buyer seat (for example, advertiser, agency) on whose behalf
 	// this bid is made.
 	//
 	// This ID will be used to breakdown spend and invalid traffic metrics in
@@ -7915,8 +7916,8 @@ func (x *BidResponse_SeatBid) GetGroup() bool {
 
 // OpenRTB 2.0: A SeatBid object contains one or more Bid objects,
 // each of which relates to a specific impression in the bid request
-// via the impid attribute and constitutes an offer to buy that impression
-// for a given price.
+// through the impid attribute and constitutes an offer to buy that
+// impression for a given price.
 type BidResponse_SeatBid_Bid struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
@@ -7932,7 +7933,7 @@ type BidResponse_SeatBid_Bid struct {
 	// Bid price expressed as CPM although the actual transaction is for a
 	// unit impression only. Note that while the type indicates float, integer
 	// math is highly recommended when handling currencies
-	// (e.g., BigDecimal in Java).
+	// (for example, BigDecimal in Java).
 	// REQUIRED by the OpenRTB specification.
 	Price *float64 `protobuf:"fixed64,3,req,name=price" json:"price,omitempty"`
 	// Win notice URL called by the exchange if the bid wins; optional means
@@ -7940,14 +7941,14 @@ type BidResponse_SeatBid_Bid struct {
 	Nurl *string `protobuf:"bytes,5,opt,name=nurl" json:"nurl,omitempty"`
 	// Billing notice URL called by the exchange when a winning bid
 	// becomes billable based on exchange-specific business policy
-	// (e.g., typically delivered, viewed, etc.). Substitution macros
-	// (Section 4.4) may be included.
+	// (for example, delivered or viewed).
+	// Substitution macros (Section 4.4) may be included.
 	Burl *string `protobuf:"bytes,22,opt,name=burl" json:"burl,omitempty"`
 	// Loss notice URL called by the exchange when a bid is known to
 	// have been lost. Substitution macros (Section 4.4) may be
 	// included. Exchange-specific policy may preclude support for
 	// loss notices or the disclosure of winning clearing prices
-	// resulting in ${AUCTION_PRICE} macros being removed (i.e.,
+	// resulting in ${AUCTION_PRICE} macros being removed (meaning,
 	// replaced with a zero-length string).
 	Lurl *string `protobuf:"bytes,23,opt,name=lurl" json:"lurl,omitempty"`
 	// Types that are assignable to AdmOneof:
@@ -7956,13 +7957,13 @@ type BidResponse_SeatBid_Bid struct {
 	AdmOneof isBidResponse_SeatBid_Bid_AdmOneof `protobuf_oneof:"adm_oneof"`
 	// ID of a preloaded ad to serve if the bid wins.
 	Adid *string `protobuf:"bytes,4,opt,name=adid" json:"adid,omitempty"`
-	// Advertiser domain for block list checking (e.g., "ford.com"). This can
-	// be an array of for the case of rotating creatives. Exchanges can
-	// mandate that only one domain is allowed.
+	// Advertiser domain for block list checking (for example, "ford.com").
+	// This can be an array of for the case of rotating creatives. Exchanges
+	// can mandate that only one domain is allowed.
 	Adomain []string `protobuf:"bytes,7,rep,name=adomain" json:"adomain,omitempty"`
 	// A platform-specific application identifier intended to be
 	// unique to the app and independent of the exchange. On Android,
-	// this should be a bundle or package name (e.g., com.foo.mygame).
+	// this should be a bundle or package name (for example, com.foo.mygame).
 	// On iOS, it is a numeric ID.
 	Bundle *string `protobuf:"bytes,14,opt,name=bundle" json:"bundle,omitempty"`
 	// URL without cache-busting to an image that is representative of the
@@ -7990,7 +7991,7 @@ type BidResponse_SeatBid_Bid struct {
 	Qagmediarating *QAGMediaRating `protobuf:"varint,20,opt,name=qagmediarating,enum=com.google.openrtb.QAGMediaRating" json:"qagmediarating,omitempty"`
 	// Language of the creative using ISO-639-1-alpha-2. The nonstandard
 	// code "xx" may also be used if the creative has no
-	// linguistic content (e.g., a banner with just a company logo).
+	// linguistic content (for example, a banner with just a company logo).
 	Language *string `protobuf:"bytes,25,opt,name=language" json:"language,omitempty"`
 	// Reference to the deal.id from the bid request if this bid pertains to a
 	// private marketplace direct deal.
@@ -8397,7 +8398,8 @@ type NativeRequest_Asset_Video struct {
 }
 
 type NativeRequest_Asset_Data_ struct {
-	// Data object for brand name, description, ratings, prices etc.
+	// Data object for brand name, description, ratings, prices or other
+	// similar elements.
 	Data *NativeRequest_Asset_Data `protobuf:"bytes,6,opt,name=data,oneof"`
 }
 
@@ -8527,7 +8529,7 @@ func (x *NativeRequest_Asset_Title) GetLen() int32 {
 }
 
 // OpenRTB Native 1.0: The Image object to be used for all image elements
-// of the Native ad such as Icons, Main Image, etc.
+// of the Native ad, such as Icons or Main Image.
 // RECOMMENDED sizes and aspect ratios are included in ImageAssetType.
 type NativeRequest_Asset_Image struct {
 	state           protoimpl.MessageState
@@ -8637,9 +8639,10 @@ func (x *NativeRequest_Asset_Image) GetMimes() []string {
 }
 
 // OpenRTB Native 1.0: The Data Object is to be used for all non-core
-// elements of the native unit such as Ratings, Review Count, Stars,
-// Download count, descriptions etc. It is also generic for future of Native
-// elements not contemplated at the time of the writing of this document.
+// elements of the native unit, such as Ratings, Review Count, Stars,
+// Download count, descriptions or other similar elements. It is also
+// generic for future of Native elements not contemplated at the time of the
+// writing of this specification.
 type NativeRequest_Asset_Data struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
@@ -8924,7 +8927,7 @@ type NativeResponse_Asset_Video_ struct {
 }
 
 type NativeResponse_Asset_Data_ struct {
-	// Data object for ratings, prices etc.
+	// Data object for ratings, prices or other similar elements.
 	Data *NativeResponse_Asset_Data `protobuf:"bytes,6,opt,name=data,oneof"`
 }
 
@@ -8937,7 +8940,7 @@ func (*NativeResponse_Asset_Video_) isNativeResponse_Asset_AssetOneof() {}
 func (*NativeResponse_Asset_Data_) isNativeResponse_Asset_AssetOneof() {}
 
 // OpenRTB Native 1.2: The event trackers response is an array of objects and
-// specifies the types of events the bidder wishes to track and the
+// specifies the types of events the bidder wants to track and the
 // URLs/information to track them. Bidder must only respond with methods
 // indicated as available in the request. Note that most javascript trackers
 // expect to be loaded at impression time, so it's not generally recommended
@@ -9080,8 +9083,8 @@ func (x *NativeResponse_Asset_Title) GetLen() int32 {
 }
 
 // OpenRTB Native 1.0: Corresponds to the Image Object in the request.
-// The Image object to be used for all image elements of the Native ad
-// such as Icons, Main Image, etc.
+// The Image object to be used for all image elements of the Native ad,
+// such as Icons or Main Image.
 // It is recommended that if assetsurl/dcourl is being used rather than
 // embbedded assets, that an image of each recommended aspect ratio
 // (per ImageType enum) be provided for image type 3 (MAIN_IMAGE).
@@ -9173,8 +9176,9 @@ func (x *NativeResponse_Asset_Image) GetH() int32 {
 // OpenRTB Native 1.0: Corresponds to the Data Object in the request, with
 // the value filled in. The Data Object is to be used for all miscellaneous
 // elements of the native unit such as Brand Name, Ratings, Review Count,
-// Stars, Downloads, etc. It is also generic for future of native elements
-// not contemplated at the time of the writing of this document.
+// Stars, Downloads, and other elements. It is also generic for future of
+// native elements not contemplated at the time of the writing of this
+// document.
 type NativeResponse_Asset_Data struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
