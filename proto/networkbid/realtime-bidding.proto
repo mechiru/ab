@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.249
+// Protocol version: v.250
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -194,6 +194,12 @@ message BidRequest {
   // publisher participated in revenue sharing, and the ID can be used to
   // authorize ads.txt.
   optional string host_publisher_id = 73;
+
+  // The domain of the partner (of the site/app owner) with ownership
+  // of some portion of ad inventory on the site/app. The partner's ads.txt or
+  // app-ads.txt file will be hosted here. More detail at
+  // http://iabtechlab.com/wp-content/uploads/2021/03/ctv-app-ads-explainer-guide.pdf
+  optional string inventory_partner_domain = 72;
 
   // Location of the end user. Uses a subset of the codes used in the Google
   // Ads API. See the geo-table.csv table in the technical documentation for a
