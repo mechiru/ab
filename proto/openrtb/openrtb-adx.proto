@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.114
+// Protocol version: v.115
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -283,6 +283,12 @@ message AppExt {
     optional Version adapter_version = 3;
   }
   repeated InstalledSdk installed_sdk = 1;
+
+  // The domain of the partner (of the app owner) with ownership
+  // of some portion of ad inventory on the app. The partner's ads.txt or
+  // app-ads.txt file will be hosted here. More detail at
+  // http://iabtechlab.com/wp-content/uploads/2021/03/ctv-app-ads-explainer-guide.pdf
+  optional string inventorypartnerdomain = 2;
 }
 
 extend com.google.openrtb.BidRequest.App {
@@ -698,6 +704,12 @@ message SiteExt {
   // be provided.  This decision is made by the publisher, see
   // https://support.google.com/admanager/answer/4584891#urls for context.
   optional bool is_semi_transparent_request = 3;
+
+  // The domain of the partner (of the site owner) with ownership
+  // of some portion of ad inventory on the site. The partner's ads.txt file
+  // will be hosted here. More detail at
+  // http://iabtechlab.com/wp-content/uploads/2021/03/ctv-app-ads-explainer-guide.pdf
+  optional string inventorypartnerdomain = 4;
 }
 
 extend com.google.openrtb.BidRequest.Site {
