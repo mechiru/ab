@@ -7123,7 +7123,7 @@ func (x *BidRequest_AdSlot_StickySettings) GetBottomHorizontalStickiness() BidRe
 	return Default_BidRequest_AdSlot_StickySettings_BottomHorizontalStickiness
 }
 
-// Encrypted data to be passed to a buyer by the publisher.
+// Secure signals passed by the publisher.
 type BidRequest_AdSlot_BuyerGeneratedRequestData struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -7135,7 +7135,7 @@ type BidRequest_AdSlot_BuyerGeneratedRequestData struct {
 	//	*BidRequest_AdSlot_BuyerGeneratedRequestData_SourceApp_
 	//	*BidRequest_AdSlot_BuyerGeneratedRequestData_SourceJs_
 	Source isBidRequest_AdSlot_BuyerGeneratedRequestData_Source `protobuf_oneof:"source"`
-	// The encrypted signal.
+	// The secure signal.
 	Data *string `protobuf:"bytes,2,opt,name=data" json:"data,omitempty"`
 }
 
@@ -7549,7 +7549,7 @@ type BidRequest_AdSlot_BuyerGeneratedRequestData_SourceJs struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Identifier of the JavaScript library that generated this data
+	// Identifier of the JavaScript library that generated this data.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
 }
 
