@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.250
+// Protocol version: v.252
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -618,15 +618,14 @@ message BidRequest {
     // For more info visit:
     // https://developer.apple.com/documentation/storekit/skadnetwork
     message SKAdNetworkRequest {
+      // Deprecated. This will be removed in November 2022. Use
+      // BidRequest.mobile.skadn.versions instead.
       // Version of SKAdNetwork supported. Dependent on both the OS version
       // and the SDK version.
-      // Note:  This field will be replaced by the
-      // BidRequest.mobile.skadn.versions field to support a list of version
-      // numbers.
       optional string version = 1;
 
-      // List of SKAdNetwork versions supported, depending on the OS version
-      // and the SDK version.
+      // List of all SKAdNetwork versions supported by the request, depending on
+      // the OS version and the SDK version.
       repeated string versions = 4;
 
       // ID of publisher app in Apple's App Store.
@@ -1616,7 +1615,7 @@ message BidRequest {
         optional string id = 1;
       }
       // The source (provider) of the signal.
-      oneof source {
+      oneof source_oneof {
         SourceApp source_app = 1;
         SourceJs source_js = 3;
       }
