@@ -2677,14 +2677,13 @@ type ImpExt_SKAdNetworkRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Deprecated. This will be removed in November 2022. Use
+	// BidRequest.imp.ext.skadn.versions instead.
 	// Version of SKAdNetwork supported. Dependent on both the OS version
 	// and the SDK version.
-	// Note:  This field will be replaced by the
-	// BidRequest.mobile.skadn.versions field to support a list of version
-	// numbers.
 	Version *string `protobuf:"bytes,1,opt,name=version" json:"version,omitempty"`
-	// List of SKAdNetwork versions supported, depending on the OS version
-	// and the SDK version.
+	// List of all SKAdNetwork versions supported by the request, depending on
+	// the OS version and the SDK version.
 	Versions []string `protobuf:"bytes,4,rep,name=versions" json:"versions,omitempty"`
 	// ID of publisher app in Apple's App Store.
 	Sourceapp *string `protobuf:"bytes,2,opt,name=sourceapp" json:"sourceapp,omitempty"`

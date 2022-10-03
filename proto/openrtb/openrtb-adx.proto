@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.116
+// Protocol version: v.117
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -118,15 +118,14 @@ message ImpExt {
   // For more info visit:
   // https://developer.apple.com/documentation/storekit/skadnetwork
   message SKAdNetworkRequest {
+    // Deprecated. This will be removed in November 2022. Use
+    // BidRequest.imp.ext.skadn.versions instead.
     // Version of SKAdNetwork supported. Dependent on both the OS version
     // and the SDK version.
-    // Note:  This field will be replaced by the
-    // BidRequest.mobile.skadn.versions field to support a list of version
-    // numbers.
     optional string version = 1;
 
-    // List of SKAdNetwork versions supported, depending on the OS version
-    // and the SDK version.
+    // List of all SKAdNetwork versions supported by the request, depending on
+    // the OS version and the SDK version.
     repeated string versions = 4;
 
     // ID of publisher app in Apple's App Store.
@@ -279,6 +278,7 @@ message AppExt {
     optional Version adapter_version = 3;
   }
   repeated InstalledSdk installed_sdk = 1;
+
   // The domain of the partner (of the app owner) with ownership
   // of some portion of ad inventory on the app. The partner's ads.txt or
   // app-ads.txt file will be hosted here. More detail at
@@ -699,6 +699,7 @@ message SiteExt {
   // be provided.  This decision is made by the publisher, see
   // https://support.google.com/admanager/answer/4584891#urls for context.
   optional bool is_semi_transparent_request = 3;
+
   // The domain of the partner (of the site owner) with ownership
   // of some portion of ad inventory on the site. The partner's ads.txt file
   // will be hosted here. More detail at
