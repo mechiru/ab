@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.252
+// Protocol version: v.253
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -1602,27 +1602,34 @@ message BidRequest {
     optional int32 session_depth = 40 [default = -1];
 
     // Secure signals passed by the publisher.
-    message BuyerGeneratedRequestData {
+    message SecureSignal {
+      // Deprecated. This will be removed in November 2022.
       // The source of the signal when this request is from an app.
       message SourceApp {
         // Identifier for the SDK that generated this data. It will match the id
         // in mobile.installed_sdk.id.
-        optional string id = 1;
+        optional string id = 1 [deprecated = true];
       }
+      // Deprecated. This will be removed in February 2023.
       // The source of the signal when this request is from a web page.
       message SourceJs {
         // Identifier of the JavaScript library that generated this data.
-        optional string id = 1;
+        optional string id = 1 [deprecated = true];
       }
       // The source (provider) of the signal.
       oneof source_oneof {
-        SourceApp source_app = 1;
-        SourceJs source_js = 3;
+        // Deprecated. This will be removed in November 2022.
+        SourceApp source_app = 1 [deprecated = true];
+        // Deprecated. This will be removed in February 2023.
+        SourceJs source_js = 3 [deprecated = true];
       }
+      // The source (provider) of the signal. Identifier for the library or SDK
+      // that generated this data.
+      optional string source = 4;
       // The secure signal.
       optional string data = 2;
     }
-    repeated BuyerGeneratedRequestData buyer_generated_request_data = 41;
+    repeated SecureSignal secure_signals = 41;
 
     // Possible ad rendering API frameworks that can be supported.
     // If an API is not explicitly listed, it is assumed not to be supported.
