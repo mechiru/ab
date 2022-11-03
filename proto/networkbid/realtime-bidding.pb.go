@@ -8251,45 +8251,33 @@ type BidResponse_Ad_AdSlot struct {
 	// The slot id from the BidRequest that the ad may appear in.
 	Id *int32 `protobuf:"varint,1,req,name=id" json:"id,omitempty"`
 	// The maximum CPM you want to be charged if you win the auction for this
-	// ad slot, expressed in micros of the bidding currency. For example, to
-	// bid a CPM of 1.29 USD, set max_cpm_micros = 1290000. Winning bids are
-	// rounded up to billable units. For example, in USD, bids are rounded up
-	// to the next multiple of 10,000 micros (one cent).
-	// The bidding currency is determined by:
-	// 1. The bidder-level currency, if configured.
-	// 2. Otherwise, the currency of the buyer account indicated by the
-	// billing ID in the billing_id field.
-	// 3. If billing_id is empty, the currency of the buyer account indicated
-	// by the sole billing ID in the bid request.
+	// ad slot, expressed in micros of the specified currency or default
+	// bidding currency. For example, to bid a CPM of 1.29 USD, set
+	// max_cpm_micros = 1290000. Winning bids are rounded up to billable
+	// units. For example, in USD, bids are rounded up to the next multiple
+	// of 10,000 micros (one cent).
 	MaxCpmMicros *int64 `protobuf:"varint,2,req,name=max_cpm_micros,json=maxCpmMicros" json:"max_cpm_micros,omitempty"`
 	// The minimum CPM you want to be charged if you win the auction for this
-	// ad slot, expressed in micros of the bidding currency. This may
-	// represent a second price if you choose max_cpm as the highest of
-	// several bids, or some form of reserve price if you want to override the
-	// reserve price set by the publisher. The bid must be less than or equal
-	// to max_cpm_micros or it will be ignored. This field is optional and
-	// does not need to be set. This field is not applicable when responding
-	// to bid requests with auction_type set to FIRST_PRICE. The bidding
-	// currency is determined by:
-	// 1. The bidder-level currency, if configured.
-	// 2. Otherwise, the currency of the buyer account indicated by the
-	// billing ID in the billing_id field.
-	// 3. If billing_id is empty, the currency of the buyer account indicated
-	// by the sole billing ID in the bid request.
+	// ad slot, expressed in micros of the specified currency or default
+	// bidding currency. This may represent a second price if you choose
+	// max_cpm_micros as the highest of several bids, or some form of reserve
+	// price if you want to override the reserve price set by the publisher.
+	// The bid must be less than or equal to max_cpm_micros or it will be
+	// ignored. This field is optional and does not need to be set. This
+	// field is not applicable when responding to bid requests with
+	// auction_type set to FIRST_PRICE.
 	MinCpmMicros *int64 `protobuf:"varint,3,opt,name=min_cpm_micros,json=minCpmMicros" json:"min_cpm_micros,omitempty"`
-	// The currency in which max_cpm_micros and min_cpm_micros are given,
-	// using ISO-4217 alpha codes. This field will be required starting in Q4
-	// 2022. If this field is populated and differs from the bidding currency,
-	// the bid will be filtered. If this field is not populated, the currency
-	// will be assumed to be the bidding currency. The bidding currency is
-	// determined by:
+	// The currency used by max_cpm_micros and min_cpm_micros, using ISO-4217
+	// alpha codes. If this field is populated, the specified currency will
+	// be used to interpret the bid. Otherwise, the default bidding currency
+	// will be used, which is determined in the following priority:
 	// 1. The bidder-level currency, if configured in RTB account settings.
-	// 2. Otherwise, the currency of the buyer account indicated by the
-	// billing ID in the billing_id field of the bid response.
-	// 3. Otherwise, if billing_id is not populated in the bid response, the
-	// currency of the buyer account indicated by the sole billing ID in the
-	// bid request.
-	// The currency of the buyer account is set on account creation and can be
+	// 2. The buyer-level currency. The buyer will be determined by the
+	// billing ID specified in the billing_id field of the bid response if it
+	// is populated, otherwise it will be based on the sole billing ID sent
+	// in the bid request.
+	//
+	// The currency of a buyer account is set on account creation and can be
 	// checked by contacting a Technical Account Manager.
 	Currency *string `protobuf:"bytes,15,opt,name=currency" json:"currency,omitempty"`
 	// Billing id to attribute this impression to. The value must be in the
