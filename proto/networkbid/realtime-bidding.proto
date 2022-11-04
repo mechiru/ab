@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.256
+// Protocol version: v.257
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2416,6 +2416,15 @@ message BidResponse {
     }
 
     optional SKAdNetworkResponse skadn = 29;
+
+    // ID of the advertised app, for app install ads.
+    // On Android, this should be a bundle or package name such as
+    // com.foo.mygame. On iOS, it is a numeric ID.
+    //
+    // If this field is provided, users will see the app store listing as an
+    // overlay after clicking the ad, without leaving the publisher app. This
+    // is currently enabled on rewarded and interstitial video ads only.
+    optional string advertised_app_id = 32;
   }
   repeated Ad ad = 2;
 
