@@ -7961,10 +7961,16 @@ type BidResponse_SeatBid_Bid struct {
 	// This can be an array of for the case of rotating creatives. Exchanges
 	// can mandate that only one domain is allowed.
 	Adomain []string `protobuf:"bytes,7,rep,name=adomain" json:"adomain,omitempty"`
-	// A platform-specific application identifier intended to be
-	// unique to the app and independent of the exchange. On Android,
-	// this should be a bundle or package name (for example, com.foo.mygame).
-	// On iOS, it is a numeric ID.
+	// The store ID of the app in an app store such as Apple App Store, Google
+	// Play. See OTT/CTV Store Assigned App Identification Guidelines for
+	// more details about expected strings for CTV app stores. For mobile apps
+	// in Google Play Store, these should be bundle or package names, such as
+	// com.foo.mygame. For apps in Apple App Store, these should be a numeric
+	// ID.
+	// If this field is provided, users will see the app store listing as an
+	// overlay after clicking the ad, without leaving the publisher app. This
+	// is currently enabled on rewarded and interstitial video ads only.
+	// Supported by Google.
 	Bundle *string `protobuf:"bytes,14,opt,name=bundle" json:"bundle,omitempty"`
 	// URL without cache-busting to an image that is representative of the
 	// content of the campaign for ad quality/safety checking.
