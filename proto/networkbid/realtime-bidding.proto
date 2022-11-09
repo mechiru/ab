@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.257
+// Protocol version: v.258
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -1603,13 +1603,6 @@ message BidRequest {
 
     // Secure signals passed by the publisher.
     message SecureSignal {
-      // Deprecated. This will be removed in November 2022.
-      // The source of the signal when this request is from an app.
-      message SourceApp {
-        // Identifier for the SDK that generated this data. It will match the id
-        // in mobile.installed_sdk.id.
-        optional string id = 1 [deprecated = true];
-      }
       // Deprecated. This will be removed in February 2023.
       // The source of the signal when this request is from a web page.
       message SourceJs {
@@ -1618,8 +1611,6 @@ message BidRequest {
       }
       // The source (provider) of the signal.
       oneof source_oneof {
-        // Deprecated. This will be removed in November 2022.
-        SourceApp source_app = 1 [deprecated = true];
         // Deprecated. This will be removed in February 2023.
         SourceJs source_js = 3 [deprecated = true];
       }
