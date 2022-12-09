@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.258
+// Protocol version: v.259
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -152,8 +152,6 @@ message BidRequest {
       repeated string version = 2;
     }
 
-    // Identifies the browser. Use the new field browsers.
-    optional BrandVersion DEPRECATED_browser = 1 [deprecated = true];
     // Each BrandVersion object identifies a browser or similar software
     // component. Exchanges should send brands and versions derived from
     // the Sec-CH-UA-Full-Version-List header.
@@ -2337,7 +2335,8 @@ message BidResponse {
       // items in BidRequest.mobile.skad.skadnetids.
       optional string network = 2;
 
-      // Campaign ID compatible with Apple's spec.
+      // Campaign ID compatible with Apple's spec. Used in SKAdNetwork 3.0 and
+      // below.
       optional int64 campaign = 3;
 
       // ID of advertiser's app in Apple's app store.
