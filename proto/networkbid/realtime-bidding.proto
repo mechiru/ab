@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.259
+// Protocol version: v.260
 // Copyright 2022 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2336,8 +2336,13 @@ message BidResponse {
       optional string network = 2;
 
       // Campaign ID compatible with Apple's spec. Used in SKAdNetwork 3.0 and
-      // below.
+      // below. Replaced by Source Identifier (`source_identifier` field) in
+      // SKAdNetwork 4.0 and above.
       optional int64 campaign = 3;
+
+      // A four-digit integer that ad networks define to represent the ad
+      // campaign. Used in SKAdNetwork 4.0+ and replaces the `campaign` field.
+      optional int64 source_identifier = 11;
 
       // ID of advertiser's app in Apple's app store.
       optional string itunesitem = 4;
