@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.119
+// Protocol version: v.120
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -498,8 +498,13 @@ message BidExt {
     optional string network = 2;
 
     // Campaign ID compatible with Apple's spec. Used in SKAdNetwork 3.0 and
-    // below.
+    // below. Replaced by Source Identifier (`sourceidentifier` field) in
+    // SKAdNetwork 4.0 and above.
     optional string campaign = 3;
+
+    // A four-digit integer that ad networks define to represent the ad
+    // campaign. Used in SKAdNetwork 4.0+ and replaces the `campaign` field.
+    optional string sourceidentifier = 11;
 
     // ID of advertiser's app in Apple's app store.
     optional string itunesitem = 4;
