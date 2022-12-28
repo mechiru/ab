@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.120
+// Protocol version: v.121
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -172,18 +172,18 @@ message ImpExt {
     // Creative publisher blocks enforcement level that applies to this
     // request. Publisher blocks allow publishers to control which creatives
     // can be shown on their properties.
-    // Deals may also override publisher blocks. Refer to Deals.adx_ext.
-    // publisher_blocks_overridden field.
+    // Deals may also override publisher blocks. Refer to
+    // Deals.ext.publisher_blocks_overridden field.
     enum PublisherBlocksEnforcement {
       PUBLISHER_BLOCKS_ENFORCEMENT_UNKNOWN = 0;
 
       // The publisher's blocking controls are enforced on creatives
       // submitted. Publisher blocks enforcement settings are provided in the
       // following fields:
-      // - Imp.adx_ext.publisher_settings_list_id
+      // - Imp.ext.publisher_settings_list_id
       // - bcat
-      // - Imp.adx_ext.allowed_restricted_category
-      // - Imp.adx_ext.allowed_vendor_type
+      // - Imp.ext.allowed_restricted_category
+      // - Imp.ext.allowed_vendor_type
       // - Audio.battr
       // - Video.battr
       // - Banner.battr
@@ -403,8 +403,8 @@ message BidExt {
   repeated int32 restricted_category = 9;
 
   // The billing ID to attribute this impression to. The value must be in the
-  // repeated BidRequest.Imp.ImpExt.billing_id field sent for this impression.
-  // If the length of BidRequest.Imp.ImpExt.billing_id is exactly 1
+  // repeated BidRequest.imp.ext.billing_id field sent for this impression.
+  // If the length of BidRequest.imp.ext.billing_id is exactly 1
   // and the bidder does not have any active child seats, this field
   // is not required and its contents will be ignored.
   optional int64 billing_id = 10;

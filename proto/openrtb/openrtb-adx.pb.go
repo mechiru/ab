@@ -322,8 +322,8 @@ func (ImpExt_CreativeEnforcementSettings_PolicyEnforcement) EnumDescriptor() ([]
 // Creative publisher blocks enforcement level that applies to this
 // request. Publisher blocks allow publishers to control which creatives
 // can be shown on their properties.
-// Deals may also override publisher blocks. Refer to Deals.adx_ext.
-// publisher_blocks_overridden field.
+// Deals may also override publisher blocks. Refer to
+// Deals.ext.publisher_blocks_overridden field.
 type ImpExt_CreativeEnforcementSettings_PublisherBlocksEnforcement int32
 
 const (
@@ -331,10 +331,10 @@ const (
 	// The publisher's blocking controls are enforced on creatives
 	// submitted. Publisher blocks enforcement settings are provided in the
 	// following fields:
-	// - Imp.adx_ext.publisher_settings_list_id
+	// - Imp.ext.publisher_settings_list_id
 	// - bcat
-	// - Imp.adx_ext.allowed_restricted_category
-	// - Imp.adx_ext.allowed_vendor_type
+	// - Imp.ext.allowed_restricted_category
+	// - Imp.ext.allowed_vendor_type
 	// - Audio.battr
 	// - Video.battr
 	// - Banner.battr
@@ -1551,8 +1551,8 @@ type BidExt struct {
 	// always declare them here.
 	RestrictedCategory []int32 `protobuf:"varint,9,rep,name=restricted_category,json=restrictedCategory" json:"restricted_category,omitempty"`
 	// The billing ID to attribute this impression to. The value must be in the
-	// repeated BidRequest.Imp.ImpExt.billing_id field sent for this impression.
-	// If the length of BidRequest.Imp.ImpExt.billing_id is exactly 1
+	// repeated BidRequest.imp.ext.billing_id field sent for this impression.
+	// If the length of BidRequest.imp.ext.billing_id is exactly 1
 	// and the bidder does not have any active child seats, this field
 	// is not required and its contents will be ignored.
 	BillingId *int64 `protobuf:"varint,10,opt,name=billing_id,json=billingId" json:"billing_id,omitempty"`
