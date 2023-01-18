@@ -7618,7 +7618,7 @@ type BidResponse_Ad struct {
 	// The event notification token is sent to AdX by bidders for
 	// troubleshooting. AdX will include the token in real-time feedback for the
 	// bid. The content of the token will not be logged by AdX. AdX will ignore
-	// any token longer than 64 bytes.
+	// any token longer than 128 bytes.
 	EventNotificationToken []byte `protobuf:"bytes,25,opt,name=event_notification_token,json=eventNotificationToken" json:"event_notification_token,omitempty"`
 	// A unique identifier chosen by you for the creative in this response.
 	// This must always be set, must be limited to at most 64 bytes, and must be

@@ -1,8 +1,8 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.260
-// Copyright 2022 Google Inc. All Rights Reserved.
+// Protocol version: v.261
+// Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
@@ -1901,7 +1901,7 @@ message BidResponse {
     // The event notification token is sent to AdX by bidders for
     // troubleshooting. AdX will include the token in real-time feedback for the
     // bid. The content of the token will not be logged by AdX. AdX will ignore
-    // any token longer than 64 bytes.
+    // any token longer than 128 bytes.
     optional bytes event_notification_token = 25;
 
     // A unique identifier chosen by you for the creative in this response.
