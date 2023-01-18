@@ -3108,7 +3108,7 @@ type BidExt_EventNotificationToken struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The contents of the token, which will be ignored if longer than 64
+	// The content of the token, which will be ignored if longer than 128
 	// bytes.
 	Payload *string `protobuf:"bytes,1,opt,name=payload" json:"payload,omitempty"`
 }

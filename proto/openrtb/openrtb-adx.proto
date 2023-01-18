@@ -1,11 +1,11 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.121
+// Protocol version: v.122
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
 
-// Copyright 2022 Google Inc. All Rights Reserved.
+// Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
@@ -387,7 +387,7 @@ message BidExt {
   optional SdkRenderedAd sdk_rendered_ad = 7;
 
   message EventNotificationToken {
-    // The contents of the token, which will be ignored if longer than 64
+    // The content of the token, which will be ignored if longer than 128
     // bytes.
     optional string payload = 1;
   }
