@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.261
+// Protocol version: v.262
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2346,6 +2346,12 @@ message BidResponse {
 
       // ID of advertiser's app in Apple's app store.
       optional string itunesitem = 4;
+
+      // ID of custom product page to display (for iOS 15 or later).
+      // If not specified, default product page will be displayed.
+      // See https://developer.apple.com/app-store/custom-product-pages/
+      // for more details about custom product pages.
+      optional string product_page_id = 12;
 
       // SKAdNetwork API starting from version 2.2 supports multiple ad
       // presentation options specified by the `fidelity-type` parameter of the
