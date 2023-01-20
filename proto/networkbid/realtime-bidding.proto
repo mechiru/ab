@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.262
+// Protocol version: v.263
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -899,11 +899,12 @@ message BidRequest {
     // A stable identifier for the combination of publisher, ad slot, and page.
     optional uint64 ad_block_key = 14;
 
+    // Deprecated. This will be removed in March 2023.
     // Set of channels of which this ad slot is a member. A channel is a set of
     // ad slots on a site. You can target a channel (like "the sports section",
     // or "all top banners") to get more fine-grained control over where your ad
     // shows. Channel names are provided by the publisher.
-    repeated string targetable_channel = 10;
+    repeated string targetable_channel = 10 [deprecated = true];
 
     // The width and height in pixels of the allowed ad sizes. Most requests
     // allow only a single size, but some allow more than one. Widths and
