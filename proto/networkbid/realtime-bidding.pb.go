@@ -7734,7 +7734,7 @@ type BidResponse_Ad struct {
 	// linked to this URL.
 	AdChoicesDestinationUrl *string `protobuf:"bytes,21,opt,name=ad_choices_destination_url,json=adChoicesDestinationUrl" json:"ad_choices_destination_url,omitempty"`
 	// Resources to invoke when the impression is rendered. This is supported
-	// for native and banner formats only and explicitly whitelisted scripts
+	// for native and banner formats only and explicitly allowed scripts
 	// only.
 	ImpressionTrackingResource []*BidResponse_Ad_ImpressionTrackingResource `protobuf:"bytes,26,rep,name=impression_tracking_resource,json=impressionTrackingResource" json:"impression_tracking_resource,omitempty"`
 	SdkRenderedAd              *BidResponse_Ad_SdkRenderedAd                `protobuf:"bytes,27,opt,name=sdk_rendered_ad,json=sdkRenderedAd" json:"sdk_rendered_ad,omitempty"`

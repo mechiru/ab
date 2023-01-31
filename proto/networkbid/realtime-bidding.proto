@@ -2276,7 +2276,7 @@ message BidResponse {
       optional string vendor_key = 4;
     }
     // Resources to invoke when the impression is rendered. This is supported
-    // for native and banner formats only and explicitly whitelisted scripts
+    // for native and banner formats only and explicitly allowed scripts
     // only.
     repeated ImpressionTrackingResource impression_tracking_resource = 26;
     // An ad that will be rendered by an SDK known to the buyer. This can only
