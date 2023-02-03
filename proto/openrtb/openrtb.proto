@@ -3,7 +3,7 @@ option go_package = "./;openrtb";
 option java_outer_classname = "OpenRtb";
 package com.google.openrtb;
 
-// Copyright 2022 Google Inc. All Rights Reserved.
+// Copyright 2023 Google Inc. All Rights Reserved.
 
 // OpenRTB extensions ("ext" fields in the spec & JSON representation)
 // are represented here by Protocol Buffer extensions. This proto only

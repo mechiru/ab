@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.123
+// Protocol version: v.124
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -248,6 +248,70 @@ message ImpExt {
   // https://support.google.com/admob/answer/9341964 for more information.
   // [AdX: BidRequest.Mobile.is_app_open_ad]
   optional bool is_app_open_ad = 19;
+
+  // AdUnitMapping is used to identify publisher inventory units in the
+  // bidder's namespace. The mappings are only populated when
+  // the bidder works directly with a publisher, and provides the mapping
+  // from Google's ad unit namespace to the bidder's inventory namespace.
+  // The ad unit mapping is only applicable for requests that use a custom
+  // SDK. https://support.google.com/admanager/answer/9601810.
+  message AdUnitMapping {
+    // Key-value pair used to specify the inventory unit in the bidder's
+    // namespace.
+    message Keyval {
+      // The key is the name of the bidder's inventory unit identifier for the
+      // SDK.
+      optional string key = 1;
+      // The value of the bidder's inventory unit identifier for the given
+      // format.
+      optional string value = 2;
+    }
+    // Multiple key-value pairs can be specified in order to support
+    // bidders whose inventory unit space is hierarchical and has multiple
+    // identifiers. The key-value pairs for the chosen AdUnitMapping should be
+    // sent back in the bid response as
+    // BidResponse.seatbid.bid.ext.sdk_rendered_ad.sdk_params. This is passed to
+    // the bidder's SDK.
+    repeated Keyval keyvals = 1;
+
+    // Possible ad unit formats that can be used for the mapping.  Corresponds
+    // to the adapter that will be used on the SDK.
+    enum FormatType {
+      FORMAT_UNKNOWN = 0;
+      // Display banner ads for web or mobile apps. For example, a 320x50
+      // leaderboard slot. This includes out-stream video.
+      FORMAT_BANNER = 1;
+      // A full-screen ad to be displayed inside a mobile app.
+      FORMAT_INTERSTITIAL = 2;
+      // Custom display or video ads for web or mobile apps that match the
+      // user experience of the site or app in which they’re placed.
+      FORMAT_NATIVE = 3;
+      // Video ads that appear before, during, or after video content
+      // streams.
+      FORMAT_VIDEO_VAST = 4;
+      // Video ads for mobile apps that allow users to voluntarily watch an
+      // ad in exchange for an in-app reward.
+      FORMAT_REWARDED = 5;
+      // Interstitial ads that allow users to watch an ad in exchange for
+      // an in-app reward. Does not require opt-in.
+      // https://support.google.com/admanager/answer/7386053
+      FORMAT_REWARDED_INTERSTITIAL = 6;
+      // App open ads shows at app load screens. App open ads can be closed
+      // at any time, and are designed to be shown when the users bring the
+      // app to the foreground.
+      FORMAT_APP_OPEN = 7;
+    }
+
+    // The mappings are targeted through a format, which is expressed in the
+    // Google-defined taxonomy. Format is populated in the bid request since
+    // Google supports targeting multiple formats with a single ad
+    // unit, and Google's definition of the format may not match the bidder's
+    // definition. In order for the bidder to differentiate which format
+    // matched, it is sent in the bid request.
+    optional FormatType format = 2;
+  }
+  // Ad unit mappings that match the given adslot.
+  repeated AdUnitMapping ad_unit_mapping = 64;
 }
 
 extend com.google.openrtb.BidRequest.Imp {
