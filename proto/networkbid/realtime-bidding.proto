@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.264
+// Protocol version: v.265
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -854,6 +854,21 @@ message BidRequest {
     // stream (0 = is not live, 1 = is live).
     //
     optional bool is_livestream = 18 [default = false];
+
+    // The event that causes playback to end. This will only be filled
+    // for non-instream video formats.
+    enum PlaybackCessationMode {
+      PLAYBACK_CESSATION_MODE_UNKNOWN = 0;
+      // On video completion or when terminated by user
+      COMPLETION_OR_USER = 1;
+      // On leaving viewport or when terminated by user
+      LEAVING_OR_USER = 2;
+      // On leaving viewport continues as a floating/slider unit until
+      // video completion or when terminated by user
+      LEAVING_CONTINUES_OR_USER = 3;
+    }
+    optional PlaybackCessationMode playback_cessation_mode = 19
+        [default = PLAYBACK_CESSATION_MODE_UNKNOWN];
   }
   optional Video video = 29;
 
