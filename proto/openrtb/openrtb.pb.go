@@ -376,20 +376,12 @@ const (
 	// Fixed position.
 	AdPosition_LOCKED         AdPosition = 2
 	AdPosition_BELOW_THE_FOLD AdPosition = 3
-	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
-	// Equivalent to
-	// `sticky_settings.top_horizontal_stickiness` in Authorized
-	// Buyers RTB protocol.
+	// Horizontal slot that sticks on the top of the screen when user scrolls.
 	AdPosition_HEADER AdPosition = 4
-	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
-	// Equivalent to `sticky_settings.bottom_horizontal_stickiness` in Authorized
-	// Buyers RTB protocol.
+	// Horizontal slot that sticks on the bottom of the screen when user scrolls.
 	AdPosition_FOOTER AdPosition = 5
-	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
-	// Equivalent to `sticky_settings.vertical_stickiness` in Authorized Buyers
-	// RTB protocol.
-	AdPosition_SIDEBAR AdPosition = 6
-	// [OpenRTB->AdX: SlotVisibility.ABOVE_THE_FOLD]
+	// Sidebar that sticks on screen when user scrolls.
+	AdPosition_SIDEBAR                AdPosition = 6
 	AdPosition_AD_POSITION_FULLSCREEN AdPosition = 7
 )
 
@@ -2254,7 +2246,7 @@ type ServerSideAdInsertionType int32
 const (
 	// Status unknown.
 	ServerSideAdInsertionType_SERVER_SIDE_AD_INSERTION_TYPE_UNKNOWN ServerSideAdInsertionType = 0
-	// All clientside (i.e., not server-side).
+	// All clientside (not server-side).
 	ServerSideAdInsertionType_CLIENT_SIDE_ONLY ServerSideAdInsertionType = 1
 	// Assets stitched server-side but tracking pixels fired client-side.
 	ServerSideAdInsertionType_SERVER_SIDE_STITCHED_CLIENT_TRACKER ServerSideAdInsertionType = 2
@@ -5323,8 +5315,7 @@ type BidRequest_Device struct {
 	Dnt *bool `protobuf:"varint,1,opt,name=dnt" json:"dnt,omitempty"`
 	// "Limit Ad Tracking" signal commercially endorsed (for example, iOS,
 	// Android), where false = tracking is unrestricted, true = tracking must be
-	// limited per commercial guidelines. RECOMMENDED by the OpenRTB
-	// specification.
+	// limited per commercial guidelines.
 	// Supported by Google.
 	Lmt *bool `protobuf:"varint,23,opt,name=lmt" json:"lmt,omitempty"`
 	// Browser user agent string. Certain data may be redacted or replaced.
@@ -5952,7 +5943,7 @@ type BidRequest_User struct {
 	// Supported by Google. Used only for Chrome Topics API testing.
 	Data []*BidRequest_Data `protobuf:"bytes,8,rep,name=data" json:"data,omitempty"`
 	// The web-safe base64-encoded IAB Transparency and Consent Framework (TCF)
-	// v2  consent string fetched from the publisher's IAB Consent Management
+	// v2 consent string fetched from the publisher's IAB Consent Management
 	// Platform (CMP). The structure of the string is defined by the IAB TCF v2.
 	// This field will be populated if the publisher has integrated with a CMP
 	// for TCF v2 and that CMP indicates that GDPR applies to this ad request
@@ -6238,7 +6229,7 @@ type BidRequest_Source_SupplyChain struct {
 	Complete *bool `protobuf:"varint,1,opt,name=complete" json:"complete,omitempty"`
 	// Array of SupplyChainNode objects in the order of the chain.
 	// In a complete supply chain, the first node represents the initial
-	// advertising system and seller ID involved in the transaction, i.e.
+	// advertising system and seller ID involved in the transaction, that is,
 	// the owner of the site, app, or other medium. In an incomplete
 	// supply chain, it represents the first known node. The last node
 	// represents the entity sending this bid request.
@@ -6324,7 +6315,7 @@ type BidRequest_Source_SupplyChain_SupplyChainNode struct {
 	Asi *string `protobuf:"bytes,1,opt,name=asi" json:"asi,omitempty"`
 	// The identifier associated with the seller or reseller account
 	// within the advertising system. This must contain the same value
-	// used in transactions (i.e. OpenRTB bid requests) in the field
+	// used in transactions (OpenRTB bid requests) in the field
 	// specified by the SSP/exchange. Typically, in OpenRTB, this is
 	// publisher.id. For OpenDirect it is typically the publisher's
 	// organization ID. Should be limited to 64 characters in length.
@@ -6837,7 +6828,7 @@ type BidRequest_Imp_Video struct {
 	// where non-exact ad durations would result in undesirable ‘dead air’.
 	// This field is mutually exclusive with minduration and maxduration;
 	// if rqddurs is specified, minduration and maxduration must not be
-	// specified and vice versa.
+	// specified and the other way around.
 	// Not supported by Google.
 	Rqddurs []int32 `protobuf:"varint,32,rep,packed,name=rqddurs" json:"rqddurs,omitempty"`
 	// Placement type for the impression.
@@ -7262,7 +7253,7 @@ type BidRequest_Imp_Audio struct {
 	// non-exact ad durations would result in undesirable ‘dead air’.
 	// This field is mutually exclusive with minduration and
 	// maxduration; if rqddurs is specified, minduration and
-	// maxduration must not be specified and vice versa.
+	// maxduration must not be specified and the other way around.
 	// Not supported by Google.
 	Rqddurs []int32 `protobuf:"varint,26,rep,packed,name=rqddurs" json:"rqddurs,omitempty"`
 	// Unique identifier indicating that an impression opportunity
@@ -7980,7 +7971,7 @@ type BidRequest_Content_Network struct {
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// A unique identifier assigned by the publisher, e.g. "net-123".
+	// A unique identifier assigned by the publisher, for example "net-123".
 	// This may not be a unique identifier across all supply sources.
 	// Not supported by Google.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
@@ -8060,7 +8051,7 @@ type BidRequest_Content_Channel struct {
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// A unique identifier assigned by the publisher, e.g. "ch-456".
+	// A unique identifier assigned by the publisher, for example "ch-456".
 	// This may not be a unique identifier across all supply sources.
 	// Not supported by Google.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`

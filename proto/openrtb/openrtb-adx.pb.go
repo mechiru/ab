@@ -1007,13 +1007,13 @@ func (BidRequestExt_PrivacyTreatments_UserAgentGeneralization) EnumDescriptor() 
 }
 
 // Generalization that can be applied to the
-// BidRequest.device.ext.user_agent_data field.
+// BidRequest.device.sua field.
 type BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization int32
 
 const (
-	// The user_agent_data field is provided in full.
+	// The sua field is provided in full.
 	BidRequestExt_PrivacyTreatments_USER_AGENT_DATA_FULL BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization = 0
-	// The user_agent_data field is generalized, which can include limiting
+	// The sua field is generalized, which can include limiting
 	// browser and OS version information to major versions only and other
 	// changes to protect user privacy.
 	BidRequestExt_PrivacyTreatments_USER_AGENT_DATA_COARSENED BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization = 1
@@ -2287,13 +2287,6 @@ type DeviceExt struct {
 	// session_id may only be used for frequency capping, competitive exclusions
 	// or related purposes. This field is populated with web-safe base64 alphabet.
 	SessionId *string `protobuf:"bytes,1,opt,name=session_id,json=sessionId" json:"session_id,omitempty"`
-	// Deprecated. This will be removed in January 2023. Use
-	// `BidRequest.device.sua` instead.
-	//
-	// User Agent information.
-	//
-	// Deprecated: Do not use.
-	UserAgentData *DeviceExt_UserAgent `protobuf:"bytes,2,opt,name=user_agent_data,json=userAgentData" json:"user_agent_data,omitempty"`
 	// (iOS Only) An integer passed to represent the app's app tracking
 	// authorization status, where 0 = not determined 1 = restricted 2 = denied
 	// 3 = authorized. This value is retrieved from ATTrackingManager and
@@ -2342,14 +2335,6 @@ func (x *DeviceExt) GetSessionId() string {
 		return *x.SessionId
 	}
 	return ""
-}
-
-// Deprecated: Do not use.
-func (x *DeviceExt) GetUserAgentData() *DeviceExt_UserAgent {
-	if x != nil {
-		return x.UserAgentData
-	}
-	return nil
 }
 
 func (x *DeviceExt) GetAtts() int32 {
@@ -4188,7 +4173,7 @@ type BidRequestExt_PrivacyTreatments struct {
 	// if any.
 	UserAgent *BidRequestExt_PrivacyTreatments_UserAgentGeneralization `protobuf:"varint,2,opt,name=user_agent,json=userAgent,enum=com.google.doubleclick.BidRequestExt_PrivacyTreatments_UserAgentGeneralization" json:"user_agent,omitempty"`
 	// Generalization that was applied to the
-	// BidRequest.device.ext.user_agent_data field, if any.
+	// BidRequest.device.ext.sua field, if any.
 	UserAgentData            *BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization `protobuf:"varint,3,opt,name=user_agent_data,json=userAgentData,enum=com.google.doubleclick.BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization" json:"user_agent_data,omitempty"`
 	NonPersonalizedAdsReason []BidRequestExt_PrivacyTreatments_NonPersonalizedAdsReason   `protobuf:"varint,6,rep,packed,name=non_personalized_ads_reason,json=nonPersonalizedAdsReason,enum=com.google.doubleclick.BidRequestExt_PrivacyTreatments_NonPersonalizedAdsReason" json:"non_personalized_ads_reason,omitempty"`
 	// True if publisher grants the permission to allow the bidder to use
@@ -4498,180 +4483,6 @@ func (x *UserExt_ExtendedId_ExtendedIdUid) GetId() string {
 	return ""
 }
 
-// Structured user agent information, which can be used when a client
-// supports User-Agent Client Hints: https://wicg.github.io/ua-client-hints/
-//
-// Note: When available, fields are sourced from Client Hints HTTP headers
-// or equivalent JavaScript accessors from the NavigatorUAData interface.
-// For agents that have no support for User-Agent Client Hints, an exchange
-// can also extract information from the parsed User-Agent header, so this
-// object can always be used as the source of the user agent information.
-type DeviceExt_UserAgent struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// Each BrandVersion object identifies a browser or similar software
-	// component. Exchanges should send brands and versions derived from
-	// the Sec-CH-UA-Full-Version-List header.
-	Browsers []*DeviceExt_UserAgent_BrandVersion `protobuf:"bytes,8,rep,name=browsers" json:"browsers,omitempty"`
-	// Identifies the user agent's execution platform / OS. Exchanges should
-	// send a brand derived from the Sec-CH-UA-Platform header, and version
-	// derived from the Sec-CH-UAPlatform-Version header.
-	Platform *DeviceExt_UserAgent_BrandVersion `protobuf:"bytes,2,opt,name=platform" json:"platform,omitempty"`
-	// True if the agent prefers a "mobile" version of the content if
-	// available, meaning optimized for small screens or touch input. False
-	// if the agent prefers the "desktop" or "full" content. Exchanges should
-	// derive this value from the Sec-CH-UAMobile header.
-	Mobile *bool `protobuf:"varint,3,opt,name=mobile" json:"mobile,omitempty"`
-	// Device's major binary architecture, for example, "x86" or "arm".
-	// Exchanges should retrieve this value from the Sec-CH-UA-Arch header.
-	Architecture *string `protobuf:"bytes,4,opt,name=architecture" json:"architecture,omitempty"`
-	// Device's bitness, for example, "64" for 64-bit architecture. Exchanges
-	// should retrieve this value from the Sec-CH-UA-Bitness header.
-	Bitness *string `protobuf:"bytes,9,opt,name=bitness" json:"bitness,omitempty"`
-	// Device model. Exchanges should retrieve this value from the
-	// Sec-CH-UAModel header.
-	Model *string `protobuf:"bytes,5,opt,name=model" json:"model,omitempty"`
-}
-
-func (x *DeviceExt_UserAgent) Reset() {
-	*x = DeviceExt_UserAgent{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[38]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DeviceExt_UserAgent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeviceExt_UserAgent) ProtoMessage() {}
-
-func (x *DeviceExt_UserAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[38]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeviceExt_UserAgent.ProtoReflect.Descriptor instead.
-func (*DeviceExt_UserAgent) Descriptor() ([]byte, []int) {
-	return file_openrtb_adx_proto_rawDescGZIP(), []int{10, 0}
-}
-
-func (x *DeviceExt_UserAgent) GetBrowsers() []*DeviceExt_UserAgent_BrandVersion {
-	if x != nil {
-		return x.Browsers
-	}
-	return nil
-}
-
-func (x *DeviceExt_UserAgent) GetPlatform() *DeviceExt_UserAgent_BrandVersion {
-	if x != nil {
-		return x.Platform
-	}
-	return nil
-}
-
-func (x *DeviceExt_UserAgent) GetMobile() bool {
-	if x != nil && x.Mobile != nil {
-		return *x.Mobile
-	}
-	return false
-}
-
-func (x *DeviceExt_UserAgent) GetArchitecture() string {
-	if x != nil && x.Architecture != nil {
-		return *x.Architecture
-	}
-	return ""
-}
-
-func (x *DeviceExt_UserAgent) GetBitness() string {
-	if x != nil && x.Bitness != nil {
-		return *x.Bitness
-	}
-	return ""
-}
-
-func (x *DeviceExt_UserAgent) GetModel() string {
-	if x != nil && x.Model != nil {
-		return *x.Model
-	}
-	return ""
-}
-
-// Identifies a device's browser or similar software component, and the
-// user agent's execution platform or operating system.
-type DeviceExt_UserAgent_BrandVersion struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// A brand identifier, for example, "Chrome" or "Windows". The value may
-	// be sourced from the User-Agent Client Hints headers, representing
-	// either the user agent brand (from the Sec-CH-UA-Full-Version header)
-	// or the platform brand (from the Sec-CH-UA-Platform header).
-	Brand *string `protobuf:"bytes,1,opt,name=brand" json:"brand,omitempty"`
-	// A sequence of version components, in descending hierarchical order
-	// (major, minor, micro, ...).
-	Version []string `protobuf:"bytes,2,rep,name=version" json:"version,omitempty"`
-}
-
-func (x *DeviceExt_UserAgent_BrandVersion) Reset() {
-	*x = DeviceExt_UserAgent_BrandVersion{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[39]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *DeviceExt_UserAgent_BrandVersion) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeviceExt_UserAgent_BrandVersion) ProtoMessage() {}
-
-func (x *DeviceExt_UserAgent_BrandVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[39]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeviceExt_UserAgent_BrandVersion.ProtoReflect.Descriptor instead.
-func (*DeviceExt_UserAgent_BrandVersion) Descriptor() ([]byte, []int) {
-	return file_openrtb_adx_proto_rawDescGZIP(), []int{10, 0, 0}
-}
-
-func (x *DeviceExt_UserAgent_BrandVersion) GetBrand() string {
-	if x != nil && x.Brand != nil {
-		return *x.Brand
-	}
-	return ""
-}
-
-func (x *DeviceExt_UserAgent_BrandVersion) GetVersion() []string {
-	if x != nil {
-		return x.Version
-	}
-	return nil
-}
-
 // OpenRTB SupplyChain object. For more information, see
 // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/supplychainobject.md.
 type SourceExt_SupplyChain struct {
@@ -4699,7 +4510,7 @@ type SourceExt_SupplyChain struct {
 func (x *SourceExt_SupplyChain) Reset() {
 	*x = SourceExt_SupplyChain{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[40]
+		mi := &file_openrtb_adx_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4712,7 +4523,7 @@ func (x *SourceExt_SupplyChain) String() string {
 func (*SourceExt_SupplyChain) ProtoMessage() {}
 
 func (x *SourceExt_SupplyChain) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[40]
+	mi := &file_openrtb_adx_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4796,7 +4607,7 @@ type SourceExt_SupplyChain_SupplyChainNode struct {
 func (x *SourceExt_SupplyChain_SupplyChainNode) Reset() {
 	*x = SourceExt_SupplyChain_SupplyChainNode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[41]
+		mi := &file_openrtb_adx_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4809,7 +4620,7 @@ func (x *SourceExt_SupplyChain_SupplyChainNode) String() string {
 func (*SourceExt_SupplyChain_SupplyChainNode) ProtoMessage() {}
 
 func (x *SourceExt_SupplyChain_SupplyChainNode) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[41]
+	mi := &file_openrtb_adx_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5721,39 +5532,11 @@ var file_openrtb_adx_proto_rawDesc = []byte{
 	0x74, 0x65, 0x6e, 0x64, 0x65, 0x64, 0x49, 0x64, 0x55, 0x69, 0x64, 0x52, 0x04, 0x75, 0x69, 0x64,
 	0x73, 0x1a, 0x1f, 0x0a, 0x0d, 0x45, 0x78, 0x74, 0x65, 0x6e, 0x64, 0x65, 0x64, 0x49, 0x64, 0x55,
 	0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02,
-	0x69, 0x64, 0x22, 0xfd, 0x03, 0x0a, 0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74,
-	0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12,
-	0x57, 0x0a, 0x0f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x64, 0x61,
-	0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
-	0x6b, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72,
-	0x41, 0x67, 0x65, 0x6e, 0x74, 0x42, 0x02, 0x18, 0x01, 0x52, 0x0d, 0x75, 0x73, 0x65, 0x72, 0x41,
-	0x67, 0x65, 0x6e, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x12, 0x0a, 0x04, 0x61, 0x74, 0x74, 0x73,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x61, 0x74, 0x74, 0x73, 0x1a, 0xe3, 0x02, 0x0a,
-	0x09, 0x55, 0x73, 0x65, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x12, 0x54, 0x0a, 0x08, 0x62, 0x72,
-	0x6f, 0x77, 0x73, 0x65, 0x72, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x38, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65,
-	0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74, 0x2e,
-	0x55, 0x73, 0x65, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x56,
-	0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x08, 0x62, 0x72, 0x6f, 0x77, 0x73, 0x65, 0x72, 0x73,
-	0x12, 0x54, 0x0a, 0x08, 0x70, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x38, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x44, 0x65, 0x76, 0x69,
-	0x63, 0x65, 0x45, 0x78, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x2e,
-	0x42, 0x72, 0x61, 0x6e, 0x64, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x08, 0x70, 0x6c,
-	0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x6f, 0x62, 0x69, 0x6c, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x6d, 0x6f, 0x62, 0x69, 0x6c, 0x65, 0x12, 0x22,
-	0x0a, 0x0c, 0x61, 0x72, 0x63, 0x68, 0x69, 0x74, 0x65, 0x63, 0x74, 0x75, 0x72, 0x65, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x72, 0x63, 0x68, 0x69, 0x74, 0x65, 0x63, 0x74, 0x75,
-	0x72, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x69, 0x74, 0x6e, 0x65, 0x73, 0x73, 0x18, 0x09, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x07, 0x62, 0x69, 0x74, 0x6e, 0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05,
-	0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6d, 0x6f, 0x64,
-	0x65, 0x6c, 0x1a, 0x3e, 0x0a, 0x0c, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x56, 0x65, 0x72, 0x73, 0x69,
-	0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x76, 0x65, 0x72, 0x73,
-	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69,
-	0x6f, 0x6e, 0x22, 0x31, 0x0a, 0x07, 0x52, 0x65, 0x67, 0x73, 0x45, 0x78, 0x74, 0x12, 0x12, 0x0a,
+	0x69, 0x64, 0x22, 0x3e, 0x0a, 0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74, 0x12,
+	0x1d, 0x0a, 0x0a, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x12,
+	0x0a, 0x04, 0x61, 0x74, 0x74, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x61, 0x74,
+	0x74, 0x73, 0x22, 0x31, 0x0a, 0x07, 0x52, 0x65, 0x67, 0x73, 0x45, 0x78, 0x74, 0x12, 0x12, 0x0a,
 	0x04, 0x67, 0x64, 0x70, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04, 0x67, 0x64, 0x70,
 	0x72, 0x12, 0x12, 0x0a, 0x04, 0x6c, 0x67, 0x70, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52,
 	0x04, 0x6c, 0x67, 0x70, 0x64, 0x22, 0xad, 0x04, 0x0a, 0x07, 0x44, 0x65, 0x61, 0x6c, 0x45, 0x78,
@@ -5926,7 +5709,7 @@ func file_openrtb_adx_proto_rawDescGZIP() []byte {
 }
 
 var file_openrtb_adx_proto_enumTypes = make([]protoimpl.EnumInfo, 18)
-var file_openrtb_adx_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
+var file_openrtb_adx_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
 var file_openrtb_adx_proto_goTypes = []interface{}{
 	(SKAdNetworkFidelityType)(0),                                       // 0: com.google.doubleclick.SKAdNetworkFidelityType
 	(ImpExt_AmpAdRequirementType)(0),                                   // 1: com.google.doubleclick.ImpExt.AmpAdRequirementType
@@ -5984,25 +5767,23 @@ var file_openrtb_adx_proto_goTypes = []interface{}{
 	(*UserExt_ConsentedProvidersSettings)(nil),                         // 53: com.google.doubleclick.UserExt.ConsentedProvidersSettings
 	(*UserExt_ExtendedId)(nil),                                         // 54: com.google.doubleclick.UserExt.ExtendedId
 	(*UserExt_ExtendedId_ExtendedIdUid)(nil),                           // 55: com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
-	(*DeviceExt_UserAgent)(nil),                                        // 56: com.google.doubleclick.DeviceExt.UserAgent
-	(*DeviceExt_UserAgent_BrandVersion)(nil),                           // 57: com.google.doubleclick.DeviceExt.UserAgent.BrandVersion
-	(*SourceExt_SupplyChain)(nil),                                      // 58: com.google.doubleclick.SourceExt.SupplyChain
-	(*SourceExt_SupplyChain_SupplyChainNode)(nil),                      // 59: com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
-	(*NativeResponse)(nil),                                             // 60: com.google.openrtb.NativeResponse
-	(*BidRequest_Imp)(nil),                                             // 61: com.google.openrtb.BidRequest.Imp
-	(*BidRequest_App)(nil),                                             // 62: com.google.openrtb.BidRequest.App
-	(*BidResponse)(nil),                                                // 63: com.google.openrtb.BidResponse
-	(*BidResponse_SeatBid_Bid)(nil),                                    // 64: com.google.openrtb.BidResponse.SeatBid.Bid
-	(*NativeRequest)(nil),                                              // 65: com.google.openrtb.NativeRequest
-	(*NativeResponse_EventTracker)(nil),                                // 66: com.google.openrtb.NativeResponse.EventTracker
-	(*BidRequest_Publisher)(nil),                                       // 67: com.google.openrtb.BidRequest.Publisher
-	(*BidRequest_Site)(nil),                                            // 68: com.google.openrtb.BidRequest.Site
-	(*BidRequest)(nil),                                                 // 69: com.google.openrtb.BidRequest
-	(*BidRequest_User)(nil),                                            // 70: com.google.openrtb.BidRequest.User
-	(*BidRequest_Device)(nil),                                          // 71: com.google.openrtb.BidRequest.Device
-	(*BidRequest_Regs)(nil),                                            // 72: com.google.openrtb.BidRequest.Regs
-	(*BidRequest_Imp_Pmp_Deal)(nil),                                    // 73: com.google.openrtb.BidRequest.Imp.Pmp.Deal
-	(*BidRequest_Source)(nil),                                          // 74: com.google.openrtb.BidRequest.Source
+	(*SourceExt_SupplyChain)(nil),                                      // 56: com.google.doubleclick.SourceExt.SupplyChain
+	(*SourceExt_SupplyChain_SupplyChainNode)(nil),                      // 57: com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
+	(*NativeResponse)(nil),                                             // 58: com.google.openrtb.NativeResponse
+	(*BidRequest_Imp)(nil),                                             // 59: com.google.openrtb.BidRequest.Imp
+	(*BidRequest_App)(nil),                                             // 60: com.google.openrtb.BidRequest.App
+	(*BidResponse)(nil),                                                // 61: com.google.openrtb.BidResponse
+	(*BidResponse_SeatBid_Bid)(nil),                                    // 62: com.google.openrtb.BidResponse.SeatBid.Bid
+	(*NativeRequest)(nil),                                              // 63: com.google.openrtb.NativeRequest
+	(*NativeResponse_EventTracker)(nil),                                // 64: com.google.openrtb.NativeResponse.EventTracker
+	(*BidRequest_Publisher)(nil),                                       // 65: com.google.openrtb.BidRequest.Publisher
+	(*BidRequest_Site)(nil),                                            // 66: com.google.openrtb.BidRequest.Site
+	(*BidRequest)(nil),                                                 // 67: com.google.openrtb.BidRequest
+	(*BidRequest_User)(nil),                                            // 68: com.google.openrtb.BidRequest.User
+	(*BidRequest_Device)(nil),                                          // 69: com.google.openrtb.BidRequest.Device
+	(*BidRequest_Regs)(nil),                                            // 70: com.google.openrtb.BidRequest.Regs
+	(*BidRequest_Imp_Pmp_Deal)(nil),                                    // 71: com.google.openrtb.BidRequest.Imp.Pmp.Deal
+	(*BidRequest_Source)(nil),                                          // 72: com.google.openrtb.BidRequest.Source
 }
 var file_openrtb_adx_proto_depIdxs = []int32{
 	32, // 0: com.google.doubleclick.ImpExt.excluded_creatives:type_name -> com.google.doubleclick.ImpExt.ExcludedCreative
@@ -6029,65 +5810,62 @@ var file_openrtb_adx_proto_depIdxs = []int32{
 	51, // 21: com.google.doubleclick.BidRequestExt.privacy_treatments:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments
 	53, // 22: com.google.doubleclick.UserExt.consented_providers_settings:type_name -> com.google.doubleclick.UserExt.ConsentedProvidersSettings
 	54, // 23: com.google.doubleclick.UserExt.eids:type_name -> com.google.doubleclick.UserExt.ExtendedId
-	56, // 24: com.google.doubleclick.DeviceExt.user_agent_data:type_name -> com.google.doubleclick.DeviceExt.UserAgent
-	16, // 25: com.google.doubleclick.DealExt.deal_type:type_name -> com.google.doubleclick.DealExt.DealType
-	17, // 26: com.google.doubleclick.DealExt.creative_source:type_name -> com.google.doubleclick.DealExt.CreativeSourceType
-	58, // 27: com.google.doubleclick.SourceExt.schain:type_name -> com.google.doubleclick.SourceExt.SupplyChain
-	38, // 28: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.source_app:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
-	0,  // 29: com.google.doubleclick.ImpExt.SKAdNetworkRequest.fidelities:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
-	3,  // 30: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.policy_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PolicyEnforcement
-	4,  // 31: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.publisher_blocks_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PublisherBlocksEnforcement
-	39, // 32: com.google.doubleclick.ImpExt.AdUnitMapping.keyvals:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
-	5,  // 33: com.google.doubleclick.ImpExt.AdUnitMapping.format:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.FormatType
-	41, // 34: com.google.doubleclick.AppExt.InstalledSdk.sdk_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
-	41, // 35: com.google.doubleclick.AppExt.InstalledSdk.adapter_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
-	46, // 36: com.google.doubleclick.BidExt.SdkRenderedAd.declared_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
-	7,  // 37: com.google.doubleclick.BidExt.FrequencyCap.time_unit:type_name -> com.google.doubleclick.BidExt.FrequencyCap.TimeUnit
-	47, // 38: com.google.doubleclick.BidExt.SKAdNetworkResponse.fidelities:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
-	48, // 39: com.google.doubleclick.BidExt.SKAdNetworkResponse.skadn_opts:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
-	60, // 40: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd.native_response:type_name -> com.google.openrtb.NativeResponse
-	0,  // 41: com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity.fidelity:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
-	52, // 42: com.google.doubleclick.BidRequestExt.BidFeedback.event_notification_token:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
-	13, // 43: com.google.doubleclick.BidRequestExt.PrivacyTreatments.user_agent:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.UserAgentGeneralization
-	14, // 44: com.google.doubleclick.BidRequestExt.PrivacyTreatments.user_agent_data:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.UserAgentDataGeneralization
-	15, // 45: com.google.doubleclick.BidRequestExt.PrivacyTreatments.non_personalized_ads_reason:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.NonPersonalizedAdsReason
-	55, // 46: com.google.doubleclick.UserExt.ExtendedId.uids:type_name -> com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
-	57, // 47: com.google.doubleclick.DeviceExt.UserAgent.browsers:type_name -> com.google.doubleclick.DeviceExt.UserAgent.BrandVersion
-	57, // 48: com.google.doubleclick.DeviceExt.UserAgent.platform:type_name -> com.google.doubleclick.DeviceExt.UserAgent.BrandVersion
-	59, // 49: com.google.doubleclick.SourceExt.SupplyChain.nodes:type_name -> com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
-	61, // 50: com.google.doubleclick.imp:extendee -> com.google.openrtb.BidRequest.Imp
-	62, // 51: com.google.doubleclick.app:extendee -> com.google.openrtb.BidRequest.App
-	63, // 52: com.google.doubleclick.bid_response:extendee -> com.google.openrtb.BidResponse
-	64, // 53: com.google.doubleclick.bid:extendee -> com.google.openrtb.BidResponse.SeatBid.Bid
-	65, // 54: com.google.doubleclick.native_ext:extendee -> com.google.openrtb.NativeRequest
-	66, // 55: com.google.doubleclick.eventtrackers:extendee -> com.google.openrtb.NativeResponse.EventTracker
-	67, // 56: com.google.doubleclick.publisher:extendee -> com.google.openrtb.BidRequest.Publisher
-	68, // 57: com.google.doubleclick.site:extendee -> com.google.openrtb.BidRequest.Site
-	69, // 58: com.google.doubleclick.bid_request:extendee -> com.google.openrtb.BidRequest
-	70, // 59: com.google.doubleclick.user:extendee -> com.google.openrtb.BidRequest.User
-	71, // 60: com.google.doubleclick.device:extendee -> com.google.openrtb.BidRequest.Device
-	72, // 61: com.google.doubleclick.regs:extendee -> com.google.openrtb.BidRequest.Regs
-	73, // 62: com.google.doubleclick.deal:extendee -> com.google.openrtb.BidRequest.Imp.Pmp.Deal
-	74, // 63: com.google.doubleclick.source:extendee -> com.google.openrtb.BidRequest.Source
-	18, // 64: com.google.doubleclick.imp:type_name -> com.google.doubleclick.ImpExt
-	19, // 65: com.google.doubleclick.app:type_name -> com.google.doubleclick.AppExt
-	20, // 66: com.google.doubleclick.bid_response:type_name -> com.google.doubleclick.BidResponseExt
-	21, // 67: com.google.doubleclick.bid:type_name -> com.google.doubleclick.BidExt
-	22, // 68: com.google.doubleclick.native_ext:type_name -> com.google.doubleclick.NativeRequestExt
-	23, // 69: com.google.doubleclick.eventtrackers:type_name -> com.google.doubleclick.EventTrackerExt
-	24, // 70: com.google.doubleclick.publisher:type_name -> com.google.doubleclick.PublisherExt
-	25, // 71: com.google.doubleclick.site:type_name -> com.google.doubleclick.SiteExt
-	26, // 72: com.google.doubleclick.bid_request:type_name -> com.google.doubleclick.BidRequestExt
-	27, // 73: com.google.doubleclick.user:type_name -> com.google.doubleclick.UserExt
-	28, // 74: com.google.doubleclick.device:type_name -> com.google.doubleclick.DeviceExt
-	29, // 75: com.google.doubleclick.regs:type_name -> com.google.doubleclick.RegsExt
-	30, // 76: com.google.doubleclick.deal:type_name -> com.google.doubleclick.DealExt
-	31, // 77: com.google.doubleclick.source:type_name -> com.google.doubleclick.SourceExt
-	78, // [78:78] is the sub-list for method output_type
-	78, // [78:78] is the sub-list for method input_type
-	64, // [64:78] is the sub-list for extension type_name
-	50, // [50:64] is the sub-list for extension extendee
-	0,  // [0:50] is the sub-list for field type_name
+	16, // 24: com.google.doubleclick.DealExt.deal_type:type_name -> com.google.doubleclick.DealExt.DealType
+	17, // 25: com.google.doubleclick.DealExt.creative_source:type_name -> com.google.doubleclick.DealExt.CreativeSourceType
+	56, // 26: com.google.doubleclick.SourceExt.schain:type_name -> com.google.doubleclick.SourceExt.SupplyChain
+	38, // 27: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.source_app:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
+	0,  // 28: com.google.doubleclick.ImpExt.SKAdNetworkRequest.fidelities:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
+	3,  // 29: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.policy_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PolicyEnforcement
+	4,  // 30: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.publisher_blocks_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PublisherBlocksEnforcement
+	39, // 31: com.google.doubleclick.ImpExt.AdUnitMapping.keyvals:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
+	5,  // 32: com.google.doubleclick.ImpExt.AdUnitMapping.format:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.FormatType
+	41, // 33: com.google.doubleclick.AppExt.InstalledSdk.sdk_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
+	41, // 34: com.google.doubleclick.AppExt.InstalledSdk.adapter_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
+	46, // 35: com.google.doubleclick.BidExt.SdkRenderedAd.declared_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
+	7,  // 36: com.google.doubleclick.BidExt.FrequencyCap.time_unit:type_name -> com.google.doubleclick.BidExt.FrequencyCap.TimeUnit
+	47, // 37: com.google.doubleclick.BidExt.SKAdNetworkResponse.fidelities:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
+	48, // 38: com.google.doubleclick.BidExt.SKAdNetworkResponse.skadn_opts:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
+	58, // 39: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd.native_response:type_name -> com.google.openrtb.NativeResponse
+	0,  // 40: com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity.fidelity:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
+	52, // 41: com.google.doubleclick.BidRequestExt.BidFeedback.event_notification_token:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
+	13, // 42: com.google.doubleclick.BidRequestExt.PrivacyTreatments.user_agent:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.UserAgentGeneralization
+	14, // 43: com.google.doubleclick.BidRequestExt.PrivacyTreatments.user_agent_data:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.UserAgentDataGeneralization
+	15, // 44: com.google.doubleclick.BidRequestExt.PrivacyTreatments.non_personalized_ads_reason:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.NonPersonalizedAdsReason
+	55, // 45: com.google.doubleclick.UserExt.ExtendedId.uids:type_name -> com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
+	57, // 46: com.google.doubleclick.SourceExt.SupplyChain.nodes:type_name -> com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
+	59, // 47: com.google.doubleclick.imp:extendee -> com.google.openrtb.BidRequest.Imp
+	60, // 48: com.google.doubleclick.app:extendee -> com.google.openrtb.BidRequest.App
+	61, // 49: com.google.doubleclick.bid_response:extendee -> com.google.openrtb.BidResponse
+	62, // 50: com.google.doubleclick.bid:extendee -> com.google.openrtb.BidResponse.SeatBid.Bid
+	63, // 51: com.google.doubleclick.native_ext:extendee -> com.google.openrtb.NativeRequest
+	64, // 52: com.google.doubleclick.eventtrackers:extendee -> com.google.openrtb.NativeResponse.EventTracker
+	65, // 53: com.google.doubleclick.publisher:extendee -> com.google.openrtb.BidRequest.Publisher
+	66, // 54: com.google.doubleclick.site:extendee -> com.google.openrtb.BidRequest.Site
+	67, // 55: com.google.doubleclick.bid_request:extendee -> com.google.openrtb.BidRequest
+	68, // 56: com.google.doubleclick.user:extendee -> com.google.openrtb.BidRequest.User
+	69, // 57: com.google.doubleclick.device:extendee -> com.google.openrtb.BidRequest.Device
+	70, // 58: com.google.doubleclick.regs:extendee -> com.google.openrtb.BidRequest.Regs
+	71, // 59: com.google.doubleclick.deal:extendee -> com.google.openrtb.BidRequest.Imp.Pmp.Deal
+	72, // 60: com.google.doubleclick.source:extendee -> com.google.openrtb.BidRequest.Source
+	18, // 61: com.google.doubleclick.imp:type_name -> com.google.doubleclick.ImpExt
+	19, // 62: com.google.doubleclick.app:type_name -> com.google.doubleclick.AppExt
+	20, // 63: com.google.doubleclick.bid_response:type_name -> com.google.doubleclick.BidResponseExt
+	21, // 64: com.google.doubleclick.bid:type_name -> com.google.doubleclick.BidExt
+	22, // 65: com.google.doubleclick.native_ext:type_name -> com.google.doubleclick.NativeRequestExt
+	23, // 66: com.google.doubleclick.eventtrackers:type_name -> com.google.doubleclick.EventTrackerExt
+	24, // 67: com.google.doubleclick.publisher:type_name -> com.google.doubleclick.PublisherExt
+	25, // 68: com.google.doubleclick.site:type_name -> com.google.doubleclick.SiteExt
+	26, // 69: com.google.doubleclick.bid_request:type_name -> com.google.doubleclick.BidRequestExt
+	27, // 70: com.google.doubleclick.user:type_name -> com.google.doubleclick.UserExt
+	28, // 71: com.google.doubleclick.device:type_name -> com.google.doubleclick.DeviceExt
+	29, // 72: com.google.doubleclick.regs:type_name -> com.google.doubleclick.RegsExt
+	30, // 73: com.google.doubleclick.deal:type_name -> com.google.doubleclick.DealExt
+	31, // 74: com.google.doubleclick.source:type_name -> com.google.doubleclick.SourceExt
+	75, // [75:75] is the sub-list for method output_type
+	75, // [75:75] is the sub-list for method input_type
+	61, // [61:75] is the sub-list for extension type_name
+	47, // [47:61] is the sub-list for extension extendee
+	0,  // [0:47] is the sub-list for field type_name
 }
 
 func init() { file_openrtb_adx_proto_init() }
@@ -6554,30 +6332,6 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeviceExt_UserAgent); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_openrtb_adx_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeviceExt_UserAgent_BrandVersion); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_openrtb_adx_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SourceExt_SupplyChain); i {
 			case 0:
 				return &v.state
@@ -6589,7 +6343,7 @@ func file_openrtb_adx_proto_init() {
 				return nil
 			}
 		}
-		file_openrtb_adx_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+		file_openrtb_adx_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SourceExt_SupplyChain_SupplyChainNode); i {
 			case 0:
 				return &v.state
@@ -6617,7 +6371,7 @@ func file_openrtb_adx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_openrtb_adx_proto_rawDesc,
 			NumEnums:      18,
-			NumMessages:   42,
+			NumMessages:   40,
 			NumExtensions: 14,
 			NumServices:   0,
 		},
