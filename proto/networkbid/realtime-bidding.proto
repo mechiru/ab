@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.265
+// Protocol version: v.266
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2498,14 +2498,37 @@ message BidResponse {
 
     optional SKAdNetworkResponse skadn = 29;
 
-    // ID of the advertised app, for app install ads.
+    // ID of the advertised app (only for app promotion).
     // On Android, this should be a bundle or package name such as
     // com.foo.mygame. On iOS, it is a numeric ID.
     //
-    // If this field is provided, users will see the app store listing as an
-    // overlay after clicking the ad, without leaving the publisher app. This
-    // is currently enabled on rewarded and interstitial video ads only.
+    // In addition to this field, set the app_promotion_type field below to take
+    // advantage of features specific to app promotion types.
     optional string advertised_app_id = 32;
+
+    // Possible types of app promotion.
+    enum AppPromotionType {
+      UNKNOWN_APP_PROMOTION_TYPE = 0;
+
+      // For encouraging new users to download and install the advertised app.
+      // Clicking this ad will show the app store listing as an overlay (for
+      // supported formats), without leaving the publisher app.
+      // Click through URL for this ad points to the app store listing.
+      INSTALLS = 1;
+
+      // Other types of app promotion that do not fall into the categories
+      // above. No features specific to app promotion types will apply.
+      OTHER = 3;
+    }
+
+    // Type of the app promotion corresponding to the advertised app specified
+    // in the advertised_app_id field above.
+    // If the advertised app is not specified, this field will be ignored.
+    //
+    // Starting May 2023, setting advertised_app_id field without this field
+    // will be treated as if this field were set to OTHER. Until then, the
+    // default value will be INSTALLS.
+    optional AppPromotionType app_promotion_type = 33;
   }
   repeated Ad ad = 2;
 
