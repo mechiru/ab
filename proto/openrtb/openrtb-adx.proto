@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.125
+// Protocol version: v.126
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -646,6 +646,31 @@ message BidExt {
 
   // [AdX: BidResponse.Ad.skadn]
   optional SKAdNetworkResponse skadn = 19;
+
+  // Possible types of app promotion.
+  enum AppPromotionType {
+    UNKNOWN_APP_PROMOTION_TYPE = 0;
+
+    // For encouraging new users to download and install the advertised app.
+    // Clicking this ad will show the app store listing as an overlay (for
+    // supported formats), without leaving the publisher app.
+    // Click through URL for this ad points to the app store listing.
+    INSTALLS = 1;
+
+    // Other types of app promotion that do not fall into the categories
+    // above. No features specific to app promotion types will apply.
+    OTHER = 3;
+  }
+
+  // [AdX: BidResponse.Ad.app_promotion_type]
+  // Type of the app promotion corresponding to the advertised app specified
+  // in the seatbid.bid.bundle field.
+  // If the advertised app is not specified, this field will be ignored.
+  //
+  // Starting May 2023, setting seatbid.bid.bundle field without this field
+  // will be treated as if this field were set to OTHER. Until then, the
+  // default value will be INSTALLS.
+  optional AppPromotionType app_promotion_type = 28;
 }
 
 extend com.google.openrtb.BidResponse.SeatBid.Bid {

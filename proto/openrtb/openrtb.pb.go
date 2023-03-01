@@ -8662,9 +8662,9 @@ type BidResponse_SeatBid_Bid struct {
 	// in Google Play Store, these should be bundle or package names, such as
 	// com.foo.mygame. For apps in Apple App Store, these should be a numeric
 	// ID.
-	// If this field is provided, users will see the app store listing as an
-	// overlay after clicking the ad, without leaving the publisher app. This
-	// is currently enabled on rewarded and interstitial video ads only.
+	//
+	// Google: In addition to this field, set bid.ext.app_promotion_type field
+	// to take advantage of features specific to app promotion types.
 	// Supported by Google.
 	Bundle *string `protobuf:"bytes,14,opt,name=bundle" json:"bundle,omitempty"`
 	// URL without cache-busting to an image that is representative of the
