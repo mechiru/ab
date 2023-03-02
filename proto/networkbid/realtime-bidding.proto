@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.266
+// Protocol version: v.267
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -616,12 +616,6 @@ message BidRequest {
     // For more info visit:
     // https://developer.apple.com/documentation/storekit/skadnetwork
     message SKAdNetworkRequest {
-      // Deprecated. This will be removed in November 2022. Use
-      // BidRequest.mobile.skadn.versions instead.
-      // Version of SKAdNetwork supported. Dependent on both the OS version
-      // and the SDK version.
-      optional string version = 1;
-
       // List of all SKAdNetwork versions supported by the request, depending on
       // the OS version and the SDK version.
       repeated string versions = 4;
