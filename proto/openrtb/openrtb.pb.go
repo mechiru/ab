@@ -4121,7 +4121,7 @@ type BidRequest_Imp struct {
 	// article for free, receive an extra life in a game, or get a sponsored
 	// ad-free music session. The reward is typically distributed after the
 	// video ad is completed.
-	// Not supported by Google.
+	// Supported by Google.
 	Rwdd *bool `protobuf:"varint,18,opt,name=rwdd,def=0" json:"rwdd,omitempty"`
 	// Indicates if server-side ad insertion (e.g., stitching an ad into an
 	// audio or video stream) is in use and the impact of this on asset

@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.127
+// Protocol version: v.128
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -42,8 +42,10 @@ message ImpExt {
   // [AdX: BidRequest.AdSlot.dfp_ad_unit_code]
   optional string dfp_ad_unit_code = 6;
 
+  // This field has been deprecated and will be removed in July 2023.
+  // Use the standard field Imp.rwdd instead.
   // [AdX: BidRequest.AdSlot.is_rewarded]
-  optional bool is_rewarded_inventory = 7;
+  optional bool is_rewarded_inventory = 7 [deprecated = true];
 
   // Possible requirement types for AMP ads.
   enum AmpAdRequirementType {
