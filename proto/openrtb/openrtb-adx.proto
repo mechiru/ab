@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.128
+// Protocol version: v.129
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1133,6 +1133,13 @@ message DealExt {
     // https://support.google.com/authorizedbuyers/answer/7516884 for more
     // information.
     AUCTION_PACKAGE = 4;
+
+    // Package of inventory that a publisher makes available to either all
+    // buyers or selected bidders. Bids participate in auction in the same way
+    // as private auction candidates. See
+    // https://support.google.com/authorizedbuyers/answer/12817370 for more
+    // information.
+    MARKETPLACE_PACKAGE = 5;
   }
   optional DealType deal_type = 1 [default = UNKNOWN_DEAL_TYPE];
 

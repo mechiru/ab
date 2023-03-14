@@ -5707,7 +5707,13 @@ func (x *BidRequest_Device) GetMacmd5() string {
 // location. When subordinate to a User object, it indicates the location of
 // the user's home base (for example, not necessarily their current location).
 //
-// See https://developers.google.com/authorized-buyers/rtb/geotargeting.
+// Google: In Google's implementation of OpenRTB, coarse geolocation
+// information is approximated based on the IP address of the device the ad
+// request originated from. This information will typically–but not always–be
+// included in the bid request with lat/lon representing the center point of
+// a circle, where accuracy is its radius. To learn more about geolocation,
+// see the geotargeting guide:
+// https://developers.google.com/authorized-buyers/rtb/geotargeting.
 type BidRequest_Geo struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
@@ -5746,11 +5752,15 @@ type BidRequest_Geo struct {
 	// Source of location data; recommended when passing lat/lon.
 	// Supported by Google.
 	Type *LocationType `protobuf:"varint,9,opt,name=type,enum=com.google.openrtb.LocationType" json:"type,omitempty"`
-	// Estimated location accuracy in meters; recommended when lat/lon
-	// are specified and derived from a device's location services
-	// (for example, type = 1). Note that this is the accuracy as reported
-	// from the device. Consult OS specific documentation
-	// (for example, Android, iOS) for exact interpretation.
+	// Estimated location accuracy in meters; recommended when lat/lon are
+	// specified and derived from a device's location services (for example,
+	// type = 1). Note that this is the accuracy as reported from the device.
+	// Consult OS specific documentation (for example, Android, iOS) for exact
+	// interpretation.
+	//
+	// Google: The radius in meters of a circle approximating the location of a
+	// device, where the center point is defined by lat/lon. This field is
+	// populated based on coarse IP-based geolocation.
 	// Supported by Google.
 	Accuracy *int32 `protobuf:"varint,11,opt,name=accuracy" json:"accuracy,omitempty"`
 	// Number of seconds since this geolocation fix was established.
