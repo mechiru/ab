@@ -1389,8 +1389,8 @@ type ImpExt struct {
 	ExcludedCreatives []*ImpExt_ExcludedCreative `protobuf:"bytes,10,rep,name=excluded_creatives,json=excludedCreatives" json:"excluded_creatives,omitempty"`
 	// [AdX: BidRequest.AdSlot.dfp_ad_unit_code]
 	DfpAdUnitCode *string `protobuf:"bytes,6,opt,name=dfp_ad_unit_code,json=dfpAdUnitCode" json:"dfp_ad_unit_code,omitempty"`
-	// This field has been deprecated and will be removed in July 2023.
-	// Use the standard field Imp.rwdd instead.
+	// Deprecated. This will be removed in July 2023. Use the standard field
+	// BidRequest.imp.rwdd instead.
 	// [AdX: BidRequest.AdSlot.is_rewarded]
 	//
 	// Deprecated: Marked as deprecated in openrtb-adx.proto.

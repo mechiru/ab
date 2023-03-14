@@ -42,8 +42,8 @@ message ImpExt {
   // [AdX: BidRequest.AdSlot.dfp_ad_unit_code]
   optional string dfp_ad_unit_code = 6;
 
-  // This field has been deprecated and will be removed in July 2023.
-  // Use the standard field Imp.rwdd instead.
+  // Deprecated. This will be removed in July 2023. Use the standard field
+  // BidRequest.imp.rwdd instead.
   // [AdX: BidRequest.AdSlot.is_rewarded]
   optional bool is_rewarded_inventory = 7 [deprecated = true];
 
