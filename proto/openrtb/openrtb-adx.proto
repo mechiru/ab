@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.129
+// Protocol version: v.130
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -134,6 +134,9 @@ message ImpExt {
     // version supported by the operating system and SDK as well as ad slot
     // properties.
     repeated SKAdNetworkFidelityType fidelities = 5 [packed = true];
+
+    // Indicates if this request supports SKOverlay for video ads.
+    optional bool skoverlay = 6;
   }
 
   // [AdX: BidRequest.Mobile.skadn]
@@ -621,6 +624,35 @@ message BidExt {
     // BidResponse.bid.ext.skadn.fidelities.signature field to support multiple
     // fidelity types.
     optional string signature = 8;
+
+    // These options indicate how to present SKOverlay recommending the
+    // advertised app.
+    // Supported by iOS 14 and later.
+    //
+    // For more info visit:
+    // https://developer.apple.com/documentation/storekit/skoverlay
+    //
+    message SKOverlay {
+      // Delay in seconds after the ad begins before presenting the overlay.
+      // If this field is set to 0, the overlay will be shown immediately
+      // after the ad begins. If this field is unset, the overlay will not
+      // be shown for the ad.
+      optional int32 delay = 1;
+
+      // Delay in seconds after the endcard shows before presenting the
+      // overlay. (This field only applies to rewarded or interstitial video
+      // creatives.) If this field is set to 0, the overlay will be shown
+      // immediately after the endcard shows. If this field is unset,
+      // the overlay will not be shown for the endcard.
+      // If both `delay` and `endcarddelay` are set, the overlay will be
+      // automatically dismissed when the ad ends, and shown again after
+      // the endcard shows.
+      optional int32 endcarddelay = 2;
+
+      // Whether this overlay can be dismissed by the user.
+      optional bool dismissible = 3 [default = true];
+    }
+    optional SKOverlay skoverlay = 13;
 
     // Google Mobile Ads SDK options for SKAdNetwork handling.
     message SKAdNetworkOptions {
