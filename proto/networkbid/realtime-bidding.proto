@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.271
+// Protocol version: v.272
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -634,6 +634,9 @@ message BidRequest {
       // properties.
       repeated SKAdNetworkFidelityType supported_fidelity_types = 5
           [packed = true];
+
+      // Indicates if this request supports SKOverlay for video ads.
+      optional bool skoverlay = 6;
     }
     optional SKAdNetworkRequest skadn = 34;
   }
@@ -2458,6 +2461,35 @@ message BidResponse {
       // BidResponse.ad.skadn.fidelities.signature field to support multiple
       // fidelity types.
       optional string signature = 8;
+
+      // These options indicate how to present SKOverlay recommending the
+      // advertised app.
+      // Supported by iOS 14 and later.
+      //
+      // For more info visit:
+      // https://developer.apple.com/documentation/storekit/skoverlay
+      //
+      message SKOverlay {
+        // Delay in seconds after the ad begins before presenting the overlay.
+        // If this field is set to 0, the overlay will be shown immediately
+        // after the ad begins. If this field is unset, the overlay will not
+        // be shown for the ad.
+        optional int32 delay_seconds = 1;
+
+        // Delay in seconds after the endcard shows before presenting the
+        // overlay. (This field only applies to rewarded or interstitial video
+        // creatives.) If this field is set to 0, the overlay will be shown
+        // immediately after the endcard shows. If this field is unset,
+        // the overlay will not be shown for the endcard.
+        // If both `delay_seconds` and `endcard_delay_seconds` are set,
+        // the overlay will be automatically dismissed when the ad ends,
+        // and shown again after the endcard shows.
+        optional int32 endcard_delay_seconds = 2;
+
+        // Whether this overlay can be dismissed by the user.
+        optional bool dismissible = 3 [default = true];
+      }
+      optional SKOverlay skoverlay = 13;
 
       // Google Mobile Ads SDK options for SKAdNetwork handling.
       message SKAdNetworkOptions {
