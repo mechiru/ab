@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.272
+// Protocol version: v.273
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -2220,6 +2220,10 @@ message BidResponse {
         EXCHANGE_AUCTION_PACKAGE = 3;
       }
       optional ExchangeDealType exchange_deal_type = 7 [default = OPEN_AUCTION];
+
+      // The seat ID in the bidder's namespace representing the seat on whose
+      // behalf this bid was made.
+      optional string seat_id = 25;
 
       // Buyer declared ID which will be used to break down spend and invalid
       // traffic metrics in IVT transparency reporting in Query Tool. Note that
