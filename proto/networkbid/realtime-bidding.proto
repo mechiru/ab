@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.273
+// Protocol version: v.274
 // Copyright 2023 Google Inc. All Rights Reserved.
 
 import "google/protobuf/duration.proto";
@@ -123,11 +123,11 @@ message BidRequest {
     repeated NonPersonalizedAdsReason non_personalized_ads_reason = 6
         [packed = true];
 
-    // True if publisher grants the permission to allow the bidder to use
-    // user visitation information from the publisher's site to create
-    // interest categories that can be used to serve ads based on those
-    // categories. To use this data to create interest categories, a bidder must
+    // True if publisher grants the permission to allow the bidder to use bid
+    // request data to build user profiles for uses such as interest-based ads
+    // and remarketing. To use this data to build user profiles, a bidder must
     // also win a given impression.
+    // Learn more about data collection controls:
     // https://support.google.com/admanager/answer/11956152
     optional bool allow_user_data_collection = 7;
   }
@@ -1074,6 +1074,14 @@ message BidRequest {
     // categories. This field does not apply to deals with block overrides (see
     // https://support.google.com/authorizedbuyers/answer/6114194).
     repeated int32 excluded_product_category = 13 [packed = true];
+
+    // Block list of applications by their platform-specific exchange
+    // independent application identifiers. On Android, these should
+    // be bundle or package names (for example, com.foo.mygame).
+    // On iOS, these are numeric IDs.
+    // Bids with ads that advertise any app from this list will be filtered
+    // out before the auction.
+    repeated string excluded_app_ids = 66;
 
     // A creative that is disallowed to bid on this impression due to Ad
     // Exchange policies or creative disapproval, excluded creative attributes,
