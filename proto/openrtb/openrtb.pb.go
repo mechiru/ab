@@ -3238,7 +3238,7 @@ type BidRequest struct {
 	// independent application identifiers. On Android, these should
 	// be bundle or package names (for example, com.foo.mygame).
 	// On iOS, these are numeric IDs.
-	// Not supported by Google.
+	// Supported by Google.
 	Bapp []string `protobuf:"bytes,16,rep,name=bapp" json:"bapp,omitempty"`
 	// Indicator of test mode in which auctions are not billable,
 	// where false = live mode, true = test mode.

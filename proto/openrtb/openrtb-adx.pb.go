@@ -4364,11 +4364,11 @@ type BidRequestExt_PrivacyTreatments struct {
 	// BidRequest.device.ext.sua field, if any.
 	UserAgentData            *BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization `protobuf:"varint,3,opt,name=user_agent_data,json=userAgentData,enum=com.google.doubleclick.BidRequestExt_PrivacyTreatments_UserAgentDataGeneralization" json:"user_agent_data,omitempty"`
 	NonPersonalizedAdsReason []BidRequestExt_PrivacyTreatments_NonPersonalizedAdsReason   `protobuf:"varint,6,rep,packed,name=non_personalized_ads_reason,json=nonPersonalizedAdsReason,enum=com.google.doubleclick.BidRequestExt_PrivacyTreatments_NonPersonalizedAdsReason" json:"non_personalized_ads_reason,omitempty"`
-	// True if publisher grants the permission to allow the bidder to use
-	// user visitation information from the publisher's site to create
-	// interest categories that can be used to serve ads based on those
-	// categories. To use this data to create interest categories, a bidder must
+	// True if publisher grants the permission to allow the bidder to use bid
+	// request data to build user profiles for uses such as interest-based ads
+	// and remarketing. To use this data to build user profiles, a bidder must
 	// also win a given impression.
+	// Learn more about data collection controls:
 	// https://support.google.com/admanager/answer/11956152
 	AllowUserDataCollection *bool `protobuf:"varint,7,opt,name=allow_user_data_collection,json=allowUserDataCollection" json:"allow_user_data_collection,omitempty"`
 }
