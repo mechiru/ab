@@ -23,7 +23,7 @@ const (
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  The following are the fidelity types supported by
+// SKAdNetwork signature. The following are the fidelity types supported by
 // Apple. For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
 type SKAdNetworkFidelityType int32
@@ -2469,7 +2469,7 @@ func (BidRequest_AdSlot_MatchingAdData_DirectDeal_CreativeSourceType) EnumDescri
 	return file_realtime_bidding_proto_rawDescGZIP(), []int{0, 11, 3, 0, 1}
 }
 
-// Possible ad unit formats that can be used for the mapping.  Corresponds
+// Possible ad unit formats that can be used for the mapping. Corresponds
 // to the adapter that will be used on the SDK.
 type BidRequest_AdSlot_AdUnitMapping_FormatType int32
 
@@ -3297,7 +3297,7 @@ type BidRequest struct {
 	// The billing address country of the publisher. This may be different from
 	// the detected country of the user in geo_criteria_id or the hosting country
 	// of the website. For a complete list of country codes, refer to
-	// https://developers.google.com/google-ads/api/reference/data/codes-formats#country_codes
+	// https://developers.google.com/google-ads/api/data/codes-formats#country_codes
 	PublisherCountry *string `protobuf:"bytes,55,opt,name=publisher_country,json=publisherCountry" json:"publisher_country,omitempty"`
 	// The ID of the host publisher. When populated, indicates that the host
 	// publisher participated in revenue sharing, and the ID can be used to
@@ -3364,7 +3364,7 @@ type BidRequest struct {
 	// Detected user languages, based on the language of the web page, the browser
 	// settings, and other signals. The order is arbitrary. The codes are 2 or 5
 	// characters and are documented at
-	// https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
+	// https://developers.google.com/google-ads/api/data/codes-formats#languages
 	DetectedLanguage []string `protobuf:"bytes,12,rep,name=detected_language,json=detectedLanguage" json:"detected_language,omitempty"`
 	// Unordered list of detected content verticals. See the
 	// publisher-verticals.txt file in the technical documentation for a list of
@@ -4067,7 +4067,7 @@ func (x *BidRequest_UserAgent) GetModel() string {
 }
 
 // The user's approximate geographic location. All location information is
-// IP geolocation-derived.  The lat/lon fields may be a reference position
+// IP geolocation-derived. The lat/lon fields may be a reference position
 // (for example, centroid) for the IP geolocation-derived location that's also
 // carried by the other fields (for example, a city), and accuracy will be the
 // radius of a circle with the approximate area of that location. Location and
@@ -4467,11 +4467,18 @@ type BidRequest_Device struct {
 	ScreenOrientation *BidRequest_Device_ScreenOrientation `protobuf:"varint,10,opt,name=screen_orientation,json=screenOrientation,enum=com.google.protos.adx.BidRequest_Device_ScreenOrientation,def=0" json:"screen_orientation,omitempty"`
 	// Apple iOS device model, for example, "iphone 5s", "iphone 6+", "ipad 4".
 	HardwareVersion *string `protobuf:"bytes,11,opt,name=hardware_version,json=hardwareVersion" json:"hardware_version,omitempty"`
-	// Indicates whether the user has opted out of interest based advertising or
-	// ads personalization as determined by an OS-level setting in iOS or
-	// Android:
-	// https://support.apple.com/en-us/HT202074
-	// https://support.google.com/googleplay/answer/3405269
+	// "Limit Ad Tracking" is a commercially endorsed signal based on the
+	// operating system or device settings, where `false` indicates that
+	// tracking is unrestricted and `true` indicates that tracking must be
+	// limited per commercial guidelines.
+	//
+	// This signal reflects user decisions on surfaces including iOS App
+	// Tracking Transparency:
+	// https://developer.apple.com/documentation/apptrackingtransparency
+	// See also lmt and App Tracking Transparency guidance:
+	// https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/skadnetwork.md#dnt-lmt-and-app-tracking-transparency-guidance
+	// and Android advertising ID:
+	// https://support.google.com/googleplay/android-developer/answer/6048248
 	LimitAdTracking *bool `protobuf:"varint,12,opt,name=limit_ad_tracking,json=limitAdTracking" json:"limit_ad_tracking,omitempty"`
 	// This field is only populated for iOS devices. Indicates the app tracking
 	// authorization status. This value is retrieved from ATTrackingManager
@@ -4705,7 +4712,7 @@ type BidRequest_Mobile struct {
 	// mobile apps and categories is defined by the Google Play Store for
 	// Android apps, or the Apple iTunes Store for iOS apps. To look up category
 	// name from category ID, refer to
-	// https://developers.google.com/google-ads/api/reference/data/codes-formats#mobile_app_categories
+	// https://developers.google.com/google-ads/api/data/codes-formats#mobile_app_categories
 	AppCategoryIds []int32 `protobuf:"varint,11,rep,name=app_category_ids,json=appCategoryIds" json:"app_category_ids,omitempty"`
 	// For a mobile web request, this field indicates whether the page is
 	// optimized for mobile browsers on high-end mobile phones.
@@ -5212,7 +5219,7 @@ type BidRequest_AdSlot struct {
 	AllowedRestrictedCategoryForDeals []int32 `protobuf:"varint,22,rep,packed,name=allowed_restricted_category_for_deals,json=allowedRestrictedCategoryForDeals" json:"allowed_restricted_category_for_deals,omitempty"`
 	// List of creative languages allowed by the publisher. The order is
 	// arbitrary. The codes are 2 or 5 characters and are documented at
-	// https://developers.google.com/google-ads/api/reference/data/codes-formats#languages.
+	// https://developers.google.com/google-ads/api/data/codes-formats#languages.
 	// When not set, all languages are allowed.
 	AllowedLanguages []string `protobuf:"bytes,27,rep,name=allowed_languages,json=allowedLanguages" json:"allowed_languages,omitempty"`
 	// The disallowed ad product categories. See the ad-product-categories.txt
@@ -9350,7 +9357,7 @@ func (*BidResponse_Ad_SdkRenderedAd_DeclaredAd_NativeAd) isBidResponse_Ad_SdkRen
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  This holds parameters used to generate the
+// SKAdNetwork signature. This holds parameters used to generate the
 // signature that would be different for each fidelity type supported.
 // For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads

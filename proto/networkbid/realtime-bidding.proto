@@ -187,7 +187,7 @@ message BidRequest {
   // The billing address country of the publisher. This may be different from
   // the detected country of the user in geo_criteria_id or the hosting country
   // of the website. For a complete list of country codes, refer to
-  // https://developers.google.com/google-ads/api/reference/data/codes-formats#country_codes
+  // https://developers.google.com/google-ads/api/data/codes-formats#country_codes
   optional string publisher_country = 55;
 
   // The ID of the host publisher. When populated, indicates that the host
@@ -211,7 +211,7 @@ message BidRequest {
   optional int32 geo_criteria_id = 39;
 
   // The user's approximate geographic location. All location information is
-  // IP geolocation-derived.  The lat/lon fields may be a reference position
+  // IP geolocation-derived. The lat/lon fields may be a reference position
   // (for example, centroid) for the IP geolocation-derived location that's also
   // carried by the other fields (for example, a city), and accuracy will be the
   // radius of a circle with the approximate area of that location. Location and
@@ -349,7 +349,7 @@ message BidRequest {
   // Detected user languages, based on the language of the web page, the browser
   // settings, and other signals. The order is arbitrary. The codes are 2 or 5
   // characters and are documented at
-  // https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
+  // https://developers.google.com/google-ads/api/data/codes-formats#languages
   repeated string detected_language = 12;
 
   // One or more detected verticals for the page as determined by Google.
@@ -460,11 +460,18 @@ message BidRequest {
     // Apple iOS device model, for example, "iphone 5s", "iphone 6+", "ipad 4".
     optional string hardware_version = 11;
 
-    // Indicates whether the user has opted out of interest based advertising or
-    // ads personalization as determined by an OS-level setting in iOS or
-    // Android:
-    // https://support.apple.com/en-us/HT202074
-    // https://support.google.com/googleplay/answer/3405269
+    // "Limit Ad Tracking" is a commercially endorsed signal based on the
+    // operating system or device settings, where `false` indicates that
+    // tracking is unrestricted and `true` indicates that tracking must be
+    // limited per commercial guidelines.
+    //
+    // This signal reflects user decisions on surfaces including iOS App
+    // Tracking Transparency:
+    // https://developer.apple.com/documentation/apptrackingtransparency
+    // See also lmt and App Tracking Transparency guidance:
+    // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/skadnetwork.md#dnt-lmt-and-app-tracking-transparency-guidance
+    // and Android advertising ID:
+    // https://support.google.com/googleplay/android-developer/answer/6048248
     optional bool limit_ad_tracking = 12;
 
     // The possible app tracking authorization statuses that could be applicable
@@ -536,7 +543,7 @@ message BidRequest {
     // mobile apps and categories is defined by the Google Play Store for
     // Android apps, or the Apple iTunes Store for iOS apps. To look up category
     // name from category ID, refer to
-    // https://developers.google.com/google-ads/api/reference/data/codes-formats#mobile_app_categories
+    // https://developers.google.com/google-ads/api/data/codes-formats#mobile_app_categories
     repeated int32 app_category_ids = 11;
 
     // For a mobile web request, this field indicates whether the page is
@@ -1063,7 +1070,7 @@ message BidRequest {
 
     // List of creative languages allowed by the publisher. The order is
     // arbitrary. The codes are 2 or 5 characters and are documented at
-    // https://developers.google.com/google-ads/api/reference/data/codes-formats#languages.
+    // https://developers.google.com/google-ads/api/data/codes-formats#languages.
     // When not set, all languages are allowed.
     repeated string allowed_languages = 27;
 
@@ -1267,7 +1274,7 @@ message BidRequest {
       // bidder's SDK.
       repeated Keyval keyvals = 1;
 
-      // Possible ad unit formats that can be used for the mapping.  Corresponds
+      // Possible ad unit formats that can be used for the mapping. Corresponds
       // to the adapter that will be used on the SDK.
       enum FormatType {
         FORMAT_UNKNOWN = 0;
@@ -2413,7 +2420,7 @@ message BidResponse {
 
       // SKAdNetwork API starting from version 2.2 supports multiple ad
       // presentation options specified by the `fidelity-type` parameter of the
-      // SKAdNetwork signature.  This holds parameters used to generate the
+      // SKAdNetwork signature. This holds parameters used to generate the
       // signature that would be different for each fidelity type supported.
       // For more info visit:
       // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
@@ -2560,7 +2567,7 @@ message BidResponse {
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  The following are the fidelity types supported by
+// SKAdNetwork signature. The following are the fidelity types supported by
 // Apple. For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
 enum SKAdNetworkFidelityType {
