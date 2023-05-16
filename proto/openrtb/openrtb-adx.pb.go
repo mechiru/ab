@@ -23,7 +23,7 @@ const (
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  The following are the fidelity types supported by
+// SKAdNetwork signature. The following are the fidelity types supported by
 // Apple. For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
 type SKAdNetworkFidelityType int32
@@ -379,7 +379,7 @@ func (ImpExt_CreativeEnforcementSettings_PublisherBlocksEnforcement) EnumDescrip
 	return file_openrtb_adx_proto_rawDescGZIP(), []int{0, 4, 1}
 }
 
-// Possible ad unit formats that can be used for the mapping.  Corresponds
+// Possible ad unit formats that can be used for the mapping. Corresponds
 // to the adapter that will be used on the SDK.
 type ImpExt_AdUnitMapping_FormatType int32
 
@@ -2122,7 +2122,7 @@ type SiteExt struct {
 	PageVisibility *SiteExt_VisibilityState `protobuf:"varint,2,opt,name=page_visibility,json=pageVisibility,enum=com.google.doubleclick.SiteExt_VisibilityState,def=0" json:"page_visibility,omitempty"`
 	// Indicates that the request is using semi-transparent branding,
 	// which means only a truncated version of the request URL will
-	// be provided.  This decision is made by the publisher, see
+	// be provided. This decision is made by the publisher, see
 	// https://support.google.com/admanager/answer/4584891#urls for context.
 	IsSemiTransparentRequest *bool `protobuf:"varint,3,opt,name=is_semi_transparent_request,json=isSemiTransparentRequest" json:"is_semi_transparent_request,omitempty"`
 	// The domain of the partner (of the site owner) with ownership
@@ -2203,7 +2203,7 @@ type BidRequestExt struct {
 	unknownFields protoimpl.UnknownFields
 
 	BidFeedback []*BidRequestExt_BidFeedback `protobuf:"bytes,1,rep,name=bid_feedback,json=bidFeedback" json:"bid_feedback,omitempty"`
-	// This represents a unique ID for the overall query.  In the event
+	// This represents a unique ID for the overall query. In the event
 	// that there are multiple callouts for a query, all callout requests for that
 	// query will contain the same google_query_id.
 	GoogleQueryId     *string                              `protobuf:"bytes,2,opt,name=google_query_id,json=googleQueryId" json:"google_query_id,omitempty"`
@@ -2287,7 +2287,7 @@ type UserExt struct {
 	// (CMP). The structure of the string is defined by the IAB TCF v2. This field
 	// will be populated if the publisher has integrated with a CMP for TCF v2 and
 	// that CMP indicates that GDPR applies to this ad request and provides a
-	// valid consent string.  See
+	// valid consent string. See
 	// https://support.google.com/authorizedbuyers/answer/9789378 for additional
 	// information about the Google TCF v2 integration.
 	//
@@ -3557,7 +3557,7 @@ func (x *BidExt_FrequencyCap) GetMaxImp() int32 {
 }
 
 // Advertiser's SKAdNetwork information to support app installation
-// attribution for iOS 14 and later.  Apple's SKAdNetwork API helps
+// attribution for iOS 14 and later. Apple's SKAdNetwork API helps
 // advertisers measure ad-driven app installation by sending a postback
 // to the ad network after a successful install. Ad networks will need
 // to send their network ID and signed advertiser information to allow
@@ -3873,7 +3873,7 @@ func (*BidExt_SdkRenderedAd_DeclaredAd_NativeResponse) isBidExt_SdkRenderedAd_De
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  This holds parameters used to generate the
+// SKAdNetwork signature. This holds parameters used to generate the
 // signature that would be different for each fidelity type supported.
 // For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
@@ -4055,7 +4055,7 @@ type BidExt_SKAdNetworkResponse_SKAdNetworkOptions struct {
 	// By default, SKAdNetwork attribution will only be initiated if the
 	// click-through URL lands on the app store, either as a direct link to
 	// the app store or as the final destination of a server-side redirect
-	// chain.  This option enables GMA SDK to always initiate SKAdNetwork
+	// chain. This option enables GMA SDK to always initiate SKAdNetwork
 	// attribution on-click regardless of the detected click's final
 	// destination URL. Note that enabling this will launch the app store
 	// even for clicks that are not meant to open the app store, for example
@@ -4219,8 +4219,8 @@ type BidRequestExt_BidFeedback struct {
 	// technical documentation for a list of ids.
 	CreativeStatusCode *int32 `protobuf:"varint,2,opt,name=creative_status_code,json=creativeStatusCode" json:"creative_status_code,omitempty"`
 	// If the bid won the auction, this is the price paid in your account
-	// currency.  If the bid participated in the auction but was out-bid, this
-	// is the CPM that should have been exceeded in order to win.  This is not
+	// currency. If the bid participated in the auction but was out-bid, this
+	// is the CPM that should have been exceeded in order to win. This is not
 	// set if the bid was filtered prior to the auction, if the publisher or
 	// winning bidder has opted out of price feedback or if your account has
 	// opted out of sharing winning prices with other bidders. For first-price
@@ -4240,7 +4240,7 @@ type BidRequestExt_BidFeedback struct {
 	// value of this field is 0. If the bid participated in the auction and
 	// there was a waterfall, the value of this field is a price representing a
 	// sample bid from the eligible mediation networks that were higher than the
-	// auction winner, weighted by expected fill rate.  This field can be used
+	// auction winner, weighted by expected fill rate. This field can be used
 	// in conjunction with minimum_bid_to_win to train bidding models. The CPM
 	// is in your account currency.
 	SampledMediationCpmAheadOfAuctionWinner *float64 `protobuf:"fixed64,8,opt,name=sampled_mediation_cpm_ahead_of_auction_winner,json=sampledMediationCpmAheadOfAuctionWinner" json:"sampled_mediation_cpm_ahead_of_auction_winner,omitempty"`

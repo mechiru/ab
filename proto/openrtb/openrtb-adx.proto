@@ -257,7 +257,7 @@ message ImpExt {
     // the bidder's SDK.
     repeated Keyval keyvals = 1;
 
-    // Possible ad unit formats that can be used for the mapping.  Corresponds
+    // Possible ad unit formats that can be used for the mapping. Corresponds
     // to the adapter that will be used on the SDK.
     enum FormatType {
       FORMAT_UNKNOWN = 0;
@@ -400,7 +400,6 @@ message BidExt {
     // Data to pass to the SDK in order to render the ad. This data is opaque
     // to the publisher and to Google.
     optional string rendering_data = 2;
-
     // Declared ad assets to support creative scanning, classification, and
     // enforcement of ad policy and publisher blocks for ads rendered with a
     // custom SDK.
@@ -528,7 +527,7 @@ message BidExt {
   repeated FrequencyCap fcap = 18;
 
   // Advertiser's SKAdNetwork information to support app installation
-  // attribution for iOS 14 and later.  Apple's SKAdNetwork API helps
+  // attribution for iOS 14 and later. Apple's SKAdNetwork API helps
   // advertisers measure ad-driven app installation by sending a postback
   // to the ad network after a successful install. Ad networks will need
   // to send their network ID and signed advertiser information to allow
@@ -565,7 +564,7 @@ message BidExt {
 
     // SKAdNetwork API starting from version 2.2 supports multiple ad
     // presentation options specified by the `fidelity-type` parameter of the
-    // SKAdNetwork signature.  This holds parameters used to generate the
+    // SKAdNetwork signature. This holds parameters used to generate the
     // signature that would be different for each fidelity type supported.
     // For more info visit:
     // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
@@ -644,7 +643,7 @@ message BidExt {
       // By default, SKAdNetwork attribution will only be initiated if the
       // click-through URL lands on the app store, either as a direct link to
       // the app store or as the final destination of a server-side redirect
-      // chain.  This option enables GMA SDK to always initiate SKAdNetwork
+      // chain. This option enables GMA SDK to always initiate SKAdNetwork
       // attribution on-click regardless of the detected click's final
       // destination URL. Note that enabling this will launch the app store
       // even for clicks that are not meant to open the app store, for example
@@ -810,7 +809,7 @@ message SiteExt {
 
   // Indicates that the request is using semi-transparent branding,
   // which means only a truncated version of the request URL will
-  // be provided.  This decision is made by the publisher, see
+  // be provided. This decision is made by the publisher, see
   // https://support.google.com/admanager/answer/4584891#urls for context.
   optional bool is_semi_transparent_request = 3;
 
@@ -840,8 +839,8 @@ message BidRequestExt {
     optional int32 creative_status_code = 2;
 
     // If the bid won the auction, this is the price paid in your account
-    // currency.  If the bid participated in the auction but was out-bid, this
-    // is the CPM that should have been exceeded in order to win.  This is not
+    // currency. If the bid participated in the auction but was out-bid, this
+    // is the CPM that should have been exceeded in order to win. This is not
     // set if the bid was filtered prior to the auction, if the publisher or
     // winning bidder has opted out of price feedback or if your account has
     // opted out of sharing winning prices with other bidders. For first-price
@@ -863,7 +862,7 @@ message BidRequestExt {
     // value of this field is 0. If the bid participated in the auction and
     // there was a waterfall, the value of this field is a price representing a
     // sample bid from the eligible mediation networks that were higher than the
-    // auction winner, weighted by expected fill rate.  This field can be used
+    // auction winner, weighted by expected fill rate. This field can be used
     // in conjunction with minimum_bid_to_win to train bidding models. The CPM
     // is in your account currency.
     optional double sampled_mediation_cpm_ahead_of_auction_winner = 8;
@@ -880,7 +879,7 @@ message BidRequestExt {
   }
   repeated BidFeedback bid_feedback = 1;
 
-  // This represents a unique ID for the overall query.  In the event
+  // This represents a unique ID for the overall query. In the event
   // that there are multiple callouts for a query, all callout requests for that
   // query will contain the same google_query_id.
   optional string google_query_id = 2;
@@ -1035,7 +1034,7 @@ message UserExt {
   // (CMP). The structure of the string is defined by the IAB TCF v2. This field
   // will be populated if the publisher has integrated with a CMP for TCF v2 and
   // that CMP indicates that GDPR applies to this ad request and provides a
-  // valid consent string.  See
+  // valid consent string. See
   // https://support.google.com/authorizedbuyers/answer/9789378 for additional
   // information about the Google TCF v2 integration.
   //
@@ -1287,7 +1286,7 @@ extend com.google.openrtb.BidRequest.Source {
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
 // presentation options specified by the `fidelity-type` parameter of the
-// SKAdNetwork signature.  The following are the fidelity types supported by
+// SKAdNetwork signature. The following are the fidelity types supported by
 // Apple. For more info visit:
 // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
 enum SKAdNetworkFidelityType {

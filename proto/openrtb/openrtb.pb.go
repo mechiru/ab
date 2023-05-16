@@ -261,8 +261,8 @@ func (CreativeAttribute) EnumDescriptor() ([]byte, []int) {
 }
 
 // OpenRTB 2.0: The following table is a list of API frameworks supported
-// by the publisher.  Note that MRAID-1 is a subset of MRAID-2.
-// In OpenRTB 2.1 and prior, value "3" was "MRAID".  However, not all
+// by the publisher. Note that MRAID-1 is a subset of MRAID-2.
+// In OpenRTB 2.1 and prior, value "3" was "MRAID". However, not all
 // MRAID capable APIs understand MRAID-2 features and as such the only
 // safe interpretation of value "3" is MRAID-1. In OpenRTB 2.2, this was
 // made explicit and MRAID-2 has been added as value "5".
@@ -695,7 +695,7 @@ func (PlaybackMethod) EnumDescriptor() ([]byte, []int) {
 }
 
 // OpenRTB 2.0: The following table lists the various options for the
-// audio/video start delay.  If the start delay value is greater than 0,
+// audio/video start delay. If the start delay value is greater than 0,
 // then the position is mid-roll and the value indicates the start delay.
 type StartDelay int32
 
@@ -4044,9 +4044,9 @@ func (x *BidRequest_Source) GetSchain() *BidRequest_Source_SupplyChain {
 }
 
 // OpenRTB 2.0: This object describes an ad placement or impression
-// being auctioned.  A single bid request can include multiple Imp objects,
+// being auctioned. A single bid request can include multiple Imp objects,
 // a use case for which might be an exchange that supports selling all
-// ad positions on a given page.  Each Imp object has a required ID so that
+// ad positions on a given page. Each Imp object has a required ID so that
 // bids can reference them individually.
 //
 // The presence of Banner (Section 3.2.3), Video (Section 3.2.4),
@@ -4109,7 +4109,7 @@ type BidRequest_Imp struct {
 	// Not supported by Google.
 	Clickbrowser *bool `protobuf:"varint,16,opt,name=clickbrowser" json:"clickbrowser,omitempty"`
 	// Indicates if the impression requires secure HTTPS URL creative
-	// assets and markup.  If omitted, the secure state is unknown, but
+	// assets and markup. If omitted, the secure state is unknown, but
 	// non-secure HTTP support can be assumed.
 	// Supported by Google.
 	Secure *bool `protobuf:"varint,12,opt,name=secure" json:"secure,omitempty"`
@@ -5313,9 +5313,19 @@ type BidRequest_Device struct {
 	// where false = tracking is unrestricted, true = do not track.
 	// Not supported by Google.
 	Dnt *bool `protobuf:"varint,1,opt,name=dnt" json:"dnt,omitempty"`
-	// "Limit Ad Tracking" signal commercially endorsed (for example, iOS,
-	// Android), where false = tracking is unrestricted, true = tracking must be
+	// "Limit Ad Tracking" is a commercially endorsed signal based on the
+	// operating system or device settings, where `false` indicates that
+	// tracking is unrestricted and `true` indicates that tracking must be
 	// limited per commercial guidelines.
+	//
+	// This signal reflects user decisions on surfaces including iOS App
+	// Tracking Transparency:
+	// https://developer.apple.com/documentation/apptrackingtransparency
+	// See also lmt and App Tracking Transparency guidance:
+	// https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/skadnetwork.md#dnt-lmt-and-app-tracking-transparency-guidance
+	// and Android advertising ID:
+	// https://support.google.com/googleplay/android-developer/answer/6048248
+	//
 	// Supported by Google.
 	Lmt *bool `protobuf:"varint,23,opt,name=lmt" json:"lmt,omitempty"`
 	// Browser user agent string. Certain data may be redacted or replaced.
@@ -5957,7 +5967,7 @@ type BidRequest_User struct {
 	// Platform (CMP). The structure of the string is defined by the IAB TCF v2.
 	// This field will be populated if the publisher has integrated with a CMP
 	// for TCF v2 and that CMP indicates that GDPR applies to this ad request
-	// and provides a valid consent string.  See
+	// and provides a valid consent string. See
 	// https://support.google.com/authorizedbuyers/answer/9789378 for additional
 	// information about the Google TCF v2 integration.
 	//
@@ -6436,7 +6446,7 @@ func (x *BidRequest_Source_SupplyChain_SupplyChainNode) GetHp() bool {
 // OpenRTB 2.5: This object is associated with an impression as
 // an array of metrics. These metrics can offer insight into
 // the impression to assist with decisioning such as average recent
-// viewability, click-through rate, or another metric.  Each metric is
+// viewability, click-through rate, or another metric. Each metric is
 // identified by its type, reports the value of the metric, and optionally
 // identifies the source or vendor measuring the value.
 type BidRequest_Imp_Metric struct {
@@ -6517,7 +6527,7 @@ func (x *BidRequest_Imp_Metric) GetVendor() string {
 }
 
 // OpenRTB 2.0: This object represents the most general type of
-// impression.  Although the term "banner" may have very specific meaning
+// impression. Although the term "banner" may have very specific meaning
 // in other contexts, here it can be many things including a simple static
 // image, an expandable ad unit, or even in-banner video (refer to the Video
 // object in Section 3.2.4 for the more generalized and full featured video
@@ -6923,7 +6933,7 @@ type BidRequest_Imp_Video struct {
 	// If an API is not explicitly listed, it is assumed not to be supported.
 	// Supported by Google.
 	Api []APIFramework `protobuf:"varint,19,rep,packed,name=api,enum=com.google.openrtb.APIFramework" json:"api,omitempty"`
-	// Supported VAST companion ad types.  Recommended if companion Banner
+	// Supported VAST companion ad types. Recommended if companion Banner
 	// objects are included through the companionad array.
 	// Supported by Google.
 	Companiontype []CompanionType `protobuf:"varint,20,rep,packed,name=companiontype,enum=com.google.openrtb.CompanionType" json:"companiontype,omitempty"`
@@ -7319,7 +7329,7 @@ type BidRequest_Imp_Audio struct {
 	// If an API is not explicitly listed, it is assumed not to be supported.
 	// Supported by Google.
 	Api []APIFramework `protobuf:"varint,13,rep,packed,name=api,enum=com.google.openrtb.APIFramework" json:"api,omitempty"`
-	// Supported DAAST companion ad types.  Recommended if companion Banner
+	// Supported DAAST companion ad types. Recommended if companion Banner
 	// objects are included through the companionad array.
 	// Supported by Google.
 	Companiontype []CompanionType `protobuf:"varint,20,rep,packed,name=companiontype,enum=com.google.openrtb.CompanionType" json:"companiontype,omitempty"`
