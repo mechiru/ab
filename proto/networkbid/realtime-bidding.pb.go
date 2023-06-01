@@ -8089,9 +8089,8 @@ type BidResponse_Ad struct {
 	// in the advertised_app_id field above.
 	// If the advertised app is not specified, this field will be ignored.
 	//
-	// Starting May 2023, setting advertised_app_id field without this field
-	// will be treated as if this field were set to OTHER. Until then, the
-	// default value will be INSTALLS.
+	// Setting advertised_app_id field without this field will be treated as if
+	// this field were set to OTHER.
 	AppPromotionType *BidResponse_Ad_AppPromotionType `protobuf:"varint,33,opt,name=app_promotion_type,json=appPromotionType,enum=com.google.protos.adx.BidResponse_Ad_AppPromotionType" json:"app_promotion_type,omitempty"`
 }
 
