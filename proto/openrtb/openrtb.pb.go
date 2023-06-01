@@ -3978,8 +3978,7 @@ type BidRequest_Source struct {
 	Pchain *string `protobuf:"bytes,3,opt,name=pchain" json:"pchain,omitempty"`
 	// This object represents both the links in the supply chain as
 	// well as an indicator whether or not the supply chain is complete.
-	// Not supported by Google. Google supports the SupplyChain object with the
-	// extension BidRequest.source.ext.schain.
+	// Supported by Google.
 	Schain *BidRequest_Source_SupplyChain `protobuf:"bytes,4,opt,name=schain" json:"schain,omitempty"`
 }
 
@@ -6245,7 +6244,7 @@ type BidRequest_Source_SupplyChain struct {
 	// transaction leading back to the owner of the site, app or other medium
 	// of the inventory.
 	// REQUIRED by the OpenRTB specification.
-	// Not supported by Google.
+	// Supported by Google.
 	Complete *bool `protobuf:"varint,1,opt,name=complete" json:"complete,omitempty"`
 	// Array of SupplyChainNode objects in the order of the chain.
 	// In a complete supply chain, the first node represents the initial
@@ -6254,13 +6253,13 @@ type BidRequest_Source_SupplyChain struct {
 	// supply chain, it represents the first known node. The last node
 	// represents the entity sending this bid request.
 	// REQUIRED by the OpenRTB specification.
-	// Not supported by Google.
+	// Supported by Google.
 	Nodes []*BidRequest_Source_SupplyChain_SupplyChainNode `protobuf:"bytes,2,rep,name=nodes" json:"nodes,omitempty"`
 	// Version of the supply chain specification in use, in the format
 	// of "major.minor". For example, for version 1.0 of the spec,
 	// use the string "1.0".
 	// REQUIRED by the OpenRTB specification.
-	// Not supported by Google.
+	// Supported by Google.
 	Ver *string `protobuf:"bytes,3,opt,name=ver" json:"ver,omitempty"`
 }
 
@@ -6331,7 +6330,7 @@ type BidRequest_Source_SupplyChain_SupplyChainNode struct {
 	// of the delegate system. This should be the same value as used to
 	// identify sellers in an ads.txt file if one exists.
 	// REQUIRED by the OpenRTB specification.
-	// Not supported by Google.
+	// Supported by Google.
 	Asi *string `protobuf:"bytes,1,opt,name=asi" json:"asi,omitempty"`
 	// The identifier associated with the seller or reseller account
 	// within the advertising system. This must contain the same value
@@ -6340,7 +6339,7 @@ type BidRequest_Source_SupplyChain_SupplyChainNode struct {
 	// publisher.id. For OpenDirect it is typically the publisher's
 	// organization ID. Should be limited to 64 characters in length.
 	// REQUIRED by the OpenRTB specification.
-	// Not supported by Google.
+	// Supported by Google.
 	Sid *string `protobuf:"bytes,2,opt,name=sid" json:"sid,omitempty"`
 	// The OpenRTB RequestId of the request as issued by this seller.
 	// Not supported by Google.
@@ -6365,7 +6364,7 @@ type BidRequest_Source_SupplyChain_SupplyChainNode struct {
 	// Implementers should ensure that they propagate this field onwards
 	// when constructing SupplyChain objects in bid requests sent to a
 	// downstream advertising system.
-	// Not supported by Google.
+	// Supported by Google.
 	Hp *bool `protobuf:"varint,6,opt,name=hp" json:"hp,omitempty"`
 }
 

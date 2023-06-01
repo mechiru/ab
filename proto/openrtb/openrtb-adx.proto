@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.131
+// Protocol version: v.133
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1276,6 +1276,8 @@ message SourceExt {
     // use the string "1.0".
     optional string ver = 3;
   }
+  // Deprecated. This will be removed in December 2023. Use the standard field
+  // schain instead.
   optional SupplyChain schain = 3;
 }
 

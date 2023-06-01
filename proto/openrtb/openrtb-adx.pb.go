@@ -2594,7 +2594,9 @@ type SourceExt struct {
 	// in the Google protocol. For more info, see the OpenRTB Advisory for
 	// Open Measurement SDK:
 	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/OpenRTB%20support%20for%20OMSDK.md#openrtb-and-adcom.
-	Omidpv *string                `protobuf:"bytes,2,opt,name=omidpv" json:"omidpv,omitempty"`
+	Omidpv *string `protobuf:"bytes,2,opt,name=omidpv" json:"omidpv,omitempty"`
+	// Deprecated. This will be removed in December 2023. Use the standard field
+	// schain instead.
 	Schain *SourceExt_SupplyChain `protobuf:"bytes,3,opt,name=schain" json:"schain,omitempty"`
 }
 
