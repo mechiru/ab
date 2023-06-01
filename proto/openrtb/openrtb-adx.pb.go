@@ -1736,9 +1736,8 @@ type BidExt struct {
 	// in the seatbid.bid.bundle field.
 	// If the advertised app is not specified, this field will be ignored.
 	//
-	// Starting May 2023, setting seatbid.bid.bundle field without this field
-	// will be treated as if this field were set to OTHER. Until then, the
-	// default value will be INSTALLS.
+	// Setting seatbid.bid.bundle field without this field will be treated as if
+	// this field were set to OTHER.
 	AppPromotionType *BidExt_AppPromotionType `protobuf:"varint,28,opt,name=app_promotion_type,json=appPromotionType,enum=com.google.doubleclick.BidExt_AppPromotionType" json:"app_promotion_type,omitempty"`
 }
 
