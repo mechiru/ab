@@ -105,7 +105,7 @@ const (
 	ImpExt_AMP_AD_ALLOWED_AND_EARLY_RENDERED ImpExt_AmpAdRequirementType = 4
 	// AMP ads are required.
 	// Ads that are non-AMP may be rejected by the publisher.
-	ImpExt_AMP_AD_REQUIRED ImpExt_AmpAdRequirementType = 5 // Exchange-specific values above 500.
+	ImpExt_AMP_AD_REQUIRED ImpExt_AmpAdRequirementType = 5
 )
 
 // Enum value maps for ImpExt_AmpAdRequirementType.
@@ -1352,6 +1352,8 @@ func (DealExt_CreativeSourceType) EnumDescriptor() ([]byte, []int) {
 	return file_openrtb_adx_proto_rawDescGZIP(), []int{12, 1}
 }
 
+// Protocol buffer for Ad Exchange OpenRTB specification.
+//
 // Ad Exchange extensions for the Imp object.
 type ImpExt struct {
 	state         protoimpl.MessageState
@@ -3965,7 +3967,6 @@ func (x *BidExt_SKAdNetworkResponse_Fidelity) GetSignature() string {
 //
 // For more info visit:
 // https://developer.apple.com/documentation/storekit/skoverlay
-//
 type BidExt_SKAdNetworkResponse_SKOverlay struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4208,7 +4209,6 @@ func (x *NativeRequestExt_MultiAdsCellInfo) GetGridId() int64 {
 // Feedback on bids submitted in previous responses. This is only set if
 // real-time feedback is enabled for your bidder. Contact your
 // account manager if you want to enable real-time feedback.
-//
 type BidRequestExt_BidFeedback struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

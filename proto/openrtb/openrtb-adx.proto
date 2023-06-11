@@ -1,16 +1,14 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.134
+// Protocol version: v.148
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
 
-// Copyright 2023 Google Inc. All Rights Reserved.
-
 import "google/protobuf/struct.proto";
 
 // Protocol buffer for Ad Exchange OpenRTB specification.
-
+//
 // Ad Exchange extensions for the Imp object.
 message ImpExt {
   // [AdX: BidRequest.AdSlot.MatchingAdData.billing_id]
@@ -50,38 +48,42 @@ message ImpExt {
   enum AmpAdRequirementType {
     // AMP ad requirements unknown.
     UNKNOWN_AMP_AD_REQUIREMENT_TYPE = 1;
+
     // AMP ads are not allowed.
     AMP_AD_NOT_ALLOWED = 2;
+
     // Either AMP ads or non-AMP ads are allowed;
     // AMP ads are not early rendered.
     AMP_AD_ALLOWED_AND_NOT_EARLY_RENDERED = 3;
+
     // Either AMP ads or non-AMP ads are allowed;
     // AMP ads are early rendered.
     AMP_AD_ALLOWED_AND_EARLY_RENDERED = 4;
+
     // AMP ads are required.
     // Ads that are non-AMP may be rejected by the publisher.
     AMP_AD_REQUIRED = 5;
-    // Exchange-specific values above 500.
   }
-  optional AmpAdRequirementType ampad = 8
-      [default = UNKNOWN_AMP_AD_REQUIREMENT_TYPE];
+  optional AmpAdRequirementType ampad = 8 [default =
+    UNKNOWN_AMP_AD_REQUIREMENT_TYPE];
 
   // Secure signals passed by the publisher.
   message BuyerGeneratedRequestData {
+    // The source (provider) of the signal.
+    oneof source {
+      SourceApp source_app = 1;
+    }
+
     // The source of the signal when this request is from an app.
     message SourceApp {
       // Identifier for the SDK that generated this data. It will match the id
       // in AppExt.InstalledSdk.id.
       optional string id = 1;
     }
-    // The source (provider) of the signal.
-    oneof source {
-      SourceApp source_app = 1;
-    }
+
     // The secure signal.
     optional string data = 2;
   }
-
   repeated BuyerGeneratedRequestData buyer_generated_request_data = 9;
 
   // For ads rendered using a custom SDK only: multiplier applied to bid in
@@ -91,7 +93,7 @@ message ImpExt {
   // billable event if they won the auction. This adjustment can be larger or
   // smaller than 1. This affects the final ranking in the auction only; in
   // particular, this multiplier does not affect the payment.
-  optional double billable_event_rate_adjustment = 16 [default = 1.0];
+  optional double billable_event_rate_adjustment = 16 [default = 1];
 
   // Parameters related to Open Bidding.
   message OpenBidding {
@@ -203,7 +205,6 @@ message ImpExt {
     // publisher blocks apply to the request.
     optional bool is_default = 4 [deprecated = true];
   }
-
   optional CreativeEnforcementSettings creative_enforcement_settings = 15;
 
   // Describes the environment where the ad auction is run.
@@ -223,8 +224,8 @@ message ImpExt {
   }
 
   // Specifies where the ad auction runs.
-  optional AuctionEnvironment auction_environment = 18
-      [default = SERVER_SIDE_AUCTION];
+  optional AuctionEnvironment auction_environment = 18 [default =
+    SERVER_SIDE_AUCTION];
 
   // Indicates whether a mobile app bid request is for an app open ad.
   // See App open ad guidance at
@@ -245,10 +246,12 @@ message ImpExt {
       // The key is the name of the bidder's inventory unit identifier for the
       // SDK.
       optional string key = 1;
+
       // The value of the bidder's inventory unit identifier for the given
       // format.
       optional string value = 2;
     }
+
     // Multiple key-value pairs can be specified in order to support
     // bidders whose inventory unit space is hierarchical and has multiple
     // identifiers. The key-value pairs for the chosen AdUnitMapping should be
@@ -261,24 +264,31 @@ message ImpExt {
     // to the adapter that will be used on the SDK.
     enum FormatType {
       FORMAT_UNKNOWN = 0;
+
       // Display banner ads for web or mobile apps. For example, a 320x50
       // leaderboard slot. This includes out-stream video.
       FORMAT_BANNER = 1;
+
       // A full-screen ad to be displayed inside a mobile app.
       FORMAT_INTERSTITIAL = 2;
+
       // Custom display or video ads for web or mobile apps that match the
       // user experience of the site or app in which they’re placed.
       FORMAT_NATIVE = 3;
+
       // Video ads that appear before, during, or after video content
       // streams.
       FORMAT_VIDEO_VAST = 4;
+
       // Video ads for mobile apps that allow users to voluntarily watch an
       // ad in exchange for an in-app reward.
       FORMAT_REWARDED = 5;
+
       // Interstitial ads that allow users to watch an ad in exchange for
       // an in-app reward. Does not require opt-in.
       // https://support.google.com/admanager/answer/7386053
       FORMAT_REWARDED_INTERSTITIAL = 6;
+
       // App open ads shows at app load screens. App open ads can be closed
       // at any time, and are designed to be shown when the users bring the
       // app to the foreground.
@@ -293,13 +303,9 @@ message ImpExt {
     // matched, it is sent in the bid request.
     optional FormatType format = 2;
   }
+
   // Ad unit mappings that match the given adslot.
   repeated AdUnitMapping ad_unit_mapping = 64;
-}
-
-extend com.google.openrtb.BidRequest.Imp {
-  // Extension key for AdX Imp.ext.
-  optional ImpExt imp = 1009;
 }
 
 message AppExt {
@@ -333,20 +339,10 @@ message AppExt {
   optional string inventorypartnerdomain = 2;
 }
 
-extend com.google.openrtb.BidRequest.App {
-  // Extension key for AdX App.ext.
-  optional AppExt app = 1011;
-}
-
 // Ad Exchange extensions for the BidResponse object.
 message BidResponseExt {
   // [AdX: BidResponse.processing_time_ms]
   optional int32 processing_time_ms = 1;
-}
-
-extend com.google.openrtb.BidResponse {
-  // Extension key for AdX BidResponse.ext.
-  optional BidResponseExt bid_response = 1005;
 }
 
 // Ad Exchange extensions for the Bid object.
@@ -400,6 +396,7 @@ message BidExt {
     // Data to pass to the SDK in order to render the ad. This data is opaque
     // to the publisher and to Google.
     optional string rendering_data = 2;
+
     // Declared ad assets to support creative scanning, classification, and
     // enforcement of ad policy and publisher blocks for ads rendered with a
     // custom SDK.
@@ -423,7 +420,7 @@ message BidExt {
         // object (if any) in the bid request. NativeResponse.assets.id is
         // optional and doesn't need to match an asset on the native request
         // object. NativeResponse.assets.img.type is required.
-        com.google.openrtb.NativeResponse native_response = 5;
+        .com.google.openrtb.NativeResponse native_response = 5;
       }
 
       // The final landing pages of the SDK-rendered ad.
@@ -438,6 +435,7 @@ message BidExt {
     // bytes.
     optional string payload = 1;
   }
+
   // A token set by bidders for troubleshooting which will be included in the
   // real-time feedback for the Bid it is sent in. The contents of the token
   // will not be logged.
@@ -503,6 +501,7 @@ message BidExt {
       DAY = 2;
       WEEK = 3;
       MONTH = 4;
+
       // When INDEFINITE is used, time_range will be ignored. INDEFINITE means
       // the frequency cap will be applied for a long period of time, (longer
       // than a month) but not necessarily forever.
@@ -570,8 +569,8 @@ message BidExt {
     // https://developer.apple.com/documentation/storekit/skadnetwork/signing_and_providing_ads
     message Fidelity {
       // The fidelity type of the attribution to track.
-      optional SKAdNetworkFidelityType fidelity = 1
-          [default = STOREKIT_RENDERED_ADS];
+      optional SKAdNetworkFidelityType fidelity = 1 [default =
+        STOREKIT_RENDERED_ADS];
 
       // A unique all-lowercase UUID generated by the advertiser to use for
       // generating the signature.
@@ -583,7 +582,6 @@ message BidExt {
       // SKAdNetwork signature as specified by Apple.
       optional string signature = 4;
     }
-
     repeated Fidelity fidelities = 9;
 
     // A unique all-lowercase UUID generated by the advertiser to use for
@@ -615,7 +613,6 @@ message BidExt {
     //
     // For more info visit:
     // https://developer.apple.com/documentation/storekit/skoverlay
-    //
     message SKOverlay {
       // Delay in seconds after the ad begins before presenting the overlay.
       // If this field is set to 0, the overlay will be shown immediately
@@ -684,11 +681,6 @@ message BidExt {
   optional AppPromotionType app_promotion_type = 28;
 }
 
-extend com.google.openrtb.BidResponse.SeatBid.Bid {
-  // Extension key for AdX Bid.ext.
-  optional BidExt bid = 1014;
-}
-
 message NativeRequestExt {
   // [AdX: BidRequest.AdSlot.native_ad_template[0].style_id]
   optional int32 style_id = 1;
@@ -715,12 +707,16 @@ message NativeRequestExt {
   message MultiAdsCellInfo {
     // The row this cell belongs to.
     optional int32 cell_row = 1;
+
     // The column this cell belongs to.
     optional int32 cell_column = 2;
+
     // Total number of rows in the grid for this cell.
     optional int32 grid_rows = 3;
+
     // Total number of columns in the grid for this cell.
     optional int32 grid_columns = 4;
+
     // Unique ID for the grid. It identifies a single grid on a single
     // instance of a page and is the same for all cells within that grid. If a
     // page has multiple grids, the grid_id for other grids would be
@@ -730,13 +726,9 @@ message NativeRequestExt {
     // request for a cell in the grid.
     optional int64 grid_id = 5;
   }
+
   // [AdX: BidRequest.AdSlot.multi_ads_cell_info]
   optional MultiAdsCellInfo multi_ads_cell_info = 5;
-}
-
-extend com.google.openrtb.NativeRequest {
-  // Extension key for the AdX Native.ext.
-  optional NativeRequestExt native_ext = 1001;
 }
 
 message EventTrackerExt {
@@ -758,11 +750,6 @@ message EventTrackerExt {
   optional string vendor_key = 3;
 }
 
-extend com.google.openrtb.NativeResponse.EventTracker {
-  // Extension key for the AdX EventTracker.ext.
-  optional EventTrackerExt eventtrackers = 1000;
-}
-
 message PublisherExt {
   // The billing address country code of the publisher. This may be different
   // from the hosting country of the website. For a complete list of country
@@ -776,35 +763,34 @@ message PublisherExt {
   optional string host_publisher_id = 2;
 }
 
-extend com.google.openrtb.BidRequest.Publisher {
-  // Extension key for the AdX Publisher.ext
-  optional PublisherExt publisher = 1002;
-}
-
 message SiteExt {
   enum AmpPage {
     // This is not an AMP page.
     DIALECT_HTML = 0;
+
     // This is an Amp page.
     DIALECT_HTML_AMP = 1;
   }
+
   // Whether this is an AMP page or not. Omitted if unknown.
   optional AmpPage amp = 1;
-
   enum VisibilityState {
     VISIBILITY_STATE_UNKNOWN = 0;
+
     // The page is at least partially visible. For example, in the foreground
     // tab of a non-minimized window.
     VISIBILITY_STATE_VISIBLE = 1;
+
     // The page is not visible to users. For example, when the page is in a
     // background browser tab, or in a minimized window.
     VISIBILITY_STATE_HIDDEN = 2;
   }
+
   // The visibility state of the web page containing the ad slot.
   // See https://www.w3.org/TR/page-visibility/.
   // [AdX: BidRequest.page_visibility]
-  optional VisibilityState page_visibility = 2
-      [default = VISIBILITY_STATE_UNKNOWN];
+  optional VisibilityState page_visibility = 2 [default =
+    VISIBILITY_STATE_UNKNOWN];
 
   // Indicates that the request is using semi-transparent branding,
   // which means only a truncated version of the request URL will
@@ -819,16 +805,10 @@ message SiteExt {
   optional string inventorypartnerdomain = 4;
 }
 
-extend com.google.openrtb.BidRequest.Site {
-  // Extension key for the Adx Site.ext
-  optional SiteExt site = 1010;
-}
-
 message BidRequestExt {
   // Feedback on bids submitted in previous responses. This is only set if
   // real-time feedback is enabled for your bidder. Contact your
   // account manager if you want to enable real-time feedback.
-  //
   message BidFeedback {
     // The unique id from BidRequest.id.
     optional string request_id = 1;
@@ -870,6 +850,7 @@ message BidRequestExt {
       // The contents of the token.
       optional string payload = 1;
     }
+
     // The token included in the corresponding bid.
     optional EventNotificationToken event_notification_token = 4;
 
@@ -914,7 +895,6 @@ message BidRequestExt {
     // Frequency capping enforcement is available within a single site.
     FREQUENCY_CAPPING_SCOPE_SITE = 5;
   }
-
   optional FrequencyCappingScope fcap_scope = 4;
 
   // Privacy treatments. Some fields in the bid request can be coarsened or
@@ -922,17 +902,18 @@ message BidRequestExt {
   // information about privacy treatments that apply to an ad opportunity
   // offered through this request.
   message PrivacyTreatments {
-
     // Generalization that can be applied to the BidRequest.device.ua field.
     enum UserAgentGeneralization {
       // The user_agent field is provided in full (the complete User-Agent
       // header).
       USER_AGENT_FULL = 0;
+
       // The user_agent field is generalized, which can include limiting
       // browser and OS version information to major versions only and other
       // changes to protect user privacy.
       USER_AGENT_COARSENED = 1;
     }
+
     // Generalization that was applied to the BidRequest.device.ua field,
     // if any.
     optional UserAgentGeneralization user_agent = 2;
@@ -942,11 +923,13 @@ message BidRequestExt {
     enum UserAgentDataGeneralization {
       // The sua field is provided in full.
       USER_AGENT_DATA_FULL = 0;
+
       // The sua field is generalized, which can include limiting
       // browser and OS version information to major versions only and other
       // changes to protect user privacy.
       USER_AGENT_DATA_COARSENED = 1;
     }
+
     // Generalization that was applied to the
     // BidRequest.device.ext.sua field, if any.
     optional UserAgentDataGeneralization user_agent_data = 3;
@@ -955,18 +938,21 @@ message BidRequestExt {
     // should not be personalized.
     enum NonPersonalizedAdsReason {
       UNKNOWN = 0;
+
       // The publisher has declared that this request should serve
       // non-personalized ads independent of other signals.
       // https://support.google.com/admanager/answer/9005435#npa
       PUBLISHER_DECLARED_NPA = 1;
+
       // The publisher has requested restricted data processing for this
       // request. https://support.google.com/authorizedbuyers/answer/11121285
       RESTRICT_DATA_PROCESSING = 2;
+
       // The user has opted out of ads personalization.
       USER_OPT_OUT = 3;
     }
-    repeated NonPersonalizedAdsReason non_personalized_ads_reason = 6
-        [packed = true];
+    repeated NonPersonalizedAdsReason non_personalized_ads_reason = 6 [packed =
+      true];
 
     // True if publisher grants the permission to allow the bidder to use bid
     // request data to build user profiles for uses such as interest-based ads
@@ -976,16 +962,11 @@ message BidRequestExt {
     // https://support.google.com/admanager/answer/11956152
     optional bool allow_user_data_collection = 7;
   }
-
   optional PrivacyTreatments privacy_treatments = 5;
 }
 
-extend com.google.openrtb.BidRequest {
-  // Extension key for the Adx BidRequest.ext
-  optional BidRequestExt bid_request = 1018;
-}
-
 message UserExt {
+
   message ConsentedProvidersSettings {
     // Set of IDs corresponding to ad tech providers (ATPs) for whom the
     // publisher has specified to Google that its EEA users have given legally
@@ -1021,6 +1002,7 @@ message UserExt {
     // about this field.
     optional string additional_consent = 3;
   }
+
   // Information about the ad tech providers for whom the publisher has
   // specified to Google that its EEA user has consented to the use of their
   // personal data for ads personalization in accordance with Google's EU User
@@ -1051,7 +1033,6 @@ message UserExt {
     message ExtendedIdUid {
       optional string id = 1;
     }
-
     repeated ExtendedIdUid uids = 2;
   }
 
@@ -1059,11 +1040,6 @@ message UserExt {
   // publisher.
   // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/2.x_official_extensions/eids.md
   repeated ExtendedId eids = 5;
-}
-
-extend com.google.openrtb.BidRequest.User {
-  // Extension key for the Adx User.ext
-  optional UserExt user = 1007;
 }
 
 message DeviceExt {
@@ -1083,10 +1059,6 @@ message DeviceExt {
   // For more information about iOS's app tracking authorization status, see:
   // https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/authorizationstatus
   optional int32 atts = 3;
-}
-
-extend com.google.openrtb.BidRequest.Device {
-  optional DeviceExt device = 1066;
 }
 
 message RegsExt {
@@ -1109,11 +1081,6 @@ message RegsExt {
   // See https://support.google.com/authorizedbuyers/answer/9928204 for more
   // information on LGPD.
   optional bool lgpd = 2;
-}
-
-extend com.google.openrtb.BidRequest.Regs {
-  // Extension key for the Adx Regs.ext
-  optional RegsExt regs = 1001;
 }
 
 message DealExt {
@@ -1178,9 +1145,11 @@ message DealExt {
   // CREATIVE_SOURCE_ADVERTISER.
   enum CreativeSourceType {
     CREATIVE_SOURCE_UNKNOWN = 0;
+
     // The creative is hosted by the advertiser, which means the bidder is
     // required to provide a creative in the bid response.
     CREATIVE_SOURCE_ADVERTISER = 1;
+
     // The creative is hosted by the publisher, which means the bidder
     // does not need to include a creative in the bid response.
     // For more information on publisher-hosted creatives, see
@@ -1188,13 +1157,8 @@ message DealExt {
     // This feature isn't currently supported for RTB bidders.
     CREATIVE_SOURCE_PUBLISHER = 2;
   }
-  optional CreativeSourceType creative_source = 4
-      [default = CREATIVE_SOURCE_ADVERTISER];
-}
-
-extend com.google.openrtb.BidRequest.Imp.Pmp.Deal {
-  // Extension key for AdX Deal.ext.
-  optional DealExt deal = 1010;
+  optional CreativeSourceType creative_source = 4 [default =
+    CREATIVE_SOURCE_ADVERTISER];
 }
 
 message SourceExt {
@@ -1203,6 +1167,7 @@ message SourceExt {
   // see the OpenRTB Advisory for Open Measurement SDK:
   // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/OpenRTB%20support%20for%20OMSDK.md#openrtb-and-adcom.
   optional string omidpn = 1;
+
   // Version of the OM SDK integration. Equivalent to BidRequest.AdSlot.omidpv
   // in the Google protocol. For more info, see the OpenRTB Advisory for
   // Open Measurement SDK:
@@ -1275,12 +1240,63 @@ message SourceExt {
     // use the string "1.0".
     optional string ver = 3;
   }
+
   // Deprecated. This will be removed in December 2023. Use the standard field
   // schain instead.
   optional SupplyChain schain = 3;
 }
-
-extend com.google.openrtb.BidRequest.Source {
+extend .com.google.openrtb.BidRequest.Imp {
+  // Extension key for AdX Imp.ext.
+  optional ImpExt imp = 1009;
+}
+extend .com.google.openrtb.BidRequest.App {
+  // Extension key for AdX App.ext.
+  optional AppExt app = 1011;
+}
+extend .com.google.openrtb.BidResponse {
+  // Extension key for AdX BidResponse.ext.
+  optional BidResponseExt bid_response = 1005;
+}
+extend .com.google.openrtb.BidResponse.SeatBid.Bid {
+  // Extension key for AdX Bid.ext.
+  optional BidExt bid = 1014;
+}
+extend .com.google.openrtb.NativeRequest {
+  // Extension key for the AdX Native.ext.
+  optional NativeRequestExt native_ext = 1001;
+}
+extend .com.google.openrtb.NativeResponse.EventTracker {
+  // Extension key for the AdX EventTracker.ext.
+  optional EventTrackerExt eventtrackers = 1000;
+}
+extend .com.google.openrtb.BidRequest.Publisher {
+  // Extension key for the AdX Publisher.ext
+  optional PublisherExt publisher = 1002;
+}
+extend .com.google.openrtb.BidRequest.Site {
+  // Extension key for the Adx Site.ext
+  optional SiteExt site = 1010;
+}
+extend .com.google.openrtb.BidRequest {
+  // Extension key for the Adx BidRequest.ext
+  optional BidRequestExt bid_request = 1018;
+}
+extend .com.google.openrtb.BidRequest.User {
+  // Extension key for the Adx User.ext
+  optional UserExt user = 1007;
+}
+extend .com.google.openrtb.BidRequest.Device {
+  optional DeviceExt device = 1066;
+}
+extend .com.google.openrtb.BidRequest.Regs {
+  // Extension key for the Adx Regs.ext
+  optional RegsExt regs = 1001;
+}
+extend .com.google.openrtb.BidRequest.Imp.Pmp.Deal {
+  // Extension key for AdX Deal.ext.
+  optional DealExt deal = 1010;
+}
+extend .com.google.openrtb.BidRequest.Source {
   // Extension key for Source.ext
   optional SourceExt source = 1059;
 }

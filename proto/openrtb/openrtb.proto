@@ -3,8 +3,6 @@ option go_package = "./;openrtb";
 option java_outer_classname = "OpenRtb";
 package com.google.openrtb;
 
-// Copyright 2023 Google Inc. All Rights Reserved.
-
 // OpenRTB extensions ("ext" fields in the spec & JSON representation)
 // are represented here by Protocol Buffer extensions. This proto only
 // reserves the range of IDs 100-9999 at every extensible object.
@@ -14,7 +12,7 @@ package com.google.openrtb;
 //   300-999:   Free for use with other exchanges or projects.
 //   1000-1999: Reserved for Google.
 //   2000-9999: Free for use with other exchanges or projects.
-
+//
 // OpenRTB 2.0: The top-level bid request object contains a globally unique
 // bid request or auction ID. This id attribute is required as is at least one
 // impression object (Section 3.2.2). Other attributes in this top-level object
@@ -27,16 +25,6 @@ package com.google.openrtb;
 // bid request depending on whether the media is browser-based web content
 // or a non-browser application, respectively.
 message BidRequest {
-  // Unique ID of the bid request, provided by the exchange.
-  // REQUIRED by the OpenRTB specification.
-  // Supported by Google.
-  required string id = 1;
-
-  // Array of Imp objects (Section 3.2.2) representing the impressions offered.
-  // At least 1 Imp object is required.
-  // Supported by Google.
-  repeated Imp imp = 2;
-
   oneof distributionchannel_oneof {
     // Information about the publisher's website. Only applicable and
     // recommended for websites.
@@ -49,226 +37,10 @@ message BidRequest {
     App app = 4;
   }
 
-  // Information about the device the impression will be delivered to.
+  // Unique ID of the bid request, provided by the exchange.
+  // REQUIRED by the OpenRTB specification.
   // Supported by Google.
-  optional Device device = 5;
-
-  // A Regs object (Section 3.2.16) that specifies any industry, legal,
-  // or governmental regulations in force for this request.
-  // Supported by Google.
-  optional Regs regs = 14;
-
-  // Information about the user of the device or the advertising audience.
-  // Supported by Google.
-  optional User user = 6;
-
-  // Auction type: one of FIRST_PRICE or SECOND_PRICE.
-  // Supported by Google.
-  optional AuctionType at = 7 [default = SECOND_PRICE];
-
-  // Maximum time in milliseconds to submit a bid to avoid timeout.
-  // This value is commonly communicated offline.
-  // Supported by Google.
-  optional int32 tmax = 8;
-
-  // Allowlist of buyer seats (for example, advertisers, agencies) that can bid
-  // on this impression. IDs of seats and knowledge of the buyer's customers to
-  // which they refer must be coordinated between bidders and the exchange a
-  // priori. Omission implies no seat restrictions.
-  // Not supported by Google.
-  repeated string wseat = 9;
-
-  // Indicates if Exchange can verify that the impressions offered
-  // represent all of the impressions available in context (for example, all on
-  // the web page, all video spots such as pre/mid/post roll) to support
-  // road-blocking. false = no or unknown, true = yes, the impressions offered
-  // represent all that are available.
-  // Not supported by Google.
-  optional bool allimps = 10 [default = false];
-
-  // Array of allowed currencies for bids on this bid request using ISO-4217
-  // alpha codes. Recommended only if the exchange accepts multiple currencies.
-  // Supported by Google.
-  repeated string cur = 11;
-
-  // Blocked advertiser categories using the IAB content categories.
-  // The taxonomy to be used is defined by the cattax field.
-  // Supported by Google.
-  repeated string bcat = 12;
-
-  // The taxonomy in use for bcat.
-  // Not supported by Google.
-  optional CategoryTaxonomy cattax = 21 [default = IAB_CONTENT_1_0];
-
-  // Block list of advertisers by their domains (for example, "ford.com").
-  // Not supported by Google.
-  repeated string badv = 13;
-
-  // Block list of applications by their platform-specific exchange
-  // independent application identifiers. On Android, these should
-  // be bundle or package names (for example, com.foo.mygame).
-  // On iOS, these are numeric IDs.
-  // Supported by Google.
-  repeated string bapp = 16;
-
-  // Indicator of test mode in which auctions are not billable,
-  // where false = live mode, true = test mode.
-  // Supported by Google.
-  optional bool test = 15 [default = false];
-
-  // Block list of buyer seats (for example, advertisers, agencies) restricted
-  // from bidding on this impression. IDs of seats and knowledge
-  // of the buyer's customers to which they refer must be
-  // coordinated between bidders and the exchange a priori.
-  // At most, only one of wseat and bseat should be used in the
-  // same request. Omission of both implies no seat restrictions.
-  // Not supported by Google.
-  repeated string bseat = 17;
-
-  // Allowed list of languages for creatives using ISO-639-1-alpha-2.
-  // Omission implies no specific restrictions, but buyers would be
-  // advised to consider language attribute in the Device and/or
-  // Content objects if available.
-  // Only one of wlang or wlangb should be present.
-  // Supported by Google.
-  repeated string wlang = 18;
-
-  // Allowed list of languages for creatives using IETF BCP 47I.
-  // Omission implies no specific restrictions, but buyers would be
-  // advised to consider language attribute in the Device and/or
-  // Content objects if available.
-  // Only one of wlang or wlangb should be present.
-  // Not supported by Google.
-  repeated string wlangb = 20;
-
-  // A Source object (Section 3.2.2) that provides data about the
-  // inventory source and which entity makes the final decision.
-  // Supported by Google.
-  optional Source source = 19;
-
-  // Extensions.
-  extensions 100 to 9999;
-
-  // OpenRTB 2.5: This object describes the nature and behavior of the entity
-  // that is the source of the bid request upstream from the exchange.
-  // The primary purpose of this object is to define post-auction or upstream
-  // decisioning when the exchange itself does not control the final decision.
-  // A common example of this is header bidding, but it can also apply to
-  // upstream server entities such as another RTB exchange, a mediation
-  // platform, or an ad server combines direct campaigns with 3rd party
-  // demand in decisioning.
-  message Source {
-    // Entity responsible for the final impression sale decision,
-    // where false = exchange, true = upstream source
-    // Not supported by Google.
-    optional bool fd = 1;
-
-    // Transaction ID that must be common across all participants in
-    // this bid request (for example, potentially multiple exchanges).
-    // Not supported by Google.
-    optional string tid = 2;
-
-    // Payment ID chain string containing embedded syntax
-    // described in the TAG Payment ID Protocol v1.0.
-    // Not supported by Google.
-    optional string pchain = 3;
-
-    // This object is composed of a set of nodes where each node represents a
-    // specific entity that participates in the transacting of inventory.
-    // The entire chain of nodes from beginning to end represents all entities
-    // who are involved in the direct flow of payment for inventory. Detailed
-    // implementation examples can be found here:
-    // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/supplychainobject.md
-    message SupplyChain {
-      // Indicates whether the chain contains all nodes involved in the
-      // transaction leading back to the owner of the site, app or other medium
-      // of the inventory.
-      // REQUIRED by the OpenRTB specification.
-      // Supported by Google.
-      optional bool complete = 1;
-
-      // The identity of an entity participating in the supply chain.
-      message SupplyChainNode {
-        // The canonical domain name of the SSP, Exchange, Header Wrapper, etc
-        // system that bidders connect to. This may be the operational domain of
-        // the system, if that is different than the parent corporate domain, to
-        // facilitate WHOIS and reverse IP lookups to establish clear ownership
-        // of the delegate system. This should be the same value as used to
-        // identify sellers in an ads.txt file if one exists.
-        // REQUIRED by the OpenRTB specification.
-        // Supported by Google.
-        optional string asi = 1;
-
-        // The identifier associated with the seller or reseller account
-        // within the advertising system. This must contain the same value
-        // used in transactions (OpenRTB bid requests) in the field
-        // specified by the SSP/exchange. Typically, in OpenRTB, this is
-        // publisher.id. For OpenDirect it is typically the publisher's
-        // organization ID. Should be limited to 64 characters in length.
-        // REQUIRED by the OpenRTB specification.
-        // Supported by Google.
-        optional string sid = 2;
-
-        // The OpenRTB RequestId of the request as issued by this seller.
-        // Not supported by Google.
-        optional string rid = 3;
-
-        // The name of the company (the legal entity) that has paid for
-        // inventory transacted under the given seller_ID. This value is
-        // optional and should NOT be included if it exists in the
-        // advertising system’s sellers.json file.
-        // Not supported by Google.
-        optional string name = 4;
-
-        // The business domain name of the entity represented by this
-        // node. This value is optional and should NOT be included if it
-        // exists in the advertising system’s sellers.json file.
-        // Not supported by Google.
-        optional string domain = 5;
-
-        // Indicates whether this node will be involved in the flow of payment
-        // for the inventory. When set to true, the advertising system in the
-        // asi field pays the seller in the sid field, who is responsible for
-        // paying the previous node in the chain. When set to false, this node
-        // is not involved in the flow of payment for the inventory.
-        // For version 1.0 of SupplyChain, this property should always be true.
-        // Implementers should ensure that they propagate this field onwards
-        // when constructing SupplyChain objects in bid requests sent to a
-        // downstream advertising system.
-        // Supported by Google.
-        optional bool hp = 6;
-
-        // Extensions.
-        extensions 100 to 9999;
-      }
-      // Array of SupplyChainNode objects in the order of the chain.
-      // In a complete supply chain, the first node represents the initial
-      // advertising system and seller ID involved in the transaction, that is,
-      // the owner of the site, app, or other medium. In an incomplete
-      // supply chain, it represents the first known node. The last node
-      // represents the entity sending this bid request.
-      // REQUIRED by the OpenRTB specification.
-      // Supported by Google.
-      repeated SupplyChainNode nodes = 2;
-
-      // Version of the supply chain specification in use, in the format
-      // of "major.minor". For example, for version 1.0 of the spec,
-      // use the string "1.0".
-      // REQUIRED by the OpenRTB specification.
-      // Supported by Google.
-      optional string ver = 3;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
-    // This object represents both the links in the supply chain as
-    // well as an indicator whether or not the supply chain is complete.
-    // Supported by Google.
-    optional SupplyChain schain = 4;
-
-    // Extensions.
-    extensions 100 to 9999;
-  }
+  required string id = 1;
 
   // OpenRTB 2.0: This object describes an ad placement or impression
   // being auctioned. A single bid request can include multiple Imp objects,
@@ -287,136 +59,6 @@ message BidRequest {
     // for n impressions).
     // Supported by Google.
     required string id = 1;
-
-    // A Banner object (Section 3.2.3); required if this impression is
-    // offered as a banner ad opportunity.
-    // Supported by Google.
-    optional Banner banner = 2;
-
-    // A Video object (Section 3.2.4); required if this impression is
-    // offered as a video ad opportunity.
-    // Supported by Google.
-    optional Video video = 3;
-
-    // An Audio object; required if this impression is offered
-    // as an audio ad opportunity.
-    // Supported by Google.
-    optional Audio audio = 15;
-
-    // Name of ad mediation partner, SDK technology, or player responsible
-    // for rendering ad (typically video or mobile). Used by some ad servers
-    // to customize ad code by partner. Recommended for video and/or apps.
-    // Supported by Google.
-    optional string displaymanager = 4;
-
-    // Version of ad mediation partner, SDK technology, or player responsible
-    // for rendering ad (typically video or mobile). Used by some ad servers
-    // to customize ad code by partner. Recommended for video and/or apps.
-    // Not supported by Google.
-    optional string displaymanagerver = 5;
-
-    // true = the ad is interstitial or full screen, false = not interstitial.
-    // Supported by Google.
-    optional bool instl = 6;
-
-    // Identifier for specific ad placement or ad tag that was used to
-    // initiate the auction. This can be useful for debugging of any issues,
-    // or for optimization by the buyer.
-    // Supported by Google.
-    optional string tagid = 7;
-
-    // Minimum bid for this impression expressed in CPM.
-    // Supported by Google.
-    optional double bidfloor = 8 [default = 0];
-
-    // Currency specified using ISO-4217 alpha codes. This may be different
-    // from bid currency returned by bidder if this is allowed by the exchange.
-    // Supported by Google.
-    optional string bidfloorcur = 9 [default = "USD"];
-
-    // Indicates the type of browser opened upon clicking the
-    // creative in an app, where false = embedded, true = native.
-    // Note that the Safari View Controller in iOS 9.x devices is considered
-    // a native browser for purposes of this attribute.
-    // Not supported by Google.
-    optional bool clickbrowser = 16;
-
-    // Indicates if the impression requires secure HTTPS URL creative
-    // assets and markup. If omitted, the secure state is unknown, but
-    // non-secure HTTP support can be assumed.
-    // Supported by Google.
-    optional bool secure = 12;
-
-    // Array of exchange-specific names of supported iframe busters.
-    // Not supported by Google.
-    repeated string iframebuster = 10;
-
-    // Indicates whether the user receives a reward for viewing the ad.
-    // Typically video ad implementations allow users to read an additional news
-    // article for free, receive an extra life in a game, or get a sponsored
-    // ad-free music session. The reward is typically distributed after the
-    // video ad is completed.
-    // Supported by Google.
-    optional bool rwdd = 18 [default = false];
-
-    // Indicates if server-side ad insertion (e.g., stitching an ad into an
-    // audio or video stream) is in use and the impact of this on asset
-    // and tracker retrieval.
-    // Not supported by Google.
-    optional ServerSideAdInsertionType ssai = 19
-        [default = SERVER_SIDE_AD_INSERTION_TYPE_UNKNOWN];
-
-    // A Pmp object (Section 3.2.17) containing any private marketplace deals
-    // in effect for this impression.
-    // Supported by Google.
-    optional Pmp pmp = 11;
-
-    // A Native object (Section 3.2.5); required if this impression is
-    // offered as a native ad opportunity.
-    // Supported by Google.
-    optional Native native = 13;
-
-    // Advisory as to the number of seconds that may elapse
-    // between the auction and the actual impression.
-    // Supported by Google.
-    optional int32 exp = 14;
-
-    // An array of Metric object (Section 3.2.5).
-    // Supported by Google.
-    repeated Metric metric = 17;
-
-    // Extensions.
-    extensions 100 to 9999;
-
-    // OpenRTB 2.5: This object is associated with an impression as
-    // an array of metrics. These metrics can offer insight into
-    // the impression to assist with decisioning such as average recent
-    // viewability, click-through rate, or another metric. Each metric is
-    // identified by its type, reports the value of the metric, and optionally
-    // identifies the source or vendor measuring the value.
-    message Metric {
-      // Type of metric being presented using exchange curated string
-      // names which should be published to bidders a priori.
-      // REQUIRED by the OpenRTB specification.
-      // Supported by Google.
-      optional string type = 1;
-
-      // Number representing the value of the metric.
-      // Probabilities must be in the range 0.0 - 1.0.
-      // REQUIRED by the OpenRTB specification.
-      // Supported by Google.
-      optional double value = 2;
-
-      // Source of the value using exchange curated string names
-      // which should be published to bidders a priori.
-      // If the exchange itself is the source versus a third party,
-      // "EXCHANGE" is recommended.
-      // Supported by Google.
-      optional string vendor = 3;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
 
     // OpenRTB 2.0: This object represents the most general type of
     // impression. Although the term "banner" may have very specific meaning
@@ -468,10 +110,9 @@ message BidRequest {
         // which the ad will be displayed when the size is expressed as a ratio.
         // Not supported by Google.
         optional int32 wmin = 5;
-
-        // Extensions.
         extensions 100 to 9999;
       }
+
       // Array of format objects representing the banner sizes permitted.
       // If none are specified, then use of the h and w attributes
       // is highly recommended.
@@ -543,10 +184,13 @@ message BidRequest {
       // Minimum height in device independent pixels (DIPS).
       // Supported by Google.
       optional int32 hmin = 14 [deprecated = true];
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
+    // A Banner object (Section 3.2.3); required if this impression is
+    // offered as a banner ad opportunity.
+    // Supported by Google.
+    optional Banner banner = 2;
 
     // OpenRTB 2.0: This object represents an in-stream video impression.
     // Many of the fields are non-essential for minimally viable transactions,
@@ -667,13 +311,13 @@ message BidRequest {
       // the sequence number will allow for the coordinated delivery of
       // multiple creatives.
       // Not supported by Google.
-      optional int32 sequence = 9 [default = 1, deprecated = true];
+      optional int32 sequence = 9 [deprecated = true, default = 1];
 
       // For video ad pods, this value indicates that the seller can
       // guarantee delivery against the indicated slot position in the pod.
       // Not supported by Google.
-      optional SlotPositionInPod slotinpod = 33
-          [default = SLOT_POSITION_POD_ANY];
+      optional SlotPositionInPod slotinpod = 33 [default =
+        SLOT_POSITION_POD_ANY];
 
       // Minimum CPM per second. This is a price floor for the
       // "dynamic" portion of a video ad pod, relative to the duration
@@ -745,10 +389,13 @@ message BidRequest {
       // Use the field <code>protocols</code>.
       // Not supported by Google.
       optional Protocol protocol = 5 [deprecated = true];
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
+    // A Video object (Section 3.2.4); required if this impression is
+    // offered as a video ad opportunity.
+    // Supported by Google.
+    optional Video video = 3;
 
     // This object represents an audio type impression. Many of the fields
     // are non-essential for minimally viable transactions, but are included
@@ -825,13 +472,13 @@ message BidRequest {
       // the sequence number will allow for the coordinated delivery of
       // multiple creatives.
       // Not supported by Google.
-      optional int32 sequence = 6 [default = 1, deprecated = true];
+      optional int32 sequence = 6 [deprecated = true, default = 1];
 
       // For audio ad pods, this value indicates that the seller can
       // guarantee delivery against the indicated sequence.
       // Not supported by Google.
-      optional SlotPositionInPod slotinpod = 29
-          [default = SLOT_POSITION_POD_ANY];
+      optional SlotPositionInPod slotinpod = 29 [default =
+        SLOT_POSITION_POD_ANY];
 
       // Minimum CPM per second. This is a price floor for the
       // "dynamic" portion of an audio ad pod, relative to the duration
@@ -894,10 +541,139 @@ message BidRequest {
       // Volume normalization mode.
       // Not supported by Google.
       optional VolumeNormalizationMode nvol = 24;
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
+    // An Audio object; required if this impression is offered
+    // as an audio ad opportunity.
+    // Supported by Google.
+    optional Audio audio = 15;
+
+    // Name of ad mediation partner, SDK technology, or player responsible
+    // for rendering ad (typically video or mobile). Used by some ad servers
+    // to customize ad code by partner. Recommended for video and/or apps.
+    // Supported by Google.
+    optional string displaymanager = 4;
+
+    // Version of ad mediation partner, SDK technology, or player responsible
+    // for rendering ad (typically video or mobile). Used by some ad servers
+    // to customize ad code by partner. Recommended for video and/or apps.
+    // Not supported by Google.
+    optional string displaymanagerver = 5;
+
+    // true = the ad is interstitial or full screen, false = not interstitial.
+    // Supported by Google.
+    optional bool instl = 6;
+
+    // Identifier for specific ad placement or ad tag that was used to
+    // initiate the auction. This can be useful for debugging of any issues,
+    // or for optimization by the buyer.
+    // Supported by Google.
+    optional string tagid = 7;
+
+    // Minimum bid for this impression expressed in CPM.
+    // Supported by Google.
+    optional double bidfloor = 8 [default = 0];
+
+    // Currency specified using ISO-4217 alpha codes. This may be different
+    // from bid currency returned by bidder if this is allowed by the exchange.
+    // Supported by Google.
+    optional string bidfloorcur = 9 [default = "USD"];
+
+    // Indicates the type of browser opened upon clicking the
+    // creative in an app, where false = embedded, true = native.
+    // Note that the Safari View Controller in iOS 9.x devices is considered
+    // a native browser for purposes of this attribute.
+    // Not supported by Google.
+    optional bool clickbrowser = 16;
+
+    // Indicates if the impression requires secure HTTPS URL creative
+    // assets and markup. If omitted, the secure state is unknown, but
+    // non-secure HTTP support can be assumed.
+    // Supported by Google.
+    optional bool secure = 12;
+
+    // Array of exchange-specific names of supported iframe busters.
+    // Not supported by Google.
+    repeated string iframebuster = 10;
+
+    // Indicates whether the user receives a reward for viewing the ad.
+    // Typically video ad implementations allow users to read an additional news
+    // article for free, receive an extra life in a game, or get a sponsored
+    // ad-free music session. The reward is typically distributed after the
+    // video ad is completed.
+    // Supported by Google.
+    optional bool rwdd = 18 [default = false];
+
+    // Indicates if server-side ad insertion (e.g., stitching an ad into an
+    // audio or video stream) is in use and the impact of this on asset
+    // and tracker retrieval.
+    // Not supported by Google.
+    optional ServerSideAdInsertionType ssai = 19 [default =
+      SERVER_SIDE_AD_INSERTION_TYPE_UNKNOWN];
+
+    // OpenRTB 2.2: This object is the private marketplace container for
+    // direct deals between buyers and sellers that may pertain to this
+    // impression. The actual deals are represented as a collection of
+    // Deal objects. Refer to Section 7.2 for more details.
+    message Pmp {
+      // Indicator of auction eligibility to seats named in the Direct Deals
+      // object, where false = all bids are accepted, true = bids are restricted
+      // to the deals specified and the terms thereof.
+      // Supported by Google.
+      optional bool private_auction = 1 [default = false];
+
+      // OpenRTB 2.2: This object constitutes a specific deal that was struck
+      // a priori between a buyer and a seller. Its presence with the Pmp
+      // collection indicates that this impression is available under the terms
+      // of that deal. Refer to Section 7.2 for more details.
+      message Deal {
+        // A unique identifier for the direct deal.
+        // REQUIRED by the OpenRTB specification.
+        // Supported by Google.
+        required string id = 1;
+
+        // Minimum bid for this impression expressed in CPM.
+        // Supported by Google.
+        optional double bidfloor = 2 [default = 0];
+
+        // Currency specified using ISO-4217 alpha codes. This may be different
+        // from bid currency returned by bidder if this is allowed
+        // by the exchange.
+        // Supported by Google.
+        optional string bidfloorcur = 3 [default = "USD"];
+
+        // Allowlist of buyer seats (for example, advertisers, agencies) that
+        // can bid on this deal. IDs of seats and knowledge of the buyer's
+        // customers to which they refer must be coordinated between bidders and
+        // the exchange a priori. Omission implies no seat restrictions.
+        // Not supported by Google.
+        repeated string wseat = 4;
+
+        // Array of advertiser domains (for example, advertiser.com) allowed to
+        // bid on this deal. Omission implies no advertiser restrictions.
+        // Not supported by Google.
+        repeated string wadomain = 5;
+
+        // Optional override of the overall auction type of the bid request.
+        // Supports the additional value FIXED_PRICE: the value passed in
+        // bidfloor is the agreed upon deal price.
+        // Supported by Google.
+        optional AuctionType at = 6;
+        extensions 100 to 9999;
+      }
+
+      // Array of Deal (Section 3.2.18) objects that convey the specific deals
+      // applicable to this impression.
+      // Supported by Google.
+      repeated Deal deals = 2;
+      extensions 100 to 9999;
+    }
+
+    // A Pmp object (Section 3.2.17) containing any private marketplace deals
+    // in effect for this impression.
+    // Supported by Google.
+    optional Pmp pmp = 11;
 
     // OpenRTB 2.3: This object represents a native type impression.
     // Native ad units are intended to blend seamlessly into the surrounding
@@ -941,230 +717,57 @@ message BidRequest {
 
       // Blocked creative attributes.
       repeated CreativeAttribute battr = 4 [packed = true];
-
-      // Extensions.
       extensions 100 to 9999;
     }
 
-    // OpenRTB 2.2: This object is the private marketplace container for
-    // direct deals between buyers and sellers that may pertain to this
-    // impression. The actual deals are represented as a collection of
-    // Deal objects. Refer to Section 7.2 for more details.
-    message Pmp {
-      // Indicator of auction eligibility to seats named in the Direct Deals
-      // object, where false = all bids are accepted, true = bids are restricted
-      // to the deals specified and the terms thereof.
-      // Supported by Google.
-      optional bool private_auction = 1 [default = false];
+    // A Native object (Section 3.2.5); required if this impression is
+    // offered as a native ad opportunity.
+    // Supported by Google.
+    optional Native native = 13;
 
-      // Array of Deal (Section 3.2.18) objects that convey the specific deals
-      // applicable to this impression.
-      // Supported by Google.
-      repeated Deal deals = 2;
+    // Advisory as to the number of seconds that may elapse
+    // between the auction and the actual impression.
+    // Supported by Google.
+    optional int32 exp = 14;
 
-      // Extensions.
+    // OpenRTB 2.5: This object is associated with an impression as
+    // an array of metrics. These metrics can offer insight into
+    // the impression to assist with decisioning such as average recent
+    // viewability, click-through rate, or another metric. Each metric is
+    // identified by its type, reports the value of the metric, and optionally
+    // identifies the source or vendor measuring the value.
+    message Metric {
+      // Type of metric being presented using exchange curated string
+      // names which should be published to bidders a priori.
+      // REQUIRED by the OpenRTB specification.
+      // Supported by Google.
+      optional string type = 1;
+
+      // Number representing the value of the metric.
+      // Probabilities must be in the range 0.0 - 1.0.
+      // REQUIRED by the OpenRTB specification.
+      // Supported by Google.
+      optional double value = 2;
+
+      // Source of the value using exchange curated string names
+      // which should be published to bidders a priori.
+      // If the exchange itself is the source versus a third party,
+      // "EXCHANGE" is recommended.
+      // Supported by Google.
+      optional string vendor = 3;
       extensions 100 to 9999;
-
-      // OpenRTB 2.2: This object constitutes a specific deal that was struck
-      // a priori between a buyer and a seller. Its presence with the Pmp
-      // collection indicates that this impression is available under the terms
-      // of that deal. Refer to Section 7.2 for more details.
-      message Deal {
-        // A unique identifier for the direct deal.
-        // REQUIRED by the OpenRTB specification.
-        // Supported by Google.
-        required string id = 1;
-
-        // Minimum bid for this impression expressed in CPM.
-        // Supported by Google.
-        optional double bidfloor = 2 [default = 0];
-
-        // Currency specified using ISO-4217 alpha codes. This may be different
-        // from bid currency returned by bidder if this is allowed
-        // by the exchange.
-        // Supported by Google.
-        optional string bidfloorcur = 3 [default = "USD"];
-
-        // Allowlist of buyer seats (for example, advertisers, agencies) that
-        // can bid on this deal. IDs of seats and knowledge of the buyer's
-        // customers to which they refer must be coordinated between bidders and
-        // the exchange a priori. Omission implies no seat restrictions.
-        // Not supported by Google.
-        repeated string wseat = 4;
-
-        // Array of advertiser domains (for example, advertiser.com) allowed to
-        // bid on this deal. Omission implies no advertiser restrictions.
-        // Not supported by Google.
-        repeated string wadomain = 5;
-
-        // Optional override of the overall auction type of the bid request.
-        // Supports the additional value FIXED_PRICE: the value passed in
-        // bidfloor is the agreed upon deal price.
-        // Supported by Google.
-        optional AuctionType at = 6;
-
-        // Extensions.
-        extensions 100 to 9999;
-      }
     }
-  }
 
-  // OpenRTB 2.0: This object should be included if the ad supported content
-  // is a website as opposed to a non-browser application. A bid request must
-  // not contain both a Site and an App object. At a minimum, it is useful to
-  // provide a site ID or page URL, but this is not strictly required.
-  message Site {
-    // Site ID on the exchange.
-    // Not supported by Google.
-    optional string id = 1;
-
-    // Site name (may be masked at publisher's request).
-    // Not supported by Google.
-    optional string name = 2;
-
-    // Domain of the site, used for advertiser side blocking.
-    // For example, "foo.com".
-    // Not supported by Google.
-    optional string domain = 3;
-
-    // The taxonomy in use for cat, sectioncat and pagecat.
-    // Not supported by Google.
-    optional CategoryTaxonomy cattax = 16 [default = IAB_CONTENT_1_0];
-
-    // Array of IAB content categories of the site.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string cat = 4;
-
-    // Array of IAB content categories that describe the current section
-    // of the site.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string sectioncat = 5;
-
-    // Array of IAB content categories that describe the current page or view
-    // of the site.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string pagecat = 6;
-
-    // URL of the page where the impression will be shown.
+    // An array of Metric object (Section 3.2.5).
     // Supported by Google.
-    optional string page = 7;
-
-    // Indicates if the site has a privacy policy.
-    // Not supported by Google.
-    optional bool privacypolicy = 8;
-
-    // Referrer URL that caused navigation to the current page.
-    // Not supported by Google.
-    optional string ref = 9;
-
-    // Search string that caused navigation to the current page.
-    // Not supported by Google.
-    optional string search = 10;
-
-    // Details about the Publisher (Section 3.2.8) of the site.
-    // Supported by Google.
-    optional Publisher publisher = 11;
-
-    // Details about the Content (Section 3.2.9) within the site.
-    // Supported by Google.
-    optional Content content = 12;
-
-    // Comma separated list of keywords about this site.
-    // Not supported by Google.
-    optional string keywords = 13;
-
-    // Indicates if the site has been programmed to optimize layout
-    // when viewed on mobile devices.
-    // Supported by Google.
-    optional bool mobile = 15;
-
-    // Extensions.
+    repeated Metric metric = 17;
     extensions 100 to 9999;
   }
 
-  // OpenRTB 2.0: This object should be included if the ad supported content
-  // is a non-browser application (typically in mobile) as opposed to a website.
-  // A bid request must not contain both an App and a Site object.
-  // At a minimum, it is useful to provide an App ID or bundle,
-  // but this is not strictly required.
-  message App {
-    // Application ID on the exchange.
-    // Not supported by Google.
-    optional string id = 1;
-
-    // Application name (may be aliased at publisher's request). App names for
-    // SDK-less requests (mostly from connected TVs) can be provided by the
-    // publisher directly in the request.
-    // Supported by Google.
-    optional string name = 2;
-
-    // Domain of the application. For example, "mygame.foo.com".
-    // Not supported by Google.
-    optional string domain = 3;
-
-    // The taxonomy in use for cat, sectioncat and pagecat.
-    // Not supported by Google.
-    optional CategoryTaxonomy cattax = 17 [default = IAB_CONTENT_1_0];
-
-    // Array of IAB content categories of the app.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string cat = 4;
-
-    // Array of IAB content categories that describe the current section
-    // of the app.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string sectioncat = 5;
-
-    // Array of IAB content categories that describe the current page or view
-    // of the app.
-    // The taxonomy to be used is defined by the cattax field.
-    // Not supported by Google.
-    repeated string pagecat = 6;
-
-    // Application version.
-    // Not supported by Google.
-    optional string ver = 7;
-
-    // A platform-specific application identifier intended to be
-    // unique to the app and independent of the exchange. On Android,
-    // this should be a bundle or package name (for example, com.foo.mygame).
-    // On iOS, it is a numeric ID. For SDK-less requests (mostly from connected
-    // TVs), it can be provided by the publisher directly in the request.
-    // Supported by Google.
-    optional string bundle = 8;
-
-    // Indicates if the app has a privacy policy.
-    // Not supported by Google.
-    optional bool privacypolicy = 9;
-
-    // false = app is free, true = the app is a paid version.
-    // Not supported by Google.
-    optional bool paid = 10;
-
-    // Details about the Publisher (Section 3.2.8) of the app.
-    // Supported by Google.
-    optional Publisher publisher = 11;
-
-    // Details about the Content (Section 3.2.9) within the app.
-    // Supported by Google.
-    optional Content content = 12;
-
-    // Comma separated list of keywords about the app.
-    // Not supported by Google.
-    optional string keywords = 13;
-
-    // App store URL for an installed app; for QAG 1.5 compliance.
-    // Supported by Google.
-    optional string storeurl = 16;
-
-    // Extensions.
-    extensions 100 to 9999;
-  }
+  // Array of Imp objects (Section 3.2.2) representing the impressions offered.
+  // At least 1 Imp object is required.
+  // Supported by Google.
+  repeated Imp imp = 2;
 
   // OpenRTB 2.0: This object describes the publisher of the media in which
   // the ad will be displayed. The publisher is typically the seller
@@ -1190,8 +793,6 @@ message BidRequest {
     // Highest level domain of the publisher (for example, "publisher.com").
     // Not supported by Google.
     optional string domain = 4;
-
-    // Extensions.
     extensions 100 to 9999;
   }
 
@@ -1246,6 +847,36 @@ message BidRequest {
     // International Standard Recording Code conforming to ISO-3901.
     // Not supported by Google.
     optional string isrc = 24;
+
+    // OpenRTB 2.0: This object defines the producer of the content in which
+    // the ad will be shown. This is particularly useful when the content is
+    // syndicated and may be distributed through different publishers and thus
+    // when the producer and publisher are not necessarily the same entity.
+    message Producer {
+      // Content producer or originator ID. Useful if content is syndicated,
+      // and may be posted on a site using embed tags.
+      // Not supported by Google.
+      optional string id = 1;
+
+      // Content producer or originator name (for example, "Warner Bros").
+      // Not supported by Google.
+      optional string name = 2;
+
+      // The taxonomy in use for cat.
+      // Not supported by Google.
+      optional CategoryTaxonomy cattax = 5 [default = IAB_CONTENT_1_0];
+
+      // Array of IAB content categories that describe the content producer.
+      // The taxonomy to be used is defined by the cattax field.
+      // Not supported by Google.
+      repeated string cat = 3;
+
+      // Highest level domain of the content producer (for example,
+      // "producer.com").
+      // Supported by Google.
+      optional string domain = 4;
+      extensions 100 to 9999;
+    }
 
     // Details about the content Producer (Section 3.2.10).
     // Supported by Google.
@@ -1342,10 +973,9 @@ message BidRequest {
       // private domain (PSL+1) for DSP targeting normalization purposes.
       // Not supported by Google.
       optional string domain = 3;
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
     // Details about the network the content is on.
     // Not supported by Google.
     optional Network network = 30;
@@ -1373,10 +1003,9 @@ message BidRequest {
       // normalization purposes.
       // Not supported by Google.
       optional string domain = 3;
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
     // Details about the channel the content is on.
     // Not supported by Google.
     optional Channel channel = 31;
@@ -1385,40 +1014,243 @@ message BidRequest {
     // Video quality per IAB's classification.
     // Not supported by Google.
     optional ProductionQuality videoquality = 8 [deprecated = true];
-
-    // Extensions.
     extensions 100 to 9999;
   }
 
-  // OpenRTB 2.0: This object defines the producer of the content in which
-  // the ad will be shown. This is particularly useful when the content is
-  // syndicated and may be distributed through different publishers and thus
-  // when the producer and publisher are not necessarily the same entity.
-  message Producer {
-    // Content producer or originator ID. Useful if content is syndicated,
-    // and may be posted on a site using embed tags.
+  // OpenRTB 2.0: This object should be included if the ad supported content
+  // is a website as opposed to a non-browser application. A bid request must
+  // not contain both a Site and an App object. At a minimum, it is useful to
+  // provide a site ID or page URL, but this is not strictly required.
+  message Site {
+    // Site ID on the exchange.
     // Not supported by Google.
     optional string id = 1;
 
-    // Content producer or originator name (for example, "Warner Bros").
+    // Site name (may be masked at publisher's request).
     // Not supported by Google.
     optional string name = 2;
 
-    // The taxonomy in use for cat.
+    // Domain of the site, used for advertiser side blocking.
+    // For example, "foo.com".
     // Not supported by Google.
-    optional CategoryTaxonomy cattax = 5 [default = IAB_CONTENT_1_0];
+    optional string domain = 3;
 
-    // Array of IAB content categories that describe the content producer.
+    // The taxonomy in use for cat, sectioncat and pagecat.
+    // Not supported by Google.
+    optional CategoryTaxonomy cattax = 16 [default = IAB_CONTENT_1_0];
+
+    // Array of IAB content categories of the site.
     // The taxonomy to be used is defined by the cattax field.
     // Not supported by Google.
-    repeated string cat = 3;
+    repeated string cat = 4;
 
-    // Highest level domain of the content producer (for example,
-    // "producer.com").
+    // Array of IAB content categories that describe the current section
+    // of the site.
+    // The taxonomy to be used is defined by the cattax field.
+    // Not supported by Google.
+    repeated string sectioncat = 5;
+
+    // Array of IAB content categories that describe the current page or view
+    // of the site.
+    // The taxonomy to be used is defined by the cattax field.
+    // Not supported by Google.
+    repeated string pagecat = 6;
+
+    // URL of the page where the impression will be shown.
     // Supported by Google.
-    optional string domain = 4;
+    optional string page = 7;
 
-    // Extensions.
+    // Indicates if the site has a privacy policy.
+    // Not supported by Google.
+    optional bool privacypolicy = 8;
+
+    // Referrer URL that caused navigation to the current page.
+    // Not supported by Google.
+    optional string ref = 9;
+
+    // Search string that caused navigation to the current page.
+    // Not supported by Google.
+    optional string search = 10;
+
+    // Details about the Publisher (Section 3.2.8) of the site.
+    // Supported by Google.
+    optional Publisher publisher = 11;
+
+    // Details about the Content (Section 3.2.9) within the site.
+    // Supported by Google.
+    optional Content content = 12;
+
+    // Comma separated list of keywords about this site.
+    // Not supported by Google.
+    optional string keywords = 13;
+
+    // Indicates if the site has been programmed to optimize layout
+    // when viewed on mobile devices.
+    // Supported by Google.
+    optional bool mobile = 15;
+    extensions 100 to 9999;
+  }
+
+  // OpenRTB 2.0: This object should be included if the ad supported content
+  // is a non-browser application (typically in mobile) as opposed to a website.
+  // A bid request must not contain both an App and a Site object.
+  // At a minimum, it is useful to provide an App ID or bundle,
+  // but this is not strictly required.
+  message App {
+    // Application ID on the exchange.
+    // Not supported by Google.
+    optional string id = 1;
+
+    // Application name (may be aliased at publisher's request). App names for
+    // SDK-less requests (mostly from connected TVs) can be provided by the
+    // publisher directly in the request.
+    // Supported by Google.
+    optional string name = 2;
+
+    // Domain of the application. For example, "mygame.foo.com".
+    // Not supported by Google.
+    optional string domain = 3;
+
+    // The taxonomy in use for cat, sectioncat and pagecat.
+    // Not supported by Google.
+    optional CategoryTaxonomy cattax = 17 [default = IAB_CONTENT_1_0];
+
+    // Array of IAB content categories of the app.
+    // The taxonomy to be used is defined by the cattax field.
+    // Not supported by Google.
+    repeated string cat = 4;
+
+    // Array of IAB content categories that describe the current section
+    // of the app.
+    // The taxonomy to be used is defined by the cattax field.
+    // Not supported by Google.
+    repeated string sectioncat = 5;
+
+    // Array of IAB content categories that describe the current page or view
+    // of the app.
+    // The taxonomy to be used is defined by the cattax field.
+    // Not supported by Google.
+    repeated string pagecat = 6;
+
+    // Application version.
+    // Not supported by Google.
+    optional string ver = 7;
+
+    // A platform-specific application identifier intended to be
+    // unique to the app and independent of the exchange. On Android,
+    // this should be a bundle or package name (for example, com.foo.mygame).
+    // On iOS, it is a numeric ID. For SDK-less requests (mostly from connected
+    // TVs), it can be provided by the publisher directly in the request.
+    // Supported by Google.
+    optional string bundle = 8;
+
+    // Indicates if the app has a privacy policy.
+    // Not supported by Google.
+    optional bool privacypolicy = 9;
+
+    // false = app is free, true = the app is a paid version.
+    // Not supported by Google.
+    optional bool paid = 10;
+
+    // Details about the Publisher (Section 3.2.8) of the app.
+    // Supported by Google.
+    optional Publisher publisher = 11;
+
+    // Details about the Content (Section 3.2.9) within the app.
+    // Supported by Google.
+    optional Content content = 12;
+
+    // Comma separated list of keywords about the app.
+    // Not supported by Google.
+    optional string keywords = 13;
+
+    // App store URL for an installed app; for QAG 1.5 compliance.
+    // Supported by Google.
+    optional string storeurl = 16;
+    extensions 100 to 9999;
+  }
+
+  // OpenRTB 2.0: This object encapsulates various methods for specifying a
+  // geographic location. When subordinate to a Device object, it indicates the
+  // location of the device which can also be interpreted as the user's current
+  // location. When subordinate to a User object, it indicates the location of
+  // the user's home base (for example, not necessarily their current location).
+  //
+  // Google: In Google's implementation of OpenRTB, coarse geolocation
+  // information is approximated based on the IP address of the device the ad
+  // request originated from. This information will typically–but not always–be
+  // included in the bid request with lat/lon representing the center point of
+  // a circle, where accuracy is its radius. To learn more about geolocation,
+  // see the geotargeting guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting.
+  message Geo {
+    // Approximate latitude from -90.0 to +90.0, where negative is south.
+    // Supported by Google.
+    optional double lat = 1;
+
+    // Approximate longitude from -180.0 to +180.0, where negative is west.
+    // Supported by Google.
+    optional double lon = 2;
+
+    // Country using ISO-3166-1 Alpha-3.
+    // Supported by Google.
+    optional string country = 3;
+
+    // Region code using ISO-3166-2; 2-letter state code if USA.
+    // Supported by Google.
+    optional string region = 4;
+
+    // Region of a country using FIPS 10-4 notation. While OpenRTB supports
+    // this attribute, it has been withdrawn by NIST in 2008.
+    // Not supported by Google.
+    optional string regionfips104 = 5;
+
+    // Google metro code; similar to but not exactly Nielsen DMAs.
+    // See Appendix A for a link to the codes.
+    // (http://code.google.com/apis/adwords/docs/appendix/metrocodes.html).
+    // Supported by Google.
+    optional string metro = 6;
+
+    // City using United Nations Code for Trade & Transport Locations.
+    // See Appendix A for a link to the codes.
+    // (http://www.unece.org/cefact/locode/service/location.htm).
+    // Supported by Google.
+    optional string city = 7;
+
+    // Zip/postal code.
+    // Supported by Google.
+    optional string zip = 8;
+
+    // Source of location data; recommended when passing lat/lon.
+    // Supported by Google.
+    optional LocationType type = 9;
+
+    // Estimated location accuracy in meters; recommended when lat/lon are
+    // specified and derived from a device's location services (for example,
+    // type = 1). Note that this is the accuracy as reported from the device.
+    // Consult OS specific documentation (for example, Android, iOS) for exact
+    // interpretation.
+    //
+    // Google: The radius in meters of a circle approximating the location of a
+    // device, where the center point is defined by lat/lon. This field is
+    // populated based on coarse IP-based geolocation.
+    // Supported by Google.
+    optional int32 accuracy = 11;
+
+    // Number of seconds since this geolocation fix was established.
+    // Note that devices may cache location data across multiple fetches.
+    // Ideally, this value should be from the time the actual fix was taken.
+    // Not supported by Google.
+    optional int32 lastfix = 12;
+
+    // Service or provider used to determine geolocation from IP
+    // address if applicable (for example, type = 2).
+    // Not supported by Google.
+    optional LocationService ipservice = 13;
+
+    // Local time as the number +/- of minutes from UTC.
+    // Supported by Google.
+    optional int32 utcoffset = 10;
     extensions 100 to 9999;
   }
 
@@ -1481,6 +1313,7 @@ message BidRequest {
         // Not supported by Google.
         repeated string version = 2;
       }
+
       // Each BrandVersion object identifies a browser or similar software
       // component. Exchanges should send brands and versions derived from
       // the Sec-CH-UA-Full-Version-List header.
@@ -1516,7 +1349,7 @@ message BidRequest {
       optional string model = 6;
 
       // The source of data for the User Agent information.
-      // Not supported by Google.
+      // Supported by Google.
       optional UserAgentSource source = 7;
     }
 
@@ -1651,94 +1484,124 @@ message BidRequest {
     // MAC address of the device; hashed through MD5.
     // Not supported by Google.
     optional string macmd5 = 22 [deprecated = true];
-
-    // Extensions.
     extensions 100 to 9999;
   }
 
-  // OpenRTB 2.0: This object encapsulates various methods for specifying a
-  // geographic location. When subordinate to a Device object, it indicates the
-  // location of the device which can also be interpreted as the user's current
-  // location. When subordinate to a User object, it indicates the location of
-  // the user's home base (for example, not necessarily their current location).
-  //
-  // Google: In Google's implementation of OpenRTB, coarse geolocation
-  // information is approximated based on the IP address of the device the ad
-  // request originated from. This information will typically–but not always–be
-  // included in the bid request with lat/lon representing the center point of
-  // a circle, where accuracy is its radius. To learn more about geolocation,
-  // see the geotargeting guide:
-  // https://developers.google.com/authorized-buyers/rtb/geotargeting.
-  message Geo {
-    // Approximate latitude from -90.0 to +90.0, where negative is south.
-    // Supported by Google.
-    optional double lat = 1;
+  // Information about the device the impression will be delivered to.
+  // Supported by Google.
+  optional Device device = 5;
 
-    // Approximate longitude from -180.0 to +180.0, where negative is west.
-    // Supported by Google.
-    optional double lon = 2;
-
-    // Country using ISO-3166-1 Alpha-3.
-    // Supported by Google.
-    optional string country = 3;
-
-    // Region code using ISO-3166-2; 2-letter state code if USA.
-    // Supported by Google.
-    optional string region = 4;
-
-    // Region of a country using FIPS 10-4 notation. While OpenRTB supports
-    // this attribute, it has been withdrawn by NIST in 2008.
+  // OpenRTB 2.2: This object contains any legal, governmental, or industry
+  // regulations that apply to the request. The coppa field signals whether
+  // or not the request falls under the United States Federal Trade Commission's
+  // regulations for the United States Children's Online Privacy Protection Act
+  // ("COPPA"). Refer to Section 7.1 for more information.
+  message Regs {
+    // Indicates if this request is subject to the COPPA regulations
+    // established by the USA FTC.
     // Not supported by Google.
-    optional string regionfips104 = 5;
+    optional bool coppa = 1;
 
-    // Google metro code; similar to but not exactly Nielsen DMAs.
-    // See Appendix A for a link to the codes.
-    // (http://code.google.com/apis/adwords/docs/appendix/metrocodes.html).
-    // Supported by Google.
-    optional string metro = 6;
-
-    // City using United Nations Code for Trade & Transport Locations.
-    // See Appendix A for a link to the codes.
-    // (http://www.unece.org/cefact/locode/service/location.htm).
-    // Supported by Google.
-    optional string city = 7;
-
-    // Zip/postal code.
-    // Supported by Google.
-    optional string zip = 8;
-
-    // Source of location data; recommended when passing lat/lon.
-    // Supported by Google.
-    optional LocationType type = 9;
-
-    // Estimated location accuracy in meters; recommended when lat/lon are
-    // specified and derived from a device's location services (for example,
-    // type = 1). Note that this is the accuracy as reported from the device.
-    // Consult OS specific documentation (for example, Android, iOS) for exact
-    // interpretation.
-    //
-    // Google: The radius in meters of a circle approximating the location of a
-    // device, where the center point is defined by lat/lon. This field is
-    // populated based on coarse IP-based geolocation.
-    // Supported by Google.
-    optional int32 accuracy = 11;
-
-    // Number of seconds since this geolocation fix was established.
-    // Note that devices may cache location data across multiple fetches.
-    // Ideally, this value should be from the time the actual fix was taken.
+    // Contains the Global Privacy Platform's consent string. See the Global
+    // Privacy Platform specification for more details:
+    // https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform
     // Not supported by Google.
-    optional int32 lastfix = 12;
+    optional string gpp = 3;
 
-    // Service or provider used to determine geolocation from IP
-    // address if applicable (for example, type = 2).
+    // Each section represents a unique privacy signal, usually a unique
+    // jurisdiction. Below are the supported discrete sections.
+    enum GppSectionId {
+      // EU TCF v1 section (deprecated)
+      TCFEUV1 = 1;
+
+      // EU TCF v2 section (see note below)
+      TCFEUV2 = 2;
+
+      // GPP Header section (REQUIRED, see note below)
+      GPP_HEADER = 3;
+
+      // GPP signal integrity section
+      GPP_SIGNAL = 4;
+
+      // Canadian TCF section
+      TCFCA = 5;
+
+      // USPrivacy String (Unencoded Format)
+      USPV1 = 6;
+
+      // US - national section
+      USNAT = 7;
+
+      // US - California section
+      USCA = 8;
+
+      // US - Virginia section
+      USVA = 9;
+
+      // US - Colorado section
+      USCO = 10;
+
+      // US - Utah section
+      USUT = 11;
+
+      // US - Connecticut section
+      USCT = 12;
+    }
+
+    // Array of the section(s) of the string which should be applied for this
+    // transaction. Generally will contain one and only one value, but there are
+    // edge cases where more than one may apply. GPP Section 3 (Header) and 4
+    // (Signal Integrity) do not need to be included. See enum GppSectionId.
     // Not supported by Google.
-    optional LocationService ipservice = 13;
+    repeated GppSectionId gpp_sid = 4 [packed = true];
+    extensions 100 to 9999;
+  }
 
-    // Local time as the number +/- of minutes from UTC.
+  // A Regs object (Section 3.2.16) that specifies any industry, legal,
+  // or governmental regulations in force for this request.
+  // Supported by Google.
+  optional Regs regs = 14;
+
+  // OpenRTB 2.0: The data and segment objects together allow additional data
+  // about the user to be specified. This data may be from multiple sources
+  // whether from the exchange itself or third party providers as specified by
+  // the id field. A bid request can mix data objects from multiple providers or
+  // can have multiple data objects.
+  // The specific data providers in use should be published by the exchange
+  // a priori to its bidders.
+  message Data {
+    // Exchange-specific ID for the data provider.
+    // Not supported by Google.
+    optional string id = 1;
+
+    // Exchange-specific name for the data provider.
+    // Not supported by Google.
+    optional string name = 2;
+
+    // OpenRTB 2.0: Segment objects are essentially key-value pairs that
+    // convey specific units of data about the user. The parent Data object
+    // is a collection of such values from a given data provider.
+    // The specific segment names and value options must be published by the
+    // exchange a priori to its bidders.
+    message Segment {
+      // ID of the data segment specific to the data provider.
+      // Supported by Google.
+      optional string id = 1;
+
+      // Name of the data segment specific to the data provider.
+      // Not supported by Google.
+      optional string name = 2;
+
+      // String representation of the data segment value.
+      // Not supported by Google.
+      optional string value = 3;
+      extensions 100 to 9999;
+    }
+
+    // Array of Segment (Section 3.2.15) objects that contain the actual
+    // data values.
     // Supported by Google.
-    optional int32 utcoffset = 10;
-
-    // Extensions.
+    repeated Segment segment = 3;
     extensions 100 to 9999;
   }
 
@@ -1827,18 +1690,16 @@ message BidRequest {
         // The identifier for the user.
         // Not supported by Google.
         optional string id = 1;
+
         // Type of user agent the ID is from.
         // Not supported by Google.
         optional AgentType atype = 2;
-
-        // Extensions.
         extensions 100 to 9999;
       }
+
       // Array of extended ID UID objects from the given source.
       // Not supported by Google.
       repeated UID uids = 2;
-
-      // Extensions.
       extensions 100 to 9999;
     }
 
@@ -1847,72 +1708,214 @@ message BidRequest {
     // Not supported by Google. For Secure Signals, see extension
     // BidRequest.user.ext.eids.
     repeated EID eids = 11;
-
-    // Extensions.
     extensions 100 to 9999;
   }
 
-  // OpenRTB 2.0: The data and segment objects together allow additional data
-  // about the user to be specified. This data may be from multiple sources
-  // whether from the exchange itself or third party providers as specified by
-  // the id field. A bid request can mix data objects from multiple providers or
-  // can have multiple data objects.
-  // The specific data providers in use should be published by the exchange
-  // a priori to its bidders.
-  message Data {
-    // Exchange-specific ID for the data provider.
+  // Information about the user of the device or the advertising audience.
+  // Supported by Google.
+  optional User user = 6;
+
+  // Auction type: one of FIRST_PRICE or SECOND_PRICE.
+  // Supported by Google.
+  optional AuctionType at = 7 [default = SECOND_PRICE];
+
+  // Maximum time in milliseconds to submit a bid to avoid timeout.
+  // This value is commonly communicated offline.
+  // Supported by Google.
+  optional int32 tmax = 8;
+
+  // Allowlist of buyer seats (for example, advertisers, agencies) that can bid
+  // on this impression. IDs of seats and knowledge of the buyer's customers to
+  // which they refer must be coordinated between bidders and the exchange a
+  // priori. Omission implies no seat restrictions.
+  // Not supported by Google.
+  repeated string wseat = 9;
+
+  // Indicates if Exchange can verify that the impressions offered
+  // represent all of the impressions available in context (for example, all on
+  // the web page, all video spots such as pre/mid/post roll) to support
+  // road-blocking. false = no or unknown, true = yes, the impressions offered
+  // represent all that are available.
+  // Not supported by Google.
+  optional bool allimps = 10 [default = false];
+
+  // Array of allowed currencies for bids on this bid request using ISO-4217
+  // alpha codes. Recommended only if the exchange accepts multiple currencies.
+  // Supported by Google.
+  repeated string cur = 11;
+
+  // Blocked advertiser categories using the IAB content categories.
+  // The taxonomy to be used is defined by the cattax field.
+  // Supported by Google.
+  repeated string bcat = 12;
+
+  // The taxonomy in use for bcat.
+  // Not supported by Google.
+  optional CategoryTaxonomy cattax = 21 [default = IAB_CONTENT_1_0];
+
+  // Block list of advertisers by their domains (for example, "ford.com").
+  // Not supported by Google.
+  repeated string badv = 13;
+
+  // Block list of applications by their platform-specific exchange
+  // independent application identifiers. On Android, these should
+  // be bundle or package names (for example, com.foo.mygame).
+  // On iOS, these are numeric IDs.
+  // Supported by Google.
+  repeated string bapp = 16;
+
+  // Indicator of test mode in which auctions are not billable,
+  // where false = live mode, true = test mode.
+  // Supported by Google.
+  optional bool test = 15 [default = false];
+
+  // Block list of buyer seats (for example, advertisers, agencies) restricted
+  // from bidding on this impression. IDs of seats and knowledge
+  // of the buyer's customers to which they refer must be
+  // coordinated between bidders and the exchange a priori.
+  // At most, only one of wseat and bseat should be used in the
+  // same request. Omission of both implies no seat restrictions.
+  // Not supported by Google.
+  repeated string bseat = 17;
+
+  // Allowed list of languages for creatives using ISO-639-1-alpha-2.
+  // Omission implies no specific restrictions, but buyers would be
+  // advised to consider language attribute in the Device and/or
+  // Content objects if available.
+  // Only one of wlang or wlangb should be present.
+  // Supported by Google.
+  repeated string wlang = 18;
+
+  // Allowed list of languages for creatives using IETF BCP 47I.
+  // Omission implies no specific restrictions, but buyers would be
+  // advised to consider language attribute in the Device and/or
+  // Content objects if available.
+  // Only one of wlang or wlangb should be present.
+  // Not supported by Google.
+  repeated string wlangb = 20;
+
+  // OpenRTB 2.5: This object describes the nature and behavior of the entity
+  // that is the source of the bid request upstream from the exchange.
+  // The primary purpose of this object is to define post-auction or upstream
+  // decisioning when the exchange itself does not control the final decision.
+  // A common example of this is header bidding, but it can also apply to
+  // upstream server entities such as another RTB exchange, a mediation
+  // platform, or an ad server combines direct campaigns with 3rd party
+  // demand in decisioning.
+  message Source {
+    // Entity responsible for the final impression sale decision,
+    // where false = exchange, true = upstream source
     // Not supported by Google.
-    optional string id = 1;
+    optional bool fd = 1;
 
-    // Exchange-specific name for the data provider.
+    // Transaction ID that must be common across all participants in
+    // this bid request (for example, potentially multiple exchanges).
     // Not supported by Google.
-    optional string name = 2;
+    optional string tid = 2;
 
-    // Array of Segment (Section 3.2.15) objects that contain the actual
-    // data values.
-    // Supported by Google.
-    repeated Segment segment = 3;
+    // Payment ID chain string containing embedded syntax
+    // described in the TAG Payment ID Protocol v1.0.
+    // Not supported by Google.
+    optional string pchain = 3;
 
-    // Extensions.
-    extensions 100 to 9999;
-
-    // OpenRTB 2.0: Segment objects are essentially key-value pairs that
-    // convey specific units of data about the user. The parent Data object
-    // is a collection of such values from a given data provider.
-    // The specific segment names and value options must be published by the
-    // exchange a priori to its bidders.
-    message Segment {
-      // ID of the data segment specific to the data provider.
+    // This object is composed of a set of nodes where each node represents a
+    // specific entity that participates in the transacting of inventory.
+    // The entire chain of nodes from beginning to end represents all entities
+    // who are involved in the direct flow of payment for inventory. Detailed
+    // implementation examples can be found here:
+    // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/supplychainobject.md
+    message SupplyChain {
+      // Indicates whether the chain contains all nodes involved in the
+      // transaction leading back to the owner of the site, app or other medium
+      // of the inventory.
+      // REQUIRED by the OpenRTB specification.
       // Supported by Google.
-      optional string id = 1;
+      optional bool complete = 1;
 
-      // Name of the data segment specific to the data provider.
-      // Not supported by Google.
-      optional string name = 2;
+      // The identity of an entity participating in the supply chain.
+      message SupplyChainNode {
+        // The canonical domain name of the SSP, Exchange, Header Wrapper, etc
+        // system that bidders connect to. This may be the operational domain of
+        // the system, if that is different than the parent corporate domain, to
+        // facilitate WHOIS and reverse IP lookups to establish clear ownership
+        // of the delegate system. This should be the same value as used to
+        // identify sellers in an ads.txt file if one exists.
+        // REQUIRED by the OpenRTB specification.
+        // Supported by Google.
+        optional string asi = 1;
 
-      // String representation of the data segment value.
-      // Not supported by Google.
-      optional string value = 3;
+        // The identifier associated with the seller or reseller account
+        // within the advertising system. This must contain the same value
+        // used in transactions (OpenRTB bid requests) in the field
+        // specified by the SSP/exchange. Typically, in OpenRTB, this is
+        // publisher.id. For OpenDirect it is typically the publisher's
+        // organization ID. Should be limited to 64 characters in length.
+        // REQUIRED by the OpenRTB specification.
+        // Supported by Google.
+        optional string sid = 2;
 
-      // Extensions.
+        // The OpenRTB RequestId of the request as issued by this seller.
+        // Not supported by Google.
+        optional string rid = 3;
+
+        // The name of the company (the legal entity) that has paid for
+        // inventory transacted under the given seller_ID. This value is
+        // optional and should NOT be included if it exists in the
+        // advertising system’s sellers.json file.
+        // Not supported by Google.
+        optional string name = 4;
+
+        // The business domain name of the entity represented by this
+        // node. This value is optional and should NOT be included if it
+        // exists in the advertising system’s sellers.json file.
+        // Not supported by Google.
+        optional string domain = 5;
+
+        // Indicates whether this node will be involved in the flow of payment
+        // for the inventory. When set to true, the advertising system in the
+        // asi field pays the seller in the sid field, who is responsible for
+        // paying the previous node in the chain. When set to false, this node
+        // is not involved in the flow of payment for the inventory.
+        // For version 1.0 of SupplyChain, this property should always be true.
+        // Implementers should ensure that they propagate this field onwards
+        // when constructing SupplyChain objects in bid requests sent to a
+        // downstream advertising system.
+        // Supported by Google.
+        optional bool hp = 6;
+        extensions 100 to 9999;
+      }
+
+      // Array of SupplyChainNode objects in the order of the chain.
+      // In a complete supply chain, the first node represents the initial
+      // advertising system and seller ID involved in the transaction, that is,
+      // the owner of the site, app, or other medium. In an incomplete
+      // supply chain, it represents the first known node. The last node
+      // represents the entity sending this bid request.
+      // REQUIRED by the OpenRTB specification.
+      // Supported by Google.
+      repeated SupplyChainNode nodes = 2;
+
+      // Version of the supply chain specification in use, in the format
+      // of "major.minor". For example, for version 1.0 of the spec,
+      // use the string "1.0".
+      // REQUIRED by the OpenRTB specification.
+      // Supported by Google.
+      optional string ver = 3;
       extensions 100 to 9999;
     }
-  }
 
-  // OpenRTB 2.2: This object contains any legal, governmental, or industry
-  // regulations that apply to the request. The coppa field signals whether
-  // or not the request falls under the United States Federal Trade Commission's
-  // regulations for the United States Children's Online Privacy Protection Act
-  // ("COPPA"). Refer to Section 7.1 for more information.
-  message Regs {
-    // Indicates if this request is subject to the COPPA regulations
-    // established by the USA FTC.
-    // Not supported by Google.
-    optional bool coppa = 1;
-
-    // Extensions.
+    // This object represents both the links in the supply chain as
+    // well as an indicator whether or not the supply chain is complete.
+    // Supported by Google.
+    optional SupplyChain schain = 4;
     extensions 100 to 9999;
   }
+
+  // A Source object (Section 3.2.2) that provides data about the
+  // inventory source and which entity makes the final decision.
+  // Supported by Google.
+  optional Source source = 19;
+  extensions 100 to 9999;
 }
 
 // OpenRTB 2.0: This object is the top-level bid response object (for example,
@@ -1931,42 +1934,6 @@ message BidResponse {
   // Supported by Google.
   required string id = 1;
 
-  // Array of seatbid objects; 1+ required if a bid is to be made.
-  // Supported by Google.
-  repeated SeatBid seatbid = 2;
-
-  // Bidder generated response ID to assist with logging/tracking.
-  // Supported by Google.
-  optional string bidid = 3;
-
-  // Bid currency using ISO-4217 alpha codes.
-  //
-  // Supported by Google. If this field is populated, the specified currency
-  // will be used to interpret the bid. Otherwise, the default bidding currency
-  // will be used, which is determined in the following priority:
-  // 1. The bidder-level currency, if configured in RTB account settings.
-  // 2. The buyer-level currency. The buyer will be determined by the billing
-  // ID specified in the BidResponse.seatbid.bid.ext.billing_id extension
-  // field if it is populated, otherwise it will be based on the sole billing
-  // ID sent in the bid request.
-  //
-  // The currency of a buyer account is set on account creation and can be
-  // checked by contacting a Technical Account Manager.
-  optional string cur = 4;
-
-  // Optional feature to allow a bidder to set data in the exchange's cookie.
-  // The string must be in base85 cookie safe characters and be in any format.
-  // Proper JSON encoding must be used to include "escaped" quotation marks.
-  // Ignored by Google.
-  optional string customdata = 5;
-
-  // Reason for not bidding.
-  // Supported by Google.
-  optional NoBidReason nbr = 6;
-
-  // Extensions.
-  extensions 100 to 9999;
-
   // OpenRTB 2.0: A bid response can contain multiple SeatBid objects, each on
   // behalf of a different bidder seat and each containing one or more
   // individual bids. If multiple impressions are presented in the request, the
@@ -1974,32 +1941,24 @@ message BidResponse {
   // impressions that it can win (default) or if it is only interested in
   // winning any if it can win them all as a group.
   message SeatBid {
-    // Array of 1+ Bid objects (Section 4.2.3) each related to an impression.
-    // Multiple bids can relate to the same impression.
-    // Supported by Google.
-    repeated Bid bid = 1;
-
-    // ID of the buyer seat (for example, advertiser, agency) on whose behalf
-    // this bid is made.
-    //
-    // This ID will be used to breakdown spend and invalid traffic metrics in
-    // IVT transparency reporting, given that it is no longer than 64 bytes.
-    // Supported by Google.
-    optional string seat = 2;
-
-    // false = impressions can be won individually;
-    // true = impressions must be won or lost as a group.
-    // Ignored by Google.
-    optional bool group = 3 [default = false];
-
-    // Extensions.
-    extensions 100 to 9999;
-
     // OpenRTB 2.0: A SeatBid object contains one or more Bid objects,
     // each of which relates to a specific impression in the bid request
     // through the impid attribute and constitutes an offer to buy that
     // impression for a given price.
     message Bid {
+      oneof adm_oneof {
+        // Optional means of conveying ad markup in case the bid wins;
+        // supersedes the win notice if markup is included in both.
+        // For native ad bids, exactly one of {adm, adm_native} should be used.
+        // Supported by Google. Standard field, should be used for OpenRTB/JSON.
+        string adm = 6;
+
+        // Native ad response.
+        // For native ad bids, exactly one of {adm, adm_native} should be used.
+        // Supported by Google. Extension, should be used for OpenRTB/Protobuf.
+        NativeResponse adm_native = 50;
+      }
+
       // Bidder generated bid ID to assist with logging/tracking.
       // REQUIRED by the OpenRTB specification.
       // Supported by Google.
@@ -2038,19 +1997,6 @@ message BidResponse {
       // replaced with a zero-length string).
       // Ignored by Google.
       optional string lurl = 23;
-
-      oneof adm_oneof {
-        // Optional means of conveying ad markup in case the bid wins;
-        // supersedes the win notice if markup is included in both.
-        // For native ad bids, exactly one of {adm, adm_native} should be used.
-        // Supported by Google. Standard field, should be used for OpenRTB/JSON.
-        string adm = 6;
-
-        // Native ad response.
-        // For native ad bids, exactly one of {adm, adm_native} should be used.
-        // Supported by Google. Extension, should be used for OpenRTB/Protobuf.
-        NativeResponse adm_native = 50;
-      }
 
       // ID of a preloaded ad to serve if the bid wins.
       // Ignored by Google.
@@ -2179,11 +2125,62 @@ message BidResponse {
       // associated with the right sub-object of the BidRequest.Imp.
       // Ignored by Google.
       optional CreativeMarkupType mtype = 33;
-
-      // Extensions.
       extensions 100 to 9999;
     }
+
+    // Array of 1+ Bid objects (Section 4.2.3) each related to an impression.
+    // Multiple bids can relate to the same impression.
+    // Supported by Google.
+    repeated Bid bid = 1;
+
+    // ID of the buyer seat (for example, advertiser, agency) on whose behalf
+    // this bid is made.
+    //
+    // This ID will be used to breakdown spend and invalid traffic metrics in
+    // IVT transparency reporting, given that it is no longer than 64 bytes.
+    // Supported by Google.
+    optional string seat = 2;
+
+    // false = impressions can be won individually;
+    // true = impressions must be won or lost as a group.
+    // Ignored by Google.
+    optional bool group = 3 [default = false];
+    extensions 100 to 9999;
   }
+
+  // Array of seatbid objects; 1+ required if a bid is to be made.
+  // Supported by Google.
+  repeated SeatBid seatbid = 2;
+
+  // Bidder generated response ID to assist with logging/tracking.
+  // Supported by Google.
+  optional string bidid = 3;
+
+  // Bid currency using ISO-4217 alpha codes.
+  //
+  // Supported by Google. If this field is populated, the specified currency
+  // will be used to interpret the bid. Otherwise, the default bidding currency
+  // will be used, which is determined in the following priority:
+  // 1. The bidder-level currency, if configured in RTB account settings.
+  // 2. The buyer-level currency. The buyer will be determined by the billing
+  // ID specified in the BidResponse.seatbid.bid.ext.billing_id extension
+  // field if it is populated, otherwise it will be based on the sole billing
+  // ID sent in the bid request.
+  //
+  // The currency of a buyer account is set on account creation and can be
+  // checked by contacting a Technical Account Manager.
+  optional string cur = 4;
+
+  // Optional feature to allow a bidder to set data in the exchange's cookie.
+  // The string must be in base85 cookie safe characters and be in any format.
+  // Proper JSON encoding must be used to include "escaped" quotation marks.
+  // Ignored by Google.
+  optional string customdata = 5;
+
+  // Reason for not bidding.
+  // Supported by Google.
+  optional NoBidReason nbr = 6;
+  extensions 100 to 9999;
 }
 
 // OpenRTB Native 1.0: The Native Object defines the native advertising
@@ -2213,39 +2210,6 @@ message NativeRequest {
   // items in the feed (in which case plcmtcnt=1, seq>=1).
   optional int32 seq = 5 [default = 0];
 
-  // Any bid must comply with the array of elements expressed by the Exchange.
-  // REQUIRED by the OpenRTB Native specification: at least 1 element.
-  repeated Asset assets = 6;
-
-  // Whether the supply source / impression supports returning an assetsurl
-  // instead of an asset object. false or the absence of the field indicates no
-  // such support.
-  optional bool aurlsupport = 11;
-
-  // Whether the supply source / impression supports returning a DCO URL
-  // instead of an asset object. false or the absence of the field indicates no
-  // such support. Beta feature.
-  optional bool durlsupport = 12;
-
-  // Specifies what type of event tracking is supported.
-  repeated EventTrackers eventtrackers = 13;
-
-  // Set to true when the native ad supports buyer-specific privacy notice.
-  // Set to false (or field absent) when the native ad doesn't support custom
-  // privacy links or if support is unknown.
-  optional bool privacy = 14;
-
-  // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
-  // Use field <code>plcmttype</code>.
-  optional LayoutId layout = 2 [deprecated = true];
-
-  // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
-  // Use fields <code>context</code> and <code>contextsubtype</code>.
-  optional AdUnitId adunit = 3 [deprecated = true];
-
-  // Extensions.
-  extensions 100 to 9999;
-
   // OpenRTB Native 1.0: The main container object for each asset requested or
   // supported by Exchange on behalf of the rendering client.
   // Any object that is required is to be flagged as such. Only one of the
@@ -2253,14 +2217,6 @@ message NativeRequest {
   // All others should be null/absent. The id is to be unique within the
   // Asset array so that the response can be aligned.
   message Asset {
-    // Unique asset ID, assigned by exchange. Typically a counter for the array.
-    // REQUIRED by the OpenRTB Native specification.
-    required int32 id = 1;
-
-    // Set to true if asset is required
-    // (exchange will not accept a bid without it).
-    optional bool required = 2 [default = false];
-
     oneof asset_oneof {
       // Title object for title assets.
       Title title = 3;
@@ -2278,8 +2234,13 @@ message NativeRequest {
       Data data = 6;
     }
 
-    // Extensions.
-    extensions 100 to 9999;
+    // Unique asset ID, assigned by exchange. Typically a counter for the array.
+    // REQUIRED by the OpenRTB Native specification.
+    required int32 id = 1;
+
+    // Set to true if asset is required
+    // (exchange will not accept a bid without it).
+    optional bool required = 2 [default = false];
 
     // OpenRTB Native 1.0: The Title object is to be used for title element
     // of the Native ad.
@@ -2288,8 +2249,6 @@ message NativeRequest {
       // RECOMMENDED that the value be either of: 25, 90, 140.
       // REQUIRED by the OpenRTB Native specification.
       required int32 len = 1;
-
-      // Extensions.
       extensions 100 to 9999;
     }
 
@@ -2325,8 +2284,6 @@ message NativeRequest {
       // integration docs. See Wikipedia's MIME page for more information and
       // links to all IETF RFCs. If blank, assume all types are allowed.
       repeated string mimes = 6;
-
-      // Extensions.
       extensions 100 to 9999;
     }
 
@@ -2345,11 +2302,24 @@ message NativeRequest {
       // may be truncated and ellipsized by Ad Exchange or the publisher during
       // rendering.
       optional int32 len = 2;
-
-      // Extensions.
       extensions 100 to 9999;
     }
+    extensions 100 to 9999;
   }
+
+  // Any bid must comply with the array of elements expressed by the Exchange.
+  // REQUIRED by the OpenRTB Native specification: at least 1 element.
+  repeated Asset assets = 6;
+
+  // Whether the supply source / impression supports returning an assetsurl
+  // instead of an asset object. false or the absence of the field indicates no
+  // such support.
+  optional bool aurlsupport = 11;
+
+  // Whether the supply source / impression supports returning a DCO URL
+  // instead of an asset object. false or the absence of the field indicates no
+  // such support. Beta feature.
+  optional bool durlsupport = 12;
 
   // OpenRTB Native 1.2: The EventTrackers object specifies the type of events
   // the bidder can request to be tracked in the bid response, and which types
@@ -2363,10 +2333,25 @@ message NativeRequest {
     // Array of types of tracking available for the given event.
     // REQUIRED by the OpenRTB Native specification.
     repeated EventTrackingMethod methods = 2;
-
-    // Extensions.
     extensions 100 to 9999;
   }
+
+  // Specifies what type of event tracking is supported.
+  repeated EventTrackers eventtrackers = 13;
+
+  // Set to true when the native ad supports buyer-specific privacy notice.
+  // Set to false (or field absent) when the native ad doesn't support custom
+  // privacy links or if support is unknown.
+  optional bool privacy = 14;
+
+  // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
+  // Use field <code>plcmttype</code>.
+  optional LayoutId layout = 2 [deprecated = true];
+
+  // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
+  // Use fields <code>context</code> and <code>contextsubtype</code>.
+  optional AdUnitId adunit = 3 [deprecated = true];
+  extensions 100 to 9999;
 }
 
 // OpenRTB Native 1.0: The native response object is the top level JSON object
@@ -2374,6 +2359,147 @@ message NativeRequest {
 message NativeResponse {
   // Version of the Native Markup version in use.
   optional string ver = 1;
+
+  // OpenRTB Native 1.0: Used for "call to action" assets, or other links from
+  // the Native ad. This Object should be associated to its peer object in the
+  // parent Asset Object or as the primary link in the top level NativeResponse
+  // object. When that peer object is activated (clicked) the action should take
+  // the user to the location of the link.
+  message Link {
+    // Landing URL of the clickable link.
+    // REQUIRED by the OpenRTB Native specification.
+    required string url = 1;
+
+    // List of third-party tracker URLs to be fired on click of the URL.
+    repeated string clicktrackers = 2;
+
+    // Fallback URL for deeplink. To be used if the URL given in url is not
+    // supported by the device.
+    optional string fallback = 3;
+    extensions 100 to 9999;
+  }
+
+  // OpenRTB Native 1.0: Corresponds to the Asset Object in the request.
+  // The main container object for each asset requested or supported by Exchange
+  // on behalf of the rendering client. Any object that is required is to be
+  // flagged as such. Only one of the {title,img,video,data} objects should be
+  // present in each object. All others should be null/absent. The id is to be
+  // unique within the Asset array so that the response can be aligned.
+  message Asset {
+    oneof asset_oneof {
+      // Title object for title assets.
+      Title title = 3;
+
+      // Image object for image assets.
+      Image img = 4;
+
+      // Video object for video assets.
+      // Note that in-stream video ads are not part of Native.
+      // Native ads may contain a video as the ad creative itself.
+      Video video = 5;
+
+      // Data object for ratings, prices or other similar elements.
+      Data data = 6;
+    }
+
+    // Unique asset ID, assigned by exchange, must match one of the asset IDs
+    // in request.
+    // REQUIRED in 1.0, or in 1.2 if embedded asset is being used.
+    required int32 id = 1;
+
+    // Set to true if asset is required. (bidder requires it to be displayed).
+    optional bool required = 2 [default = false];
+
+    // OpenRTB Native 1.0: Corresponds to the Title Object in the request,
+    // with the value filled in.
+    // If using assetsurl or dcourl response rather than embedded asset
+    // response, it is recommended that three title objects be provided, the
+    // length of each is less than or equal to the three recommended maximum
+    // title lengths (25,90,140).
+    message Title {
+      // The text associated with the text element.
+      // REQUIRED by the OpenRTB Native specification.
+      required string text = 1;
+
+      // The length of the title being provided.
+      // REQUIRED if using assetsurl/dcourl representation.
+      optional int32 len = 2;
+      extensions 100 to 9999;
+    }
+
+    // OpenRTB Native 1.0: Corresponds to the Image Object in the request.
+    // The Image object to be used for all image elements of the Native ad,
+    // such as Icons or Main Image.
+    // It is recommended that if assetsurl/dcourl is being used rather than
+    // embbedded assets, that an image of each recommended aspect ratio
+    // (per ImageType enum) be provided for image type 3 (MAIN_IMAGE).
+    message Image {
+      // The type of image element being submitted from the ImageType enum.
+      // REQUIRED for assetsurl or dcourl responses,
+      // not required to embedded asset responses.
+      optional ImageAssetType type = 4;
+
+      // URL of the image asset.
+      // REQUIRED by the OpenRTB Native specification.
+      required string url = 1;
+
+      // Width of the image in pixels.
+      // RECOMMENDED in 1.0, 1.1, or in 1.2 for embedded asset responses.
+      // REQUIRED in 1.2 for assetsurl or dcourl if multiple assets
+      // of the same type submitted.
+      optional int32 w = 2;
+
+      // Height of the image in pixels.
+      // RECOMMENDED in 1.0, 1.1, or in 1.2 for embedded asset responses.
+      // REQUIRED in 1.2 for assetsurl or dcourl if multiple assets
+      // of the same type submitted.
+      optional int32 h = 3;
+      extensions 100 to 9999;
+    }
+
+    // OpenRTB Native 1.0: Corresponds to the Video Object in the request,
+    // yet containing a value of a conforming VAST tag as a value.
+    message Video {
+      // VAST xml.
+      // REQUIRED by the OpenRTB Native specification.
+      required string vasttag = 1;
+      extensions 100 to 9999;
+    }
+
+    // OpenRTB Native 1.0: Corresponds to the Data Object in the request, with
+    // the value filled in. The Data Object is to be used for all miscellaneous
+    // elements of the native unit such as Brand Name, Ratings, Review Count,
+    // Stars, Downloads, and other elements. It is also generic for future of
+    // native elements not contemplated at the time of the writing of this
+    // document.
+    message Data {
+      // The type of data element being submitted from the DataAssetTypes enum.
+      // REQUIRED in 1.2 for assetsurl or dcourl responses.
+      optional DataAssetType type = 3;
+
+      // The length of the data element being submitted. Where applicable, must
+      // comply with the recommended maximum lengths in the DataAssetType enum.
+      // REQUIRED in 1.2 for assetsurl or dcourl responses.
+      optional int32 len = 4;
+
+      // DEPRECATED in OpenRTB Native 1.2+. No replacement.
+      // The optional formatted string name of the data type to be displayed.
+      optional string label = 1 [deprecated = true];
+
+      // The formatted string of data to be displayed. Can contain a formatted
+      // value such as "5 stars" or "$10" or "3.4 stars out of 5".
+      // REQUIRED by the OpenRTB Native specification.
+      required string value = 2;
+      extensions 100 to 9999;
+    }
+
+    // Link object for call to actions.
+    // This link object applies if the asset item is activated (clicked).
+    // If there is no link object on the asset, the parent link object on the
+    // bid response apply.
+    optional Link link = 7;
+    extensions 100 to 9999;
+  }
 
   // List of native ad's assets.
   // RECOMMENDED in 1.0, 1.1, or in 1.2 as a fallback if assetsurl is provided.
@@ -2413,171 +2539,6 @@ message NativeResponse {
   // executed at impression time where it can be supported.
   optional string jstracker = 5 [deprecated = true];
 
-  // Array of response event trackers to run with the ad, in response to the
-  // declared supported methods in the NativeRequest. Replaces imptrackers and
-  // jstrackers.
-  repeated EventTracker eventtrackers = 8;
-
-  // If support was indicated in the request, URL of a page informing the user
-  // about the buyer's targeting activity.
-  optional string privacy = 9;
-
-  // Extensions.
-  extensions 100 to 9999;
-
-  // OpenRTB Native 1.0: Used for "call to action" assets, or other links from
-  // the Native ad. This Object should be associated to its peer object in the
-  // parent Asset Object or as the primary link in the top level NativeResponse
-  // object. When that peer object is activated (clicked) the action should take
-  // the user to the location of the link.
-  message Link {
-    // Landing URL of the clickable link.
-    // REQUIRED by the OpenRTB Native specification.
-    required string url = 1;
-
-    // List of third-party tracker URLs to be fired on click of the URL.
-    repeated string clicktrackers = 2;
-
-    // Fallback URL for deeplink. To be used if the URL given in url is not
-    // supported by the device.
-    optional string fallback = 3;
-
-    // Extensions.
-    extensions 100 to 9999;
-  }
-
-  // OpenRTB Native 1.0: Corresponds to the Asset Object in the request.
-  // The main container object for each asset requested or supported by Exchange
-  // on behalf of the rendering client. Any object that is required is to be
-  // flagged as such. Only one of the {title,img,video,data} objects should be
-  // present in each object. All others should be null/absent. The id is to be
-  // unique within the Asset array so that the response can be aligned.
-  message Asset {
-    // Unique asset ID, assigned by exchange, must match one of the asset IDs
-    // in request.
-    // REQUIRED in 1.0, or in 1.2 if embedded asset is being used.
-    required int32 id = 1;
-
-    // Set to true if asset is required. (bidder requires it to be displayed).
-    optional bool required = 2 [default = false];
-
-    oneof asset_oneof {
-      // Title object for title assets.
-      Title title = 3;
-
-      // Image object for image assets.
-      Image img = 4;
-
-      // Video object for video assets.
-      // Note that in-stream video ads are not part of Native.
-      // Native ads may contain a video as the ad creative itself.
-      Video video = 5;
-
-      // Data object for ratings, prices or other similar elements.
-      Data data = 6;
-    }
-
-    // Link object for call to actions.
-    // This link object applies if the asset item is activated (clicked).
-    // If there is no link object on the asset, the parent link object on the
-    // bid response apply.
-    optional Link link = 7;
-
-    // Extensions.
-    extensions 100 to 9999;
-
-    // OpenRTB Native 1.0: Corresponds to the Title Object in the request,
-    // with the value filled in.
-    // If using assetsurl or dcourl response rather than embedded asset
-    // response, it is recommended that three title objects be provided, the
-    // length of each is less than or equal to the three recommended maximum
-    // title lengths (25,90,140).
-    message Title {
-      // The text associated with the text element.
-      // REQUIRED by the OpenRTB Native specification.
-      required string text = 1;
-
-      // The length of the title being provided.
-      // REQUIRED if using assetsurl/dcourl representation.
-      optional int32 len = 2;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
-
-    // OpenRTB Native 1.0: Corresponds to the Image Object in the request.
-    // The Image object to be used for all image elements of the Native ad,
-    // such as Icons or Main Image.
-    // It is recommended that if assetsurl/dcourl is being used rather than
-    // embbedded assets, that an image of each recommended aspect ratio
-    // (per ImageType enum) be provided for image type 3 (MAIN_IMAGE).
-    message Image {
-      // The type of image element being submitted from the ImageType enum.
-      // REQUIRED for assetsurl or dcourl responses,
-      // not required to embedded asset responses.
-      optional ImageAssetType type = 4;
-
-      // URL of the image asset.
-      // REQUIRED by the OpenRTB Native specification.
-      required string url = 1;
-
-      // Width of the image in pixels.
-      // RECOMMENDED in 1.0, 1.1, or in 1.2 for embedded asset responses.
-      // REQUIRED in 1.2 for assetsurl or dcourl if multiple assets
-      // of the same type submitted.
-      optional int32 w = 2;
-
-      // Height of the image in pixels.
-      // RECOMMENDED in 1.0, 1.1, or in 1.2 for embedded asset responses.
-      // REQUIRED in 1.2 for assetsurl or dcourl if multiple assets
-      // of the same type submitted.
-      optional int32 h = 3;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
-
-    // OpenRTB Native 1.0: Corresponds to the Data Object in the request, with
-    // the value filled in. The Data Object is to be used for all miscellaneous
-    // elements of the native unit such as Brand Name, Ratings, Review Count,
-    // Stars, Downloads, and other elements. It is also generic for future of
-    // native elements not contemplated at the time of the writing of this
-    // document.
-    message Data {
-      // The type of data element being submitted from the DataAssetTypes enum.
-      // REQUIRED in 1.2 for assetsurl or dcourl responses.
-      optional DataAssetType type = 3;
-
-      // The length of the data element being submitted. Where applicable, must
-      // comply with the recommended maximum lengths in the DataAssetType enum.
-      // REQUIRED in 1.2 for assetsurl or dcourl responses.
-      optional int32 len = 4;
-
-      // DEPRECATED in OpenRTB Native 1.2+. No replacement.
-      // The optional formatted string name of the data type to be displayed.
-      optional string label = 1 [deprecated = true];
-
-      // The formatted string of data to be displayed. Can contain a formatted
-      // value such as "5 stars" or "$10" or "3.4 stars out of 5".
-      // REQUIRED by the OpenRTB Native specification.
-      required string value = 2;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
-
-    // OpenRTB Native 1.0: Corresponds to the Video Object in the request,
-    // yet containing a value of a conforming VAST tag as a value.
-    message Video {
-      // VAST xml.
-      // REQUIRED by the OpenRTB Native specification.
-      required string vasttag = 1;
-
-      // Extensions.
-      extensions 100 to 9999;
-    }
-  }
-
   // OpenRTB Native 1.2: The event trackers response is an array of objects and
   // specifies the types of events the bidder wants to track and the
   // URLs/information to track them. Bidder must only respond with methods
@@ -2597,19 +2558,24 @@ message NativeResponse {
     // The URL of the image or js.
     // REQUIRED for image or js, optional for custom.
     optional string url = 3;
-
-    // Extensions.
     extensions 100 to 9999;
   }
+
+  // Array of response event trackers to run with the ad, in response to the
+  // declared supported methods in the NativeRequest. Replaces imptrackers and
+  // jstrackers.
+  repeated EventTracker eventtrackers = 8;
+
+  // If support was indicated in the request, URL of a page informing the user
+  // about the buyer's targeting activity.
+  optional string privacy = 9;
+  extensions 100 to 9999;
 }
 
 // ***** OpenRTB Core enums ****************************************************
-
 enum AuctionType {
   FIRST_PRICE = 1;
-
   SECOND_PRICE = 2;
-
   FIXED_PRICE = 3;
 }
 
@@ -2618,10 +2584,13 @@ enum AuctionType {
 enum BannerAdType {
   // "Usually mobile".
   XHTML_TEXT_AD = 1;
+
   // "Usually mobile".
   XHTML_BANNER_AD = 2;
+
   // Javascript must be valid XHTML (ie, script tags included).
   JAVASCRIPT_AD = 3;
+
   // Iframe.
   IFRAME = 4;
 }
@@ -2637,21 +2606,28 @@ enum CreativeAttribute {
   EXPANDABLE_ROLLOVER_INITIATED = 5;
   VIDEO_IN_BANNER_AUTO_PLAY = 6;
   VIDEO_IN_BANNER_USER_INITIATED = 7;
+
   // Pop (for example, Over, Under, or upon Exit).
   POP = 8;
   PROVOCATIVE_OR_SUGGESTIVE = 9;
+
   // Defined as "Shaky, Flashing, Flickering, Extreme Animation, Smileys".
   ANNOYING = 10;
   SURVEYS = 11;
   TEXT_ONLY = 12;
-  USER_INTERACTIVE = 13;  // Eg, embedded games.
+
+  // For example, embedded games.
+  USER_INTERACTIVE = 13;
   WINDOWS_DIALOG_OR_ALERT_STYLE = 14;
   HAS_AUDIO_ON_OFF_BUTTON = 15;
+
   // Ad provides skip button (for example, VPAID-rendered skip button
   // on pre-roll video).
   AD_CAN_BE_SKIPPED = 16;
+
   // Adobe Flash
   FLASH = 17;
+
   // Responsive, sizeless and fluid. Dynamically resizes to environment.
   RESPONSIVE = 18;
 }
@@ -2666,27 +2642,35 @@ enum APIFramework {
   // Video Player-Ad Interface Definition Version 1.0. See
   // https://iabtechlab.com/wp-content/uploads/2016/03/VPAID_1.0_Final.pdf
   VPAID_1 = 1;
+
   // Video Player-Ad Interface Definition Version 2.0. See
   // https://iabtechlab.com/wp-content/uploads/2016/04/VPAID_2_0_Final_04-10-2012.pdf
   VPAID_2 = 2;
+
   // Mobile Rich Media Ad Interface Definitions Version 1.0. See
   // https://www.iab.com/guidelines/mraid/.
   MRAID_1 = 3;
+
   // Open Rich Media Mobile Advertising. See
   // https://code.google.com/archive/p/ormma/
   ORMMA = 4;
+
   // Mobile Rich Media Ad Interface Definitions Version 2.0. See
   // https://www.iab.com/guidelines/mraid/.
   MRAID_2 = 5;
+
   // Mobile Rich Media Ad Interface Definitions Version 3.0. See
   // https://www.iab.com/guidelines/mraid/.
   MRAID_3 = 6;
+
   // Open Measurement Interface Definition Version 1.0. See
   // https://iabtechlab.com/standards/open-measurement-sdk/.
   OMID_1 = 7;
+
   // Secure Interactive Media Interface Definition Version 1.0.
   // See https://iabtechlab.com/simid/.
   SIMID_1_0 = 8;
+
   // Secure Interactive Media Interface Definition Version 1.1.
   // See https://iabtechlab.com/simid/.
   SIMID_1_1 = 9;
@@ -2701,12 +2685,10 @@ enum APIFramework {
 // per the mobile addendum to QAG version 1.5.
 enum AdPosition {
   UNKNOWN = 0;
-
   ABOVE_THE_FOLD = 1;
 
   // Fixed position.
   LOCKED = 2;
-
   BELOW_THE_FOLD = 3;
 
   // Horizontal slot that sticks on the top of the screen when user scrolls.
@@ -2717,7 +2699,6 @@ enum AdPosition {
 
   // Sidebar that sticks on screen when user scrolls.
   SIDEBAR = 6;
-
   AD_POSITION_FULLSCREEN = 7;
 }
 
@@ -2738,8 +2719,11 @@ enum AdPosition {
 // Guidelines (QAG). Practitioners should keep in sync with updates to the
 // QAG values as published on IAB.net.
 enum VideoLinearity {
-  LINEAR = 1;      // Linear/In-stream
-  NON_LINEAR = 2;  // Non-linear/Overlay
+  // Linear/In-stream
+  LINEAR = 1;
+
+  // Non-linear/Overlay
+  NON_LINEAR = 2;
 }
 
 // OpenRTB 2.0: The following table lists the options for the various
@@ -2836,8 +2820,10 @@ enum VideoPlacementType {
 enum PlaybackCessationMode {
   // On Video Completion or when Terminated by User
   COMPLETION_OR_USER = 1;
+
   // On Leaving Viewport or when Terminated by User
   LEAVING_OR_USER = 2;
+
   // On Leaving Viewport Continues as a Floating/Slider Unit until
   // Video Completion or when Terminated by User
   LEAVING_CONTINUES_OR_USER = 3;
@@ -2847,10 +2833,13 @@ enum PlaybackCessationMode {
 enum SlotPositionInPod {
   // Any position in the pod.
   SLOT_POSITION_POD_ANY = 0;
+
   // Last position in the pod.
   SLOT_POSITION_POD_LAST = -1;
+
   // First position in the pod.
   SLOT_POSITION_POD_FIRST = 1;
+
   // First or last position in the pod.
   SLOT_POSITION_POD_FIRST_OR_LAST = 2;
 }
@@ -2860,8 +2849,10 @@ enum SlotPositionInPod {
 enum PodSequence {
   // Any pod in the content stream
   POD_SEQUENCE_ANY = 0;
+
   // Last pod in the content stream
   POD_SEQUENCE_LAST = -1;
+
   // First pod in the content stream
   POD_SEQUENCE_FIRST = 1;
 }
@@ -2870,18 +2861,25 @@ enum PodSequence {
 // type of device connectivity.
 enum ConnectionType {
   CONNECTION_UNKNOWN = 0;
+
   // Ethernet; Wired Connection
   ETHERNET = 1;
+
   // WiFi
   WIFI = 2;
+
   // Mobile Network - Unknown Generation
   CELL_UNKNOWN = 3;
+
   // Mobile Network - 2G
   CELL_2G = 4;
+
   // Mobile Network - 3G
   CELL_3G = 5;
+
   // Mobile Network - 4G
   CELL_4G = 6;
+
   // Mobile Network - 5G
   CELL_5G = 7;
 }
@@ -2895,6 +2893,7 @@ enum ExpandableDirection {
   UP = 3;
   DOWN = 4;
   EXPANDABLE_FULLSCREEN = 5;
+
   // Resize/Minimize (make smaller).
   RESIZE_MINIMIZE = 6;
 }
@@ -2905,9 +2904,11 @@ enum ContentDeliveryMethod {
   // Content is transferred continuously by the network; clients receive
   // real-time content for playback while connected. Example: broadcast TV.
   STREAMING = 1;
+
   // Content is transferred incrementally as client's playback requires.
   // Example: on-demand movies, podcasts, or music.
   PROGRESSIVE = 2;
+
   // Content should be transferred completely prior to use/playback.
   // Example: installable apps.
   DOWNLOAD = 3;
@@ -2944,8 +2945,10 @@ enum ProductionQuality {
 enum LocationType {
   // GPS / Location Services.
   GPS_LOCATION = 1;
+
   // IP Geolocation.
   IP = 2;
+
   // User-provided, for example, registration data.
   USER_PROVIDED = 3;
 }
@@ -3000,9 +3003,7 @@ enum DeviceType {
 // http://www.iab.net/media/file/long-form-video-final.pdf.
 enum CompanionType {
   STATIC = 1;
-
   HTML = 2;
-
   COMPANION_IFRAME = 3;
 }
 
@@ -3087,10 +3088,13 @@ enum VolumeNormalizationMode {
 // Possible sources for User-Agent data.
 enum UserAgentSource {
   UNKNOWN_SOURCE = 0;
+
   // User-Agent Client Hints (only low-entropy headers were available).
   CLIENT_HINTS_LOW_ENTROPY = 1;
+
   // User-Agent Client Hints (with high-entropy headers available).
   CLIENT_HINTS_HIGH_ENTROPY = 2;
+
   // Parsed from User-Agent header.
   USER_AGENT_STRING = 3;
 }
@@ -3100,12 +3104,15 @@ enum CreativeMarkupType {
   // Ad markup returned as HTML code in response to the BidRequest.imp.banner
   // object specification.
   CREATIVE_MARKUP_BANNER = 1;
+
   // VAST URL or inline VAST XML document returned that represents a video ad in
   // response to the BidRequest.imp.video object specification.
   CREATIVE_MARKUP_VIDEO = 2;
+
   // VAST URL or inline VAST XML document that represents an audio ad returned
   // in response to the BidRequest.imp.audio object specification.
   CREATIVE_MARKUP_AUDIO = 3;
+
   // Native markup response object returned as per for the BidRequest.imp.native
   // object specification.
   CREATIVE_MARKUP_NATIVE = 4;
@@ -3115,10 +3122,13 @@ enum CreativeMarkupType {
 enum ServerSideAdInsertionType {
   // Status unknown.
   SERVER_SIDE_AD_INSERTION_TYPE_UNKNOWN = 0;
+
   // All clientside (not server-side).
   CLIENT_SIDE_ONLY = 1;
+
   // Assets stitched server-side but tracking pixels fired client-side.
   SERVER_SIDE_STITCHED_CLIENT_TRACKER = 2;
+
   // All server-side.
   SERVER_SIDE_ONLY = 3;
 }
@@ -3129,9 +3139,11 @@ enum AgentType {
   // An ID which is tied to a specific web browser or device (cookie-based,
   // probabilistic, or other).
   BROWSER_OR_DEVICE = 1;
+
   // In-app impressions, which will typically contain a type of device ID
   // (or rather, the privacy-compliant versions of device IDs).
   IN_APP_IMPRESSION = 2;
+
   // An identifier that is the same across devices.
   STABLE_ID = 3;
 }
@@ -3142,31 +3154,36 @@ enum CategoryTaxonomy {
   // DEPRECATED in OpenRTB 2.6+.
   // IAB Tech Lab Content Category Taxonomy 1.0.
   IAB_CONTENT_1_0 = 1 [deprecated = true];
+
   // DEPRECATED in OpenRTB 2.6+.
   // IAB Tech Lab Content Category Taxonomy 2.0.
   IAB_CONTENT_2_0 = 2 [deprecated = true];
+
   // IAB Tech Lab Ad Product Taxonomy 1.0. See:
   // https://iabtechlab.com/wp-content/uploads/2020/10/IABTL-Ad-Product-Taxonomy-1.0-Final.xlsx
   IAB_PRODUCT_1_0 = 3;
+
   // IAB Tech Lab Audience Taxonomy 1.1. See:
   // https://iabtechlab.com/standards/audience-taxonomy/
   IAB_AUDIENCE_1_1 = 4;
+
   // IAB Tech Lab Content Taxonomy 2.1. See:
   // https://iabtechlab.com/standards/content-taxonomy/
   IAB_CONTENT_2_1 = 5;
+
   // IAB Tech Lab Content Taxonomy 2.2. See:
   // https://iabtechlab.com/standards/content-taxonomy/
   IAB_CONTENT_2_2 = 6;
 
   // Exchange-specific values above 500.
-
+  //
   // Chromium Topics API taxonomy. See:
   // https://github.com/patcg-individual-drafts/topics/blob/main/taxonomy_v1.md
   CHROME_TOPICS = 600;
 }
 
 // ***** OpenRTB Native enums **************************************************
-
+//
 // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
 enum LayoutId {
   CONTENT_WALL = 1;
@@ -3176,7 +3193,6 @@ enum LayoutId {
   CAROUSEL = 5;
   CONTENT_STREAM = 6;
   GRID = 7;
-  // Exchange-specific values above 500.
 }
 
 // DEPRECATED in OpenRTB Native 1.1, REMOVED in 1.2+.
@@ -3186,7 +3202,6 @@ enum AdUnitId {
   PROMOTED_LISTING = 3;
   IAB_IN_AD_NATIVE = 4;
   ADUNITID_CUSTOM = 5;
-  // Exchange-specific values above 500.
 }
 
 // OpenRTB Native 1.1: The context in which the ad appears - what type
@@ -3199,9 +3214,11 @@ enum ContextType {
   // Content-centric context such as newsfeed, article, image gallery,
   // video gallery, or similar.
   CONTENT = 1;
+
   // Social-centric context such as social network feed, email,
   // chat, or similar.
   SOCIAL = 2;
+
   // Product context such as product listings, details, recommendations,
   // reviews, or similar.
   PRODUCT = 3;
@@ -3220,11 +3237,9 @@ enum ContextSubtype {
   CONTENT_AUDIO = 13;
   CONTENT_IMAGE = 14;
   CONTENT_USER_GENERATED = 15;
-
   SOCIAL_GENERAL = 20;
   SOCIAL_EMAIL = 21;
   SOCIAL_CHAT_IM = 22;
-
   PRODUCT_SELLING = 30;
   PRODUCT_MARKETPLACE = 31;
   PRODUCT_REVIEW = 32;
@@ -3236,13 +3251,16 @@ enum PlacementType {
   // In the feed of content - for example as an item inside the organic
   // feed/grid/listing/carousel.
   IN_FEED = 1;
+
   // In the atomic unit of the content - IE in the article page
   // or single image page.
   ATOMIC_UNIT = 2;
+
   // Outside the core content - for example in the ads section on the
   // right rail, as a banner-style placement near the content, or another
   // placement type.
   OUTSIDE = 3;
+
   // Recommendation widget, most commonly presented below
   // the article content.
   RECOMMENDATION = 4;
@@ -3306,8 +3324,6 @@ enum DataAssetType {
   // Text describing a 'call to action' button for the destination URL.
   // Format: Text.
   CTATEXT = 12;
-
-  // Exchange-specific values above 500.
 }
 
 // OpenRTB Native 1.0: Common image asset element types of native advertising
@@ -3329,8 +3345,6 @@ enum ImageAssetType {
   // Large Variant: max height: 627+, max width: 627+, 836, or 1198,
   //                aspect ratio: 1:1, 4:3, or 1.91:1.
   MAIN = 3;
-
-  // Exchange-specific values above 500.
 }
 
 // OpenRTB Native 1.2.
@@ -3347,8 +3361,6 @@ enum EventType {
   // Visible impression for video using MRC definition at 50% in view
   // for 2 seconds.
   VIEWABLE_VIDEO_50 = 4;
-
-  // Exchange-specific values above 500.
 }
 
 // OpenRTB Native 1.2.
