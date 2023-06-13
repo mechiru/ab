@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.287
+// Protocol version: v.288
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -275,22 +275,25 @@ message BidRequest {
   }
   optional Geo geo = 62;
 
+  // Deprecated. This field will be removed in Q3 2023. It is recommended that
+  // BidRequest.geo.zip be used instead. See Geotargeting Guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting
   // Detected postal code of the appropriate type for the country of the end
   // user (for example, zip code if the country is "US"). The postal_code_prefix
   // field is set when accuracy is too low to imply a full code, otherwise the
   // postal_code field is set.
-  // It is recommended that BidRequest.geo be used instead of this field.
-  // See Geotargeting Guide:
-  // https://developers.google.com/authorized-buyers/rtb/geotargeting
-  optional string postal_code = 33;
+  optional string postal_code = 33 [deprecated = true];
 
-  // It is recommended that BidRequest.geo be used instead of this field.
-  // See Geotargeting Guide:
+  // Deprecated. This field will be removed in Q3 2023. It is recommended that
+  // BidRequest.geo.zip be used instead. See Geotargeting Guide:
   // https://developers.google.com/authorized-buyers/rtb/geotargeting
-  optional string postal_code_prefix = 34;
+  optional string postal_code_prefix = 34 [deprecated = true];
 
+  // Deprecated. This field will be removed in Q3 2023. It is recommended that
+  // BidRequest.geo is used instead. See Geotargeting Guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting
   // Encrypted hyperlocal targeting signals.
-  optional bytes encrypted_hyperlocal_set = 40;
+  optional bytes encrypted_hyperlocal_set = 40 [deprecated = true];
 
   // Coarse geolocation information approximated based on the IP address of the
   // device the ad request originated from.
@@ -319,13 +322,19 @@ message BidRequest {
     optional Hyperlocal.Point center_point = 2;
   }
 
+  // Deprecated. This field will be removed in Q3 2023. It is recommended that
+  // BidRequest.geo is used instead. See Geotargeting Guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting
   // Unencrypted version of encrypted_hyperlocal_set. This field is only set
   // when using an SSL connection.
-  optional HyperlocalSet hyperlocal_set = 53;
+  optional HyperlocalSet hyperlocal_set = 53 [deprecated = true];
 
+  // Deprecated. This field will be removed in Q3 2023. It is recommended that
+  // BidRequest.geo is used instead. See Geotargeting Guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting
   // The offset of the user's time from GMT in minutes. For example, GMT+10 is
   // timezone_offset = 600.
-  optional int32 timezone_offset = 25;
+  optional int32 timezone_offset = 25 [deprecated = true];
 
   // This field is not populated by default. We recommend that bidders instead
   // store and look up list ids using either google_user_id or hosted_match_data
