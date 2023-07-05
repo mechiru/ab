@@ -6557,7 +6557,8 @@ type BidRequest_Imp_Video struct {
 	// Indicates the maximum number of ads that may be served into a
 	// "dynamic" video ad pod (where the precise number of ads is not
 	// predetermined by the seller).
-	// Not supported by Google.
+	// This field is currently only supported by Google for
+	// rewarded video pods requests.
 	Maxseq *int32 `protobuf:"varint,28,opt,name=maxseq" json:"maxseq,omitempty"`
 	// Indicates the total amount of time in seconds that advertisers may
 	// fill for a "dynamic" video ad pod, or the dynamic portion of a
@@ -6565,7 +6566,8 @@ type BidRequest_Imp_Video struct {
 	// portion(s) of video ad pods. This field refers to the length of the
 	// entire ad break, whereas minduration/maxduration/rqddurs are
 	// constraints relating to the slots that make up the pod.
-	// Not supported by Google.
+	// This field is currently only supported for rewarded video pods
+	// requests.
 	Poddur *int32 `protobuf:"varint,29,opt,name=poddur" json:"poddur,omitempty"`
 	// Array of supported video bid response protocols.
 	// At least one supported protocol must be specified.
@@ -8909,7 +8911,8 @@ type BidResponse_SeatBid_Bid struct {
 	Dur *int32 `protobuf:"varint,32,opt,name=dur" json:"dur,omitempty"`
 	// Indicates that the bid is only eligible
 	// for a specific position within the pod.
-	// Ignored by Google.
+	// This field is currently only supported for rewarded video pods
+	// requests.
 	Slotinpod *SlotPositionInPod `protobuf:"varint,28,opt,name=slotinpod,enum=com.google.openrtb.SlotPositionInPod" json:"slotinpod,omitempty"`
 	// Type of the creative markup so that it can properly be
 	// associated with the right sub-object of the BidRequest.Imp.

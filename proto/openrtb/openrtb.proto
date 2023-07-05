@@ -235,7 +235,8 @@ message BidRequest {
       // Indicates the maximum number of ads that may be served into a
       // "dynamic" video ad pod (where the precise number of ads is not
       // predetermined by the seller).
-      // Not supported by Google.
+      // This field is currently only supported by Google for
+      // rewarded video pods requests.
       optional int32 maxseq = 28;
 
       // Indicates the total amount of time in seconds that advertisers may
@@ -244,7 +245,8 @@ message BidRequest {
       // portion(s) of video ad pods. This field refers to the length of the
       // entire ad break, whereas minduration/maxduration/rqddurs are
       // constraints relating to the slots that make up the pod.
-      // Not supported by Google.
+      // This field is currently only supported for rewarded video pods
+      // requests.
       optional int32 poddur = 29;
 
       // Array of supported video bid response protocols.
@@ -2118,7 +2120,8 @@ message BidResponse {
 
       // Indicates that the bid is only eligible
       // for a specific position within the pod.
-      // Ignored by Google.
+      // This field is currently only supported for rewarded video pods
+      // requests.
       optional SlotPositionInPod slotinpod = 28;
 
       // Type of the creative markup so that it can properly be

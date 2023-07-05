@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.148
+// Protocol version: v.150
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -679,6 +679,53 @@ message BidExt {
   // Setting seatbid.bid.bundle field without this field will be treated as if
   // this field were set to OTHER.
   optional AppPromotionType app_promotion_type = 28;
+
+  // All bids with the same bid_group_id will be won or lost as a group.
+  // Bids must have a non-empty bid_group_id to allow an ad to be played
+  // as part of a pod.
+  // This field is currently only supported for rewarded video pods requests.
+  // Note that if there are multiple bids for the same ad, each bid must have
+  // different bid_group_id. For example, if a bidder wants to bid creative_1
+  // for first position and last position in the pod and creative_2 for any
+  // position and want to ensure either both win at the same time or neither
+  // of those wins, bidder needs to submit:
+  // {
+  //   "seatbid": [
+  //     {
+  //       "bid": [
+  //         {
+  //           "crid": "creative_1",
+  //           "slotinpod": 1,
+  //           "ext": {
+  //             "bid_group_id": "group1"
+  //           }
+  //         },
+  //         {
+  //           "crid": "creative_1",
+  //           "slotinpod": -1,
+  //           "ext": {
+  //             "bid_group_id": "group2"
+  //           }
+  //         },
+  //         {
+  //           "crid": "creative_2",
+  //           "slotinpod": 0,
+  //           "ext": {
+  //             "bid_group_id": "group1"
+  //           }
+  //         },
+  //         {
+  //           "crid": "creative_2",
+  //           "slotinpod": 0,
+  //           "ext": {
+  //             "bid_group_id": "group2"
+  //           }
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
+  optional string bid_group_id = 26;
 }
 
 message NativeRequestExt {
