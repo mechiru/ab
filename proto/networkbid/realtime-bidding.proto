@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.288
+// Protocol version: v.293
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -770,6 +770,9 @@ message BidRequest {
     // ads. Actual number of video ads shown can be less than or equal to this
     // value but cannot exceed it.
     optional int32 max_ads_in_pod = 12;
+
+    // The maximum duration of a pod in seconds.
+    optional int32 max_pod_duration_seconds = 20;
 
     // Does the publisher allow/require/block skippable video ads?
     enum SkippableBidRequestType {
@@ -2369,6 +2372,60 @@ message BidResponse {
         optional int32 max_impressions = 4;
       }
       repeated FrequencyCap frequency_cap = 16;
+
+      // Position within the pod.
+      enum PodPosition {
+        // Any position in the pod.
+        POD_POSITION_ANY = 0;
+
+        // Last position in the pod.
+        POD_POSITION_LAST = 1;
+
+        // First position in the pod.
+        POD_POSITION_FIRST = 2;
+
+        // First or last position in the pod.
+        POD_POSITION_FIRST_OR_LAST = 3;
+      }
+
+      // Indicates that the bid is only eligible
+      // for a specific position within the pod.
+      optional PodPosition position_in_pod = 22;
+
+      // All bids with the same bid_group_id will be won or lost as a group.
+      // Bids must have a non-empty bid_group_id to allow an ad to be played
+      // as part of a pod.
+      // This field is currently only supported for rewarded video pods
+      // requests. If an ad is submitted on multiple positional bids
+      // represented by AdSlot messages, each bid (AdSlot message)
+      // must have a different bid_group_id.
+      // For example, if a bidder wants to bid ad_1 for first position
+      // and last position in the pod and ad_2 for any position and
+      // want to ensure either both win at the same time or neither of those
+      // wins, bidder needs to submit:
+      // ad {
+      //   buyer_creative_id: "ad_1",
+      //   adslot {
+      //     position_in_pod: POD_POSITION_FIRST,
+      //     bid_group_id: "group1"
+      //   },
+      //   adslot {
+      //     position_in_pod: POD_POSITION_LAST,
+      //     bid_group_id: "group2"
+      //   }
+      // },
+      // ad {
+      //   buyer_creative_id: "ad_2",
+      //   adslot {
+      //     position_in_pod: POD_POSITION_ANY,
+      //     bid_group_id: "group1"
+      //   },
+      //   adslot {
+      //     position_in_pod: POD_POSITION_ANY,
+      //     bid_group_id: "group2"
+      //   }
+      // }
+      optional string bid_group_id = 23;
     }
     repeated AdSlot adslot = 3;
 
