@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.150
+// Protocol version: v.151
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1206,6 +1206,46 @@ message DealExt {
   }
   optional CreativeSourceType creative_source = 4 [default =
     CREATIVE_SOURCE_ADVERTISER];
+
+  // Constraints for creatives that can apply when bidding on a deal.
+  message CreativeConstraints {
+    // The allowed ad types of the deal. If empty, there are no deal-specific
+    // allowed ad type restrictions for the deal. In that case, bidders should
+    // refer to the presence of Banner, Video, Audio or Native objects in the
+    // BidRequest to check the allowed formats.
+    repeated .com.google.openrtb.CreativeMarkupType mtypes = 1 [packed = true];
+
+    // Possible creative skippability requirements.
+    enum SkippabilityConstraint {
+      // Skippable and non-skippable creatives are allowed.
+      ALLOW_SKIPPABLE = 0;
+
+      // Only skippable creatives are allowed.
+      REQUIRE_SKIPPABLE = 1;
+
+      // Only non-skippable creatives are allowed.
+      BLOCK_SKIPPABLE = 2;
+    }
+
+    // Whether skippable creatives are allowed. For PROGRAMMATIC_GUARANTEED or
+    // PREFERRED_DEAL deals that specifically allow video or audio ad types, it
+    // is always set. For the skippability setting of other deal types or open
+    // auction bidding, refer to the corresponding BidRequest-level field
+    // video.skip.
+    optional SkippabilityConstraint skippability = 2 [default =
+      ALLOW_SKIPPABLE];
+
+    // Maximum video ad duration in seconds. For PROGRAMMATIC_GUARANTEED or
+    // PREFERRED_DEAL deals that specifically allow video or audio ad types, it
+    // is always set. For the allowed max duration of other deal types or open
+    // auction bidding, refer to the corresponding BidRequest-level field
+    // video.maxduration.
+    optional int32 maxduration = 3;
+  }
+
+  // Creative constraints for this deal. If this is not set, bidders should
+  // refer to the BidRequest-level setting of each field.
+  optional CreativeConstraints creative_constraints = 5;
 }
 
 message SourceExt {
