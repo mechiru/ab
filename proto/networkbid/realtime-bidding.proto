@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.293
+// Protocol version: v.294
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1263,6 +1263,35 @@ message BidRequest {
         // false. When it is true, the buyer is required to bid on this deal for
         // this impression opportunity.
         optional bool must_bid = 9 [default = true];
+
+        // Constraints for creatives that can apply when bidding on a deal.
+        message CreativeConstraints {
+          // The allowed ad types of the deal. If empty, there are no
+          // deal-specific allowed ad type restrictions for the deal. In that
+          // case, bidders should refer to the BidRequest-level creative types
+          // in adslot.allowed_ad_types.
+          repeated AllowedAdType allowed_ad_types = 1 [packed = true];
+
+          // Whether skippable creatives are allowed. For
+          // PROGRAMMATIC_GUARANTEED or PREFERRED_DEAL deals that specifically
+          // allow video or audio ad types, it is always set. For the
+          // skippability setting of other deal types or open auction bidding,
+          // refer to the corresponding BidRequest-level field
+          // video.video_ad_skippable.
+          optional Video.SkippableBidRequestType video_ad_skippable = 2 [default
+            = ALLOW_SKIPPABLE];
+
+          // The maximum allowed duration in milliseconds for the ad. For
+          // PROGRAMMATIC_GUARANTEED or PREFERRED_DEAL deals that specifically
+          // allow video or audio ad types, it is always set. For the allowed
+          // max duration of other deal types or open auction bidding, refer to
+          // the corresponding BidRequest-level field video.max_ad_duration.
+          optional int32 max_ad_duration_ms = 3;
+        }
+
+        // Creative constraints for this deal. If this is not set, bidders
+        // should refer to the BidRequest-level setting of each field.
+        optional CreativeConstraints creative_constraints = 17;
       }
       repeated DirectDeal direct_deal = 6;
     }
