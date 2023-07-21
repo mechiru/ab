@@ -1508,7 +1508,7 @@ message BidRequest {
     // Privacy Platform specification for more details:
     // https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform
     // Not supported by Google.
-    optional string gpp = 3;
+    optional string gpp = 2;
 
     // Each section represents a unique privacy signal, usually a unique
     // jurisdiction. Below are the supported discrete sections.
@@ -1555,7 +1555,7 @@ message BidRequest {
     // edge cases where more than one may apply. GPP Section 3 (Header) and 4
     // (Signal Integrity) do not need to be included. See enum GppSectionId.
     // Not supported by Google.
-    repeated GppSectionId gpp_sid = 4 [packed = true];
+    repeated GppSectionId gpp_sid = 3 [packed = true];
     extensions 100 to 9999;
   }
 
