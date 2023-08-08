@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.151
+// Protocol version: v.152
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -880,6 +880,15 @@ message BidRequestExt {
     // only be populated if your bid participated in a first-price auction, and
     // will not be populated if your bid was filtered prior to the auction.
     optional double minimum_bid_to_win = 6;
+
+    // The minimum bid value necessary to have won the server-side component of
+    // the overall auction given that there was also an interest group bidding
+    // component to the overall auction which ran using the Protected Audience
+    // API. The value is expressed in CPM of the buyer account currency. The
+    // minimum bid to win for the overall auction, including bids from the
+    // server-side and the on-device interest group components, is populated in
+    // the minimum_bid_to_win field of the same BidFeedback object.
+    optional double sscminbidtowin = 14;
 
     // When a publisher uses an RTB auction and waterfall-based SDK mediation on
     // the same query, the winner of the real-time auction must also compete in
