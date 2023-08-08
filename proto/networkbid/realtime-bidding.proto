@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.294
+// Protocol version: v.295
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1938,6 +1938,15 @@ message BidRequest {
     // auction, and will not be populated if your bid was filtered prior to the
     // auction.
     optional int64 minimum_bid_to_win = 7;
+
+    // The minimum bid value necessary to have won the server-side component of
+    // the overall auction given that there was also an interest group bidding
+    // component to the overall auction which ran using the Protected Audience
+    // API. The value is expressed in CPM micros of the buyer account currency.
+    // The minimum bid to win for the overall auction, including bids from the
+    // server-side and the on-device interest group components, is populated in
+    // the minimum_bid_to_win field of the same BidResponseFeedback object.
+    optional int64 server_side_component_minimum_bid_to_win = 16;
 
     // When a publisher uses an RTB auction and waterfall-based SDK mediation on
     // the same query, the winner of the real-time auction must also compete in
