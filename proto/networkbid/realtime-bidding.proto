@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.295
+// Protocol version: v.296
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1894,7 +1894,21 @@ message BidRequest {
     }
 
     // Specifies where the ad auction runs.
-    optional AuctionEnvironment auction_environment = 61 [default =
+    // Deprecated. This will be removed in November, 2023. Use
+    // supported_auction_environment instead.
+    optional AuctionEnvironment auction_environment = 61 [deprecated = true,
+      default = SERVER_SIDE_AUCTION];
+
+    // The supported auction environment for this impression. For inventory
+    // which does not support interest group bidding, this will always be set to
+    // SERVER_SIDE_AUCTION. For inventory which does support interest group
+    // bidding, this will be set to ON_DEVICE_INTEREST_GROUP_AUCTION. Note that
+    // this only indicates that the interest group auction is supported, not
+    // that it is guaranteed to execute. If no buyer chooses to participate in
+    // the interest group auction, then the interest group auction will be
+    // skipped and the winner of the contextual auction, if any, will be
+    // served instead.
+    optional AuctionEnvironment supported_auction_environment = 69 [default =
       SERVER_SIDE_AUCTION];
 
     // The expected time period when an impression can occur in seconds
