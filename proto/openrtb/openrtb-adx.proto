@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.152
+// Protocol version: v.153
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -224,8 +224,20 @@ message ImpExt {
   }
 
   // Specifies where the ad auction runs.
-  optional AuctionEnvironment auction_environment = 18 [default =
-    SERVER_SIDE_AUCTION];
+  // Deprecated. This will be removed in November, 2023. Use ae instead.
+  optional AuctionEnvironment auction_environment = 18 [deprecated = true,
+    default = SERVER_SIDE_AUCTION];
+
+  // The supported auction environment for this impression. For inventory
+  // which does not support interest group bidding, this will always be set to
+  // SERVER_SIDE_AUCTION. For inventory which does support interest group
+  // bidding, this will be set to ON_DEVICE_INTEREST_GROUP_AUCTION. Note that
+  // this only indicates that the interest group auction is supported, not
+  // that it is guaranteed to execute. If no buyer chooses to participate in
+  // the interest group auction, then the interest group auction will be
+  // skipped and the winner of the contextual auction, if any, will be
+  // served instead.
+  optional AuctionEnvironment ae = 66 [default = SERVER_SIDE_AUCTION];
 
   // Indicates whether a mobile app bid request is for an app open ad.
   // See App open ad guidance at
