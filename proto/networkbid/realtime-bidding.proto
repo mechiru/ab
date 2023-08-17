@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.296
+// Protocol version: v.297
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1781,19 +1781,6 @@ message BidRequest {
 
     // Secure signals passed by the publisher.
     message SecureSignal {
-      // The source (provider) of the signal.
-      oneof source_oneof {
-        // Deprecated. This will be removed in February 2023.
-        SourceJs source_js = 3 [deprecated = true];
-      }
-
-      // Deprecated. This will be removed in February 2023.
-      // The source of the signal when this request is from a web page.
-      message SourceJs {
-        // Identifier of the JavaScript library that generated this data.
-        optional string id = 1 [deprecated = true];
-      }
-
       // The source (provider) of the signal. Identifier for the library or SDK
       // that generated this data.
       optional string source = 4;
