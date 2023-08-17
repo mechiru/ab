@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.153
+// Protocol version: v.154
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -86,6 +86,9 @@ message ImpExt {
   }
   repeated BuyerGeneratedRequestData buyer_generated_request_data = 9;
 
+  // Deprecated. This will be removed in Q1 2024. This field has been
+  // deprecated in favor of the repeated field
+  // `billable_event_rate_bid_adjustment` below.
   // For ads rendered using a custom SDK only: multiplier applied to bid in
   // the auction. The adjustment reflects the likelihood that your bid would
   // generate a billable event (meaning the ad renders successfully) if it
@@ -93,7 +96,62 @@ message ImpExt {
   // billable event if they won the auction. This adjustment can be larger or
   // smaller than 1. This affects the final ranking in the auction only; in
   // particular, this multiplier does not affect the payment.
-  optional double billable_event_rate_adjustment = 16 [default = 1];
+  optional double billable_event_rate_adjustment = 16 [deprecated = true,
+    default = 1];
+
+  // The billable event rate bid adjustment of an ad and the dependent
+  // features of the ad the adjustment applies to, such as the format or the
+  // SDK used to render the ad. Each feature combination may have a unique
+  // adjustment, each adjustment therefore specifies which SDK or creative
+  // format it applies to.
+  message BillableEventRateBidAdjustment {
+    // A multiplier to your bid to adjust for the likelihood that your bid
+    // would result in a billable event (namely, the ad renders successfully)
+    // if it won the auction, relative to the average probability that bids
+    // from other buyers would result in a billable event if they won the
+    // auction. This adjustment can be larger or smaller than 1. This affects
+    // the final ranking in the auction only; in particular, this multiplier
+    // does not affect the payment or whether the bid clears any floor price.
+    optional float bid_adjustment = 1 [default = 1];
+
+    // The types of creative the bid adjustments can apply to.
+    enum CreativeType {
+      CREATIVE_TYPE_UNKNOWN = 0;
+
+      // Banner ads
+      HTML_SNIPPET = 1;
+
+      // VAST video or audio ads
+      VIDEO_VAST = 2;
+
+      // Native ads
+      NATIVE = 3;
+
+      // SDK rendered ad
+      SDK_RENDERED = 4;
+    }
+
+    // The type of ads to which the above bid adjustment applies to. Each type
+    // corresponds to different ways of how the ad's creative is specified, as
+    // described in
+    // https://developers.google.com/authorized-buyers/rtb/response-guide#specify-creative.
+    // If the ad is SDK-rendered, this will be set to SDK_RENDERED regardless
+    // of the actual creative type.
+    optional CreativeType creative_type = 2 [default = CREATIVE_TYPE_UNKNOWN];
+
+    // The SDK used to render the ad with. The SDK ID will match the one sent
+    // in BidRequest.app.ext.installed_sdk.id. This field is not set for Google
+    // SDK.
+    optional AppExt.InstalledSdk sdk = 3;
+  }
+
+  // A list of billable event rate bid adjustments applicable to the request
+  // and the ad features associated to the adjustment. Bid adjustments are
+  // listed here only if they are not equal to 1.0, which is equivalent to
+  // having no adjustment. This field replaces the deprecated field
+  // billable_event_rate_adjustment.
+  repeated BillableEventRateBidAdjustment billable_event_rate_bid_adjustment =
+    65;
 
   // Parameters related to Open Bidding.
   message OpenBidding {
@@ -901,6 +959,16 @@ message BidRequestExt {
     // server-side and the on-device interest group components, is populated in
     // the minimum_bid_to_win field of the same BidFeedback object.
     optional double sscminbidtowin = 14;
+
+    // Billable event rate multiplier that was applied to this bid during
+    // ranking. The adjustment reflects the likelihood that your bid would
+    // generate a billable event (namely, the ad renders successfully) if it won
+    // the auction, relative to the probability that other bids generate a
+    // billable event if they won the auction. This adjustment can be larger or
+    // smaller than 1. This affects the final ranking in the auction only; in
+    // particular, this multiplier does not affect the payment or whether the
+    // bid clears any floor price.
+    optional float billable_event_rate_bid_adjustment = 13 [default = 1];
 
     // When a publisher uses an RTB auction and waterfall-based SDK mediation on
     // the same query, the winner of the real-time auction must also compete in
