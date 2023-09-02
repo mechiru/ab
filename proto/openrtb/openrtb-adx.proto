@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.154
+// Protocol version: v.155
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -253,15 +253,6 @@ message ImpExt {
       PUBLISHER_BLOCKS_ENFORCEMENT_OVERRIDDEN = 2;
     }
     optional PublisherBlocksEnforcement publisher_blocks_enforcement = 3;
-
-    // Deprecated. This will be removed in August 2022.
-    //
-    // Indicates whether the policy, scan and publisher blocks level
-    // combination is the default combination for this bidder. Use
-    // policy_enforcement and publisher_blocks_enforcement in
-    // CreativeEnforcementSettings to learn which creative policy and
-    // publisher blocks apply to the request.
-    optional bool is_default = 4 [deprecated = true];
   }
   optional CreativeEnforcementSettings creative_enforcement_settings = 15;
 
@@ -432,10 +423,6 @@ message BidExt {
   // https://support.google.com/admanager/answer/9243220.
   // [AdX: BidResponse.Ad.click_tracking_urls]
   repeated string click_tracking_urls = 22;
-
-  // This field is deprecated due to being unused.
-  // [AdX: BidResponse.Ad.bidder_name]
-  optional string DEPRECATED_bidder_name = 3 [deprecated = true];
 
   // [AdX: BidResponse.Ad.AdSlot.exchange_deal_type]
   enum ExchangeDealType {
