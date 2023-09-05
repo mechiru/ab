@@ -173,8 +173,8 @@ const (
 	// server-side, and bidding functions are run on the device to determine
 	// interest group bids. Both the winning contextual bid and interest
 	// group bids are entered into a final auction held on the device to
-	// select the winning ad. For more information regarding the FLEDGE
-	// on device bidding and auction, see:
+	// select the winning ad. For more information regarding the Protected
+	// Audience API on device bidding and auction, see:
 	// https://github.com/WICG/turtledove and
 	// https://github.com/WICG/turtledove/blob/main/FLEDGE.md
 	ImpExt_ON_DEVICE_INTEREST_GROUP_AUCTION ImpExt_AuctionEnvironment = 1
