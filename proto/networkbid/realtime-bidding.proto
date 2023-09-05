@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.299
+// Protocol version: v.300
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1931,8 +1931,8 @@ message BidRequest {
       // server-side, and bidding functions are run on the device to determine
       // interest group bids. Both the winning contextual bid and interest
       // group bids are entered into a final auction held on the device to
-      // select the winning ad. For more information regarding the FLEDGE
-      // on device bidding and auction, see:
+      // select the winning ad. For more information regarding the Protected
+      // Audience API, see:
       // https://github.com/WICG/turtledove and
       // https://github.com/WICG/turtledove/blob/main/FLEDGE.md
       ON_DEVICE_INTEREST_GROUP_AUCTION = 1;
