@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.300
+// Protocol version: v.301
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1910,7 +1910,9 @@ message BidRequest {
       // request for a cell in the grid.
       optional int64 grid_id = 5;
     }
-    optional MultiAdsCellInfo multi_ads_cell_info = 55;
+
+    // Deprecated. This field will be removed in Q1 2024.
+    optional MultiAdsCellInfo multi_ads_cell_info = 55 [deprecated = true];
 
     // Identifier of the OM SDK integration. For more info, see the OpenRTB
     // Advisory for Open Measurement SDK:
