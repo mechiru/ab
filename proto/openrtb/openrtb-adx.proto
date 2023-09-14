@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.156
+// Protocol version: v.157
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -831,8 +831,9 @@ message NativeRequestExt {
     optional int64 grid_id = 5;
   }
 
+  // Deprecated. This field will be removed in Q1 2024.
   // [AdX: BidRequest.AdSlot.multi_ads_cell_info]
-  optional MultiAdsCellInfo multi_ads_cell_info = 5;
+  optional MultiAdsCellInfo multi_ads_cell_info = 5 [deprecated = true];
 }
 
 message EventTrackerExt {
