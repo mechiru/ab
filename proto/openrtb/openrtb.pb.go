@@ -5471,7 +5471,10 @@ type BidRequest_Device struct {
 	// Device make (for example, "Apple").
 	// Supported by Google.
 	Make *string `protobuf:"bytes,12,opt,name=make" json:"make,omitempty"`
-	// Device model (for example, "iPhone").
+	// Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
+	// field contains Apple's model identifier string (such as "iPhone12,1" and
+	// "iPad13,8") if available. Otherwise this field contains the generic model
+	// (either "iphone" or "ipad").
 	// Supported by Google.
 	Model *string `protobuf:"bytes,13,opt,name=model" json:"model,omitempty"`
 	// Device operating system (for example, "iOS").
@@ -5480,7 +5483,9 @@ type BidRequest_Device struct {
 	// Device operating system version (for example, "3.1.2").
 	// Supported by Google.
 	Osv *string `protobuf:"bytes,15,opt,name=osv" json:"osv,omitempty"`
-	// Hardware version of the device (for example, "5S" for iPhone 5S).
+	// Hardware version of the device. For iPhone/iPad, this field contains
+	// Apple's model identifier string (such as "iPhone12,1" and "iPad13,8") if
+	// available.
 	// Supported by Google.
 	Hwv *string `protobuf:"bytes,24,opt,name=hwv" json:"hwv,omitempty"`
 	// Physical width of the screen in pixels.

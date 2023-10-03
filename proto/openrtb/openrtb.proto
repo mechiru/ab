@@ -1378,7 +1378,10 @@ message BidRequest {
     // Supported by Google.
     optional string make = 12;
 
-    // Device model (for example, "iPhone").
+    // Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
+    // field contains Apple's model identifier string (such as "iPhone12,1" and
+    // "iPad13,8") if available. Otherwise this field contains the generic model
+    // (either "iphone" or "ipad").
     // Supported by Google.
     optional string model = 13;
 
@@ -1390,7 +1393,9 @@ message BidRequest {
     // Supported by Google.
     optional string osv = 15;
 
-    // Hardware version of the device (for example, "5S" for iPhone 5S).
+    // Hardware version of the device. For iPhone/iPad, this field contains
+    // Apple's model identifier string (such as "iPhone12,1" and "iPad13,8") if
+    // available.
     // Supported by Google.
     optional string hwv = 24;
 
