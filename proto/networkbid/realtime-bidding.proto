@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.301
+// Protocol version: v.302
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -445,7 +445,10 @@ message BidRequest {
     // The brand of the device, for example, Nokia, Samsung.
     optional string brand = 3 [default = ""];
 
-    // The model of the device, for example, N70, Galaxy.
+    // Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
+    // field contains Apple's model identifier string (such as "iPhone12,1" and
+    // "iPad13,8") if available. Otherwise this field contains the generic
+    // model (either "iphone" or "ipad").
     optional string model = 4 [default = ""];
 
     // Contains the OS version of the platform. For instance, for Android 2,
@@ -489,7 +492,9 @@ message BidRequest {
     optional ScreenOrientation screen_orientation = 10 [default =
       UNKNOWN_ORIENTATION];
 
-    // Apple iOS device model, for example, "iphone 5s", "iphone 6+", "ipad 4".
+    // Hardware version of the device. For iPhone/iPad, this field contains
+    // Apple's model identifier string (such as "iPhone12,1" and "iPad13,8") if
+    // available.
     optional string hardware_version = 11;
 
     // "Limit Ad Tracking" is a commercially endorsed signal based on the

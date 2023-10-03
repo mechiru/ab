@@ -4686,7 +4686,10 @@ type BidRequest_Device struct {
 	Platform *string `protobuf:"bytes,2,opt,name=platform,def=" json:"platform,omitempty"`
 	// The brand of the device, for example, Nokia, Samsung.
 	Brand *string `protobuf:"bytes,3,opt,name=brand,def=" json:"brand,omitempty"`
-	// The model of the device, for example, N70, Galaxy.
+	// Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
+	// field contains Apple's model identifier string (such as "iPhone12,1" and
+	// "iPad13,8") if available. Otherwise this field contains the generic
+	// model (either "iphone" or "ipad").
 	Model *string `protobuf:"bytes,4,opt,name=model,def=" json:"model,omitempty"`
 	// The OS version; for example, 2 for Android 2.1, or 3.3 for iOS 3.3.1.
 	OsVersion *BidRequest_Device_OsVersion `protobuf:"bytes,5,opt,name=os_version,json=osVersion" json:"os_version,omitempty"`
@@ -4709,7 +4712,9 @@ type BidRequest_Device struct {
 	ScreenPixelRatioMillis *int32 `protobuf:"varint,9,opt,name=screen_pixel_ratio_millis,json=screenPixelRatioMillis,def=0" json:"screen_pixel_ratio_millis,omitempty"`
 	// The screen orientation of the device when the ad request is sent.
 	ScreenOrientation *BidRequest_Device_ScreenOrientation `protobuf:"varint,10,opt,name=screen_orientation,json=screenOrientation,enum=com.google.protos.adx.BidRequest_Device_ScreenOrientation,def=0" json:"screen_orientation,omitempty"`
-	// Apple iOS device model, for example, "iphone 5s", "iphone 6+", "ipad 4".
+	// Hardware version of the device. For iPhone/iPad, this field contains
+	// Apple's model identifier string (such as "iPhone12,1" and "iPad13,8") if
+	// available.
 	HardwareVersion *string `protobuf:"bytes,11,opt,name=hardware_version,json=hardwareVersion" json:"hardware_version,omitempty"`
 	// "Limit Ad Tracking" is a commercially endorsed signal based on the
 	// operating system or device settings, where `false` indicates that
