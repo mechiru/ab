@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.302
+// Protocol version: v.303
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -65,6 +65,11 @@ message BidRequest {
   // session_id may only be used for frequency capping, competitive exclusions
   // or related purposes.
   optional string session_id = 65;
+
+  // A pseudonymized identifier created and controlled by the publisher for use
+  // in frequency capping, audience segmentation and targeting, and sequential
+  // ad rotation. See https://support.google.com/admanager/answer/2880055.
+  optional string publisher_provided_id = 79;
 
   // A string that identifies the browser and type of device that sent the
   // request. Certain data may be redacted or replaced.
