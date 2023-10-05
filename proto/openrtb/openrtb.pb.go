@@ -6064,9 +6064,9 @@ type BidRequest_User struct {
 	// Not supported by Google. Google supports the IAB TCFv2 consent string
 	// with the extension BidRequest.user.ext.consent.
 	Consent *string `protobuf:"bytes,10,opt,name=consent" json:"consent,omitempty"`
-	// Details for support of a standard protocol for multiple third
-	// party identity providers.
-	// Not supported by Google. For Secure Signals, see extension
+	// Data made available by the publisher, such as publisher-provided
+	// identifiers.
+	// Supported by Google. For Secure Signals, see extension
 	// BidRequest.user.ext.eids.
 	Eids []*BidRequest_User_EID `protobuf:"bytes,11,rep,name=eids" json:"eids,omitempty"`
 }
@@ -8341,22 +8341,21 @@ func (x *BidRequest_Data_Segment) GetValue() string {
 	return ""
 }
 
-// Extended identifiers support in the OpenRTB specification allows buyers
-// to use audience data in real-time bidding. This object can contain one or
-// more UIDs from a single source or a technology provider. The exchange
-// should ensure that business agreements allow for the sending of this data
+// Extended data, such as a publisher-provided identifier, that allows
+// buyers to use data made available by the publisher in real-time bidding.
+// This object can contain one or more UIDs from a single source or a
+// technology provider.
 type BidRequest_User_EID struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// Source or technology provider responsible for the set of included IDs.
-	// Expressed as a top-level domain.
-	// Not supported by Google.
+	// Source or technology provider responsible for the set of included data.
+	// Supported by Google.
 	Source *string `protobuf:"bytes,1,opt,name=source" json:"source,omitempty"`
 	// Array of extended ID UID objects from the given source.
-	// Not supported by Google.
+	// Supported by Google.
 	Uids []*BidRequest_User_EID_UID `protobuf:"bytes,2,rep,name=uids" json:"uids,omitempty"`
 }
 
@@ -8406,17 +8405,16 @@ func (x *BidRequest_User_EID) GetUids() []*BidRequest_User_EID_UID {
 	return nil
 }
 
-// This object contains a single user identifier provided as part of
-// extended identifiers. The exchange should ensure that business
-// agreements allow for the sending of this data.
+// This object contains a single data item, such as a publisher-provided
+// identifier, provided as part of extended identifiers.
 type BidRequest_User_EID_UID struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// The identifier for the user.
-	// Not supported by Google.
+	// The data value, such as a publisher-provided identifier.
+	// Supported by Google.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
 	// Type of user agent the ID is from.
 	// Not supported by Google.
