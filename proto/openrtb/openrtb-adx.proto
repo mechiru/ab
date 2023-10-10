@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.158
+// Protocol version: v.159
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -896,6 +896,50 @@ message SiteExt {
   // [AdX: BidRequest.page_visibility]
   optional VisibilityState page_visibility = 2 [default =
     VISIBILITY_STATE_UNKNOWN];
+
+  // Information about a browser window's user activation state. See
+  // https://html.spec.whatwg.org/multipage/interaction.html#the-useractivation-interface.
+  message UserActivation {
+    // Indicates whether a user has completed an interaction since page load.
+    optional bool wasact = 1;
+
+    // Indicates whether a user is currently interacting with the page.
+    optional bool isact = 2;
+  }
+
+  // User activation information from the browser for the current request, if
+  // the request is for a web page.
+  optional UserActivation uact = 5;
+
+  // The set of possible web navigation types that predicate a page load. Each
+  // of these types may have different performance characteristics. For example,
+  // users going back and forth might experience a faster site than users
+  // performing navigation for the first time or submitting forms. See
+  // https://w3c.github.io/navigation-timing/#dom-performancenavigationtiming-type.
+  enum NavigationType {
+    NAVIGATION_TYPE_UNKNOWN = 0;
+
+    // Navigation started by clicking a link, entering the URL in the browser's
+    // address bar, form submission, or initializing through a script operation
+    // other than reload and back_forward.
+    NAVIGATION_TYPE_NAVIGATE = 1;
+
+    // Navigation is through the browser's reload operation, location.reload(),
+    // or a Refresh pragma directive like
+    // <meta http-equiv="refresh" content="300">.
+    NAVIGATION_TYPE_RELOAD = 2;
+
+    // Navigation is through the browser's history traversal operation.
+    NAVIGATION_TYPE_BACK_FORWARD = 3;
+
+    // Navigation is initiated by a prerender hint (deprecated). See
+    // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prerender.
+    NAVIGATION_TYPE_PRERENDER = 4;
+  }
+
+  // The type of browser navigation that led to the current page. Unset for
+  // non-web ad requests.
+  optional NavigationType ntype = 6;
 
   // Indicates that the request is using semi-transparent branding,
   // which means only a truncated version of the request URL will
