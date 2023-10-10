@@ -962,6 +962,50 @@ message BidRequest {
   optional VisibilityState page_visibility = 66 [default =
     VISIBILITY_STATE_UNKNOWN];
 
+  // Information about a browser window's user activation state. See
+  // https://html.spec.whatwg.org/multipage/interaction.html#the-useractivation-interface
+  message UserActivation {
+    // Indicates whether a user has completed an interaction since page load.
+    optional bool has_been_active = 1;
+
+    // Indicates whether a user is currently interacting with the page.
+    optional bool is_active = 2;
+  }
+
+  // User activation information from the browser for the current request, if
+  // the request is for a web page.
+  optional UserActivation user_activation = 76;
+
+  // The set of possible web navigation types that predicate a page load. Each
+  // of these types may have different performance characteristics. For example,
+  // users going back and forth might experience a faster site than users
+  // performing navigation for the first time or submitting forms. See
+  // https://w3c.github.io/navigation-timing/#dom-performancenavigationtiming-type.
+  enum NavigationType {
+    NAVIGATION_TYPE_UNKNOWN = 0;
+
+    // Navigation started by clicking a link, entering the URL in the browser's
+    // address bar, form submission, or initializing through a script operation
+    // other than reload and back_forward.
+    NAVIGATION_TYPE_NAVIGATE = 1;
+
+    // Navigation is through the browser's reload operation, location.reload(),
+    // or a Refresh pragma directive like
+    // <meta http-equiv="refresh" content="300">.
+    NAVIGATION_TYPE_RELOAD = 2;
+
+    // Navigation is through the browser's history traversal operation.
+    NAVIGATION_TYPE_BACK_FORWARD = 3;
+
+    // Navigation is initiated by a prerender hint (deprecated). See
+    // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prerender.
+    NAVIGATION_TYPE_PRERENDER = 4;
+  }
+
+  // The type of browser navigation that led to the current page. Unset for
+  // non-web ad requests.
+  optional NavigationType navigation_type = 77;
+
   // -----------------------------------------------------------
   // Information about the adslots on the page.
   message AdSlot {
