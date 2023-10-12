@@ -4544,7 +4544,8 @@ type BidRequest_Content struct {
 	// Not supported by Google.
 	Embeddable *bool `protobuf:"varint,18,opt,name=embeddable" json:"embeddable,omitempty"`
 	// Additional content data. Each object represents a different data source.
-	// Not supported by Google.
+	// Supported by Google. Used for Publisher Provided Signals:
+	// https://support.google.com/admanager/answer/12451124
 	Data []*BidRequest_Data `protobuf:"bytes,28,rep,name=data" json:"data,omitempty"`
 	// Details about the network the content is on.
 	// Not supported by Google.
@@ -6047,7 +6048,10 @@ type BidRequest_User struct {
 	Geo *BidRequest_Geo `protobuf:"bytes,7,opt,name=geo" json:"geo,omitempty"`
 	// Additional user data. Each Data object (Section 3.2.14) represents a
 	// different data source.
-	// Supported by Google. Used only for Chrome Topics API testing.
+	// Supported by Google.
+	// Used for Chrome Topics API and for Publisher Provided Signals:
+	// https://developers.google.com/authorized-buyers/rtb/topics
+	// https://support.google.com/admanager/answer/12451124
 	Data []*BidRequest_Data `protobuf:"bytes,8,rep,name=data" json:"data,omitempty"`
 	// The web-safe base64-encoded IAB Transparency and Consent Framework (TCF)
 	// v2 consent string fetched from the publisher's IAB Consent Management

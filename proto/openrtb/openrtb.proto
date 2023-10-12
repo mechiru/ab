@@ -950,7 +950,8 @@ message BidRequest {
     optional bool embeddable = 18;
 
     // Additional content data. Each object represents a different data source.
-    // Not supported by Google.
+    // Supported by Google. Used for Publisher Provided Signals:
+    // https://support.google.com/admanager/answer/12451124
     repeated Data data = 28;
 
     // This object describes the network an ad will be displayed on.
@@ -1661,7 +1662,10 @@ message BidRequest {
 
     // Additional user data. Each Data object (Section 3.2.14) represents a
     // different data source.
-    // Supported by Google. Used only for Chrome Topics API testing.
+    // Supported by Google.
+    // Used for Chrome Topics API and for Publisher Provided Signals:
+    // https://developers.google.com/authorized-buyers/rtb/topics
+    // https://support.google.com/admanager/answer/12451124
     repeated Data data = 8;
 
     // The web-safe base64-encoded IAB Transparency and Consent Framework (TCF)
