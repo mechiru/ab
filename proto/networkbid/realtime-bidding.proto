@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.303
+// Protocol version: v.304
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -136,6 +136,39 @@ message BidRequest {
     optional bool allow_user_data_collection = 7;
   }
   optional PrivacyTreatments privacy_treatments = 71;
+
+  // First party data segments that describe the content or audience. Each
+  // SegmentData object represents a different data source.
+  message SegmentData {
+    // Exchange-specific name for the signal provider.
+    optional string name = 1;
+
+    // Segment objects contain segment IDs that can be used with the taxonomy
+    // type to access first party data.
+    message Segment {
+      // ID of the data segment specific to the signal provider.
+      optional string id = 1;
+    }
+    repeated Segment segment = 2;
+
+    // Taxonomy types that are registered centrally. Used to define the
+    // namespace and semantic meaning of the segment IDs. For more information
+    // about these taxonomies, see:
+    // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/segtax.md#enumeration-of-taxonomies
+    enum TaxonomyType {
+      TAXONOMY_TYPE_UNKNOWN = 0;
+      IAB_AUDIENCE_1_1 = 4;
+      IAB_CONTENT_2_2 = 6;
+      IAB_CONTENT_3_0 = 7;
+    }
+
+    // The taxonomy in use for segment IDs.
+    optional TaxonomyType type = 3;
+  }
+
+  // Data segments for Publisher Provided Signals:
+  // https://support.google.com/admanager/answer/12451124
+  repeated SegmentData segment_data = 75;
 
   // Structured user agent information, which can be used when a client
   // supports User-Agent Client Hints: https://wicg.github.io/ua-client-hints/
