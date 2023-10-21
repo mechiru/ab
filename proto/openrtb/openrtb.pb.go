@@ -5924,9 +5924,11 @@ func (x *BidRequest_Regs) GetGppSid() []BidRequest_Regs_GppSectionId {
 // about the user to be specified. This data may be from multiple sources
 // whether from the exchange itself or third party providers as specified by
 // the id field. A bid request can mix data objects from multiple providers or
-// can have multiple data objects.
-// The specific data providers in use should be published by the exchange
-// a priori to its bidders.
+// can have multiple data objects. The specific data providers in use should
+// be published by the exchange a priori to its bidders.
+//
+// Google: This is used to send Publisher Provided Signals and Topics to
+// bidders.
 type BidRequest_Data struct {
 	state           protoimpl.MessageState
 	sizeCache       protoimpl.SizeCache
