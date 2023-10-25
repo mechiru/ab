@@ -284,7 +284,15 @@ message BidRequest {
 
       // Placement type for the impression.
       // Supported by Google.
-      optional VideoPlacementType placement = 26;
+      // Deprecated. This will be removed in January 2025 per the IAB here:
+      // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--placement-subtypes---video-
+      optional VideoPlacementType placement = 26 [deprecated = true];
+
+      // Video placement type for the impression.
+      // Introduced in OpenRTB 2.6 to reflect updated industry definitions
+      // around different types of video ad placements. This field supersedes
+      // the Video.placement field.
+      optional Plcmt plcmt = 35 [default = PLCMT_UNKNOWN];
 
       // Indicates if the impression must be linear or nonlinear. If none
       // specified, assume all are allowed.
@@ -2826,6 +2834,41 @@ enum VideoPlacementType {
   // Note that a full-screen interstitial (for example, in mobile)
   // can be distinguished from a floating/slider unit by the imp.instl field.
   FLOATING_PLACEMENT = 5;
+}
+
+// Possible video placement types. See:
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list--plcmt-subtypes---video-
+enum Plcmt {
+  PLCMT_UNKNOWN = 0;
+
+  // Pre-roll, mid-roll, and post-roll ads that are played before, during or
+  // after the streaming video content that the consumer has requested. Instream
+  // video must be set to “sound on” by default at player start, or have
+  // explicitly clear user intent to watch the video content. While there may be
+  // other content surrounding the player, the video content must be the focus
+  // of the user’s visit. It should remain the primary content on the page and
+  // the only video player in-view capable of audio when playing. If the player
+  // converts to floating/sticky, subsequent ad calls should accurately convey
+  // the updated player size.
+  PLCMT_INSTREAM = 1;
+
+  // Pre-roll, mid-roll, and post-roll ads that are played before, during, or
+  // after streaming video content. The video player loads and plays before,
+  // between, or after paragraphs of text or graphical content, and starts
+  // playing only when it enters the viewport. Accompanying content should only
+  // start playback upon entering the viewport. It may convert to a
+  // floating/sticky player as it scrolls off the page.
+  PLCMT_ACCOMPANYING_CONTENT = 2;
+
+  // Video ads that are played without video content. During playback, it must
+  // be the primary focus of the page and take up the majority of the viewport
+  // and cannot be scrolled out of view. This can be in placements like in-app
+  // video or slideshows.
+  PLCMT_INTERSTITIAL = 3;
+
+  // Video ads that are played without streaming video content. This can be in
+  // placements like slideshows, native feeds, in-content or sticky/floating.
+  PLCMT_NO_CONTENT_STANDALONE = 4;
 }
 
 // OpenRTB 2.5: The various modes for when playback terminates.
