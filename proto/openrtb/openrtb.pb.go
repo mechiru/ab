@@ -4592,13 +4592,14 @@ type BidRequest_Content struct {
 	// Not supported by Google.
 	Cat []string `protobuf:"bytes,7,rep,name=cat" json:"cat,omitempty"`
 	// Production quality.
-	// Not supported by Google.
+	// Supported by Google.
 	Prodq *ProductionQuality `protobuf:"varint,25,opt,name=prodq,enum=com.google.openrtb.ProductionQuality" json:"prodq,omitempty"`
 	// Type of content (for example, game, video or text).
 	// Not supported by Google.
 	Context *ContentContext `protobuf:"varint,20,opt,name=context,enum=com.google.openrtb.ContentContext" json:"context,omitempty"`
-	// Content rating (for example, MPAA).
-	// Not supported by Google.
+	// Content rating.
+	// Possible values: "DV-G", "DV-PG", "DV-T", "DV-MA".
+	// Supported by Google.
 	Contentrating *string `protobuf:"bytes,10,opt,name=contentrating" json:"contentrating,omitempty"`
 	// User rating of the content (for example, number of stars or likes).
 	// Supported by Google.
@@ -6695,10 +6696,10 @@ type BidRequest_Imp_Video struct {
 	// specified and the other way around.
 	// Not supported by Google.
 	Rqddurs []int32 `protobuf:"varint,32,rep,packed,name=rqddurs" json:"rqddurs,omitempty"`
-	// Placement type for the impression.
-	// Supported by Google.
 	// Deprecated. This will be removed in January 2025 per the IAB here:
 	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--placement-subtypes---video-
+	// Placement type for the impression.
+	// Supported by Google.
 	//
 	// Deprecated: Marked as deprecated in openrtb.proto.
 	Placement *VideoPlacementType `protobuf:"varint,26,opt,name=placement,enum=com.google.openrtb.VideoPlacementType" json:"placement,omitempty"`
@@ -6706,6 +6707,7 @@ type BidRequest_Imp_Video struct {
 	// Introduced in OpenRTB 2.6 to reflect updated industry definitions
 	// around different types of video ad placements. This field supersedes
 	// the Video.placement field.
+	// Supported by Google.
 	Plcmt *Plcmt `protobuf:"varint,35,opt,name=plcmt,enum=com.google.openrtb.Plcmt,def=0" json:"plcmt,omitempty"`
 	// Indicates if the impression must be linear or nonlinear. If none
 	// specified, assume all are allowed.
@@ -6774,7 +6776,7 @@ type BidRequest_Imp_Video struct {
 	Playbackend *PlaybackCessationMode `protobuf:"varint,27,opt,name=playbackend,enum=com.google.openrtb.PlaybackCessationMode" json:"playbackend,omitempty"`
 	// Supported delivery methods (for example, streaming, progressive).
 	// If none specified, assume all are supported.
-	// Not supported by Google.
+	// Supported by Google.
 	Delivery []ContentDeliveryMethod `protobuf:"varint,16,rep,packed,name=delivery,enum=com.google.openrtb.ContentDeliveryMethod" json:"delivery,omitempty"`
 	// Ad position on screen.
 	// Supported by Google.
@@ -7181,8 +7183,7 @@ type BidRequest_Imp_Audio struct {
 	// Not supported by Google.
 	Maxbitrate *int32 `protobuf:"varint,10,opt,name=maxbitrate" json:"maxbitrate,omitempty"`
 	// Supported delivery methods (for example, streaming, progressive).
-	// If none specified, assume all are supported.
-	// Not supported by Google.
+	// Supported by Google.
 	Delivery []ContentDeliveryMethod `protobuf:"varint,11,rep,packed,name=delivery,enum=com.google.openrtb.ContentDeliveryMethod" json:"delivery,omitempty"`
 	// Array of Banner objects if companion ads are available.
 	// Supported by Google.
@@ -7199,7 +7200,7 @@ type BidRequest_Imp_Audio struct {
 	// Not supported by Google.
 	Maxseq *int32 `protobuf:"varint,21,opt,name=maxseq" json:"maxseq,omitempty"`
 	// Type of audio feed.
-	// Not supported by Google.
+	// Supported by Google.
 	Feed *FeedType `protobuf:"varint,22,opt,name=feed,enum=com.google.openrtb.FeedType" json:"feed,omitempty"`
 	// Indicates if the ad is stitched with audio content or delivered
 	// independently.

@@ -282,16 +282,17 @@ message BidRequest {
       // Not supported by Google.
       repeated int32 rqddurs = 32 [packed = true];
 
-      // Placement type for the impression.
-      // Supported by Google.
       // Deprecated. This will be removed in January 2025 per the IAB here:
       // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--placement-subtypes---video-
+      // Placement type for the impression.
+      // Supported by Google.
       optional VideoPlacementType placement = 26 [deprecated = true];
 
       // Video placement type for the impression.
       // Introduced in OpenRTB 2.6 to reflect updated industry definitions
       // around different types of video ad placements. This field supersedes
       // the Video.placement field.
+      // Supported by Google.
       optional Plcmt plcmt = 35 [default = PLCMT_UNKNOWN];
 
       // Indicates if the impression must be linear or nonlinear. If none
@@ -374,7 +375,7 @@ message BidRequest {
 
       // Supported delivery methods (for example, streaming, progressive).
       // If none specified, assume all are supported.
-      // Not supported by Google.
+      // Supported by Google.
       repeated ContentDeliveryMethod delivery = 16 [packed = true];
 
       // Ad position on screen.
@@ -517,8 +518,7 @@ message BidRequest {
       optional int32 maxbitrate = 10;
 
       // Supported delivery methods (for example, streaming, progressive).
-      // If none specified, assume all are supported.
-      // Not supported by Google.
+      // Supported by Google.
       repeated ContentDeliveryMethod delivery = 11 [packed = true];
 
       // Array of Banner objects if companion ads are available.
@@ -540,7 +540,7 @@ message BidRequest {
       optional int32 maxseq = 21;
 
       // Type of audio feed.
-      // Not supported by Google.
+      // Supported by Google.
       optional FeedType feed = 22;
 
       // Indicates if the ad is stitched with audio content or delivered
@@ -906,15 +906,16 @@ message BidRequest {
     repeated string cat = 7;
 
     // Production quality.
-    // Not supported by Google.
+    // Supported by Google.
     optional ProductionQuality prodq = 25;
 
     // Type of content (for example, game, video or text).
     // Not supported by Google.
     optional ContentContext context = 20;
 
-    // Content rating (for example, MPAA).
-    // Not supported by Google.
+    // Content rating.
+    // Possible values: "DV-G", "DV-PG", "DV-T", "DV-MA".
+    // Supported by Google.
     optional string contentrating = 10;
 
     // User rating of the content (for example, number of stars or likes).
