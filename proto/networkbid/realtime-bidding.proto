@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.306
+// Protocol version: v.307
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2097,6 +2097,16 @@ message BidRequest {
     // following guide:
     // https://developers.google.com/authorized-buyers/rtb/billing-event-guide
     optional int32 impression_expiration_seconds = 63;
+
+    // The name of the rendering environment, such as a mobile ads or video
+    // SDK, or a publisher ad tag type. This field describes a Google SDK while
+    // the installed_sdk field describes third party SDKs.
+    optional string display_manager = 71;
+
+    // Version of the rendering environment specified by the display_manager
+    // field. This field describes a Google SDK while the installed_sdk field
+    // describes third party SDKs.
+    optional string display_manager_version = 72;
   }
   repeated AdSlot adslot = 14;
 
