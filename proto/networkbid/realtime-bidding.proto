@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.307
+// Protocol version: v.309
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -78,19 +78,20 @@ message BidRequest {
   // Information about privacy treatments that apply to an ad opportunity
   // offered through this request.
   message PrivacyTreatments {
-    // Generalization that can be applied to the user_agent field.
+    // Generalization that can be applied to the user_agent and user_agent_data
+    // fields.
     enum UserAgentGeneralization {
-      // The user_agent field is provided in full (the complete User-Agent
-      // header).
+      // The user_agent and user_agent_data fields are both provided in full.
       USER_AGENT_FULL = 0;
 
-      // The user_agent field is generalized, which can include limiting
-      // browser and OS version information to major versions only and other
-      // changes to protect user privacy.
+      // The user_agent and user_agent_data fields are generalized, which can
+      // include limiting browser and OS version information to major versions
+      // only and other changes to protect user privacy.
       USER_AGENT_COARSENED = 1;
     }
 
-    // Generalization that was applied to the user_agent field, if any.
+    // Generalization that was applied to the user_agent and user_agent_data
+    // fields, if any.
     optional UserAgentGeneralization user_agent = 2;
 
     // Generalization that can be applied to the user_agent_data field.
@@ -104,8 +105,10 @@ message BidRequest {
       USER_AGENT_DATA_COARSENED = 1;
     }
 
+    // Deprecated. This will be removed in January 2024.
     // Generalization that was applied to the user_agent_data field, if any.
-    optional UserAgentDataGeneralization user_agent_data = 3;
+    optional UserAgentDataGeneralization user_agent_data = 3 [deprecated =
+      true];
 
     // Specifies the reasons that ads returned in response to this request
     // should not be personalized.
