@@ -5031,7 +5031,7 @@ type BidRequest_Device struct {
 	DeviceType *BidRequest_Device_DeviceType `protobuf:"varint,1,opt,name=device_type,json=deviceType,enum=com.google.protos.adx.BidRequest_Device_DeviceType,def=0" json:"device_type,omitempty"`
 	// The platform of the device. Examples: android, iphone, palm
 	Platform *string `protobuf:"bytes,2,opt,name=platform,def=" json:"platform,omitempty"`
-	// The brand of the device, for example, Nokia, Samsung.
+	// The brand of the device (for example, "Apple" or "Samsung").
 	Brand *string `protobuf:"bytes,3,opt,name=brand,def=" json:"brand,omitempty"`
 	// Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
 	// field contains Apple's model identifier string (such as "iPhone12,1" and

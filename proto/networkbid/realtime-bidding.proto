@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.309
+// Protocol version: v.310
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -483,7 +483,7 @@ message BidRequest {
     // The platform of the device. Examples: android, iphone, palm
     optional string platform = 2 [default = ""];
 
-    // The brand of the device, for example, Nokia, Samsung.
+    // The brand of the device (for example, "Apple" or "Samsung").
     optional string brand = 3 [default = ""];
 
     // Device model (for example, "pixel 7 pro"). For iPhone/iPad, this
