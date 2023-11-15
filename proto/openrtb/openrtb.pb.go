@@ -5558,7 +5558,7 @@ type BidRequest_Device struct {
 	// The general type of device.
 	// Supported by Google.
 	Devicetype *DeviceType `protobuf:"varint,18,opt,name=devicetype,enum=com.google.openrtb.DeviceType" json:"devicetype,omitempty"`
-	// Device make (for example, "Apple").
+	// Device make (for example, "Apple" or "Samsung").
 	// Supported by Google.
 	Make *string `protobuf:"bytes,12,opt,name=make" json:"make,omitempty"`
 	// Device model (for example, "pixel 7 pro"). For iPhone/iPad, this

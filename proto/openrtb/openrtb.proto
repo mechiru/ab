@@ -1384,7 +1384,7 @@ message BidRequest {
     // Supported by Google.
     optional DeviceType devicetype = 18;
 
-    // Device make (for example, "Apple").
+    // Device make (for example, "Apple" or "Samsung").
     // Supported by Google.
     optional string make = 12;
 
