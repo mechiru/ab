@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.310
+// Protocol version: v.311
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -446,6 +446,54 @@ message BidRequest {
   // List of detected content labels. See content-labels.txt file in the
   // technical documentation for a list of ids.
   repeated int32 detected_content_label = 26 [packed = true];
+
+  // The production quality of the content. See
+  // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list--production-qualities-
+  // for details.
+  enum ProductionQuality {
+    QUALITY_UNKNOWN = 0;
+
+    // Content that is usually created or produced by media and entertainment
+    // companies using professional-grade equipment, talent, and production
+    // crews that hold or maintain the rights for distribution and syndication.
+    PROFESSIONAL = 1;
+
+    // Consumer or user-generated content that has professional or industrial
+    // qualities (e.g. shot with professional-grade equipment, using
+    // professional talent, etc.).
+    PROSUMER = 2;
+
+    // Publicly available video content that is created or produced by
+    // end users.
+    USER_GENERATED = 3;
+  }
+
+  // The production quality of the content where an ad can be shown, as
+  // determined by the publisher.
+  optional ProductionQuality production_quality = 80 [default =
+    QUALITY_UNKNOWN];
+
+  // The rating of the content. See
+  // https://support.google.com/admanager/answer/12451124#content-rating for
+  // details.
+  enum ContentRating {
+    RATING_UNKNOWN = 0;
+
+    // Content suitable for general audiences.
+    GENERAL_AUDIENCES = 1;
+
+    // Content suitable for most audiences with parental guidance.
+    PARENTAL_GUIDANCE = 2;
+
+    // Content suitable for teen and older audiences.
+    TEEN = 3;
+
+    // Content suitable only for mature audiences.
+    MATURE_AUDIENCES = 4;
+  }
+
+  // The rating of the content where an ad can be shown.
+  optional ContentRating content_rating = 84 [default = RATING_UNKNOWN];
 
   // This represents a unique ID for the overall query. In the event
   // that there are multiple callouts for a query, all callout requests for that
@@ -1009,6 +1057,50 @@ message BidRequest {
     }
     optional PlaybackCessationMode playback_cessation_mode = 19 [default =
       PLAYBACK_CESSATION_MODE_UNKNOWN];
+
+    // Types of feed for audio content. See
+    // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list--feed-types-
+    // for details.
+    enum FeedType {
+      FEED_TYPE_UNKNOWN = 0;
+
+      // Music streaming service.
+      MUSIC_SERVICE = 1;
+
+      // Live content broadcast over the air but also available through online
+      // streaming.
+      FM_AM_BROADCAST = 2;
+
+      // Original, pre-recorded content distributed as episodes in a series.
+      PODCAST = 3;
+    }
+
+    // Type of audio content feed where an audio ad can be played.
+    optional FeedType feed_type = 21 [default = FEED_TYPE_UNKNOWN];
+
+    // Options for delivery of audio or video content. See
+    // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list_deliverymethods
+    // for details.
+    enum ContentDeliveryMethod {
+      CONTENT_DELIVERY_METHOD_UNKNOWN = 0;
+
+      // Content is transferred continuously by the network; clients receive
+      // real-time content for playback while connected. Example: broadcast TV.
+      STREAMING = 1;
+
+      // Content is transferred incrementally as client's playback requires.
+      // Example: on-demand movies, podcasts, or music.
+      PROGRESSIVE = 2;
+
+      // Content should be transferred completely prior to use/playback.
+      // Example: content downloaded to the user's device for offline
+      // consumption.
+      DOWNLOAD = 3;
+    }
+
+    // Supported delivery methods for the video or audio content where an ad can
+    // be shown.
+    repeated ContentDeliveryMethod delivery_method = 22 [packed = true];
   }
   optional Video video = 29;
 
