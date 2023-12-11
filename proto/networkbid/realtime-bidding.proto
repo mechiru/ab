@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.311
+// Protocol version: v.312
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2568,13 +2568,6 @@ message BidResponse {
     // width and height or if BidRequest.Mobile.is_interstitial_request is true.
     optional int32 width = 14;
     optional int32 height = 15;
-
-    // Deprecated. This field will be removed in November, 2023.
-    // The Agency associated with this ad. See agencies.txt file in the
-    // technical documentation for a list of ids. If this ad has no associated
-    // agency then the value NONE (agency_id: 1) should be used rather than
-    // leaving this field unset.
-    optional int64 agency_id = 16 [deprecated = true];
 
     message AdSlot {
       // The slot id from the BidRequest that the ad may appear in.
