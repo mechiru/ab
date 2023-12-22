@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.312
+// Protocol version: v.313
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -70,6 +70,26 @@ message BidRequest {
   // in frequency capping, audience segmentation and targeting, and sequential
   // ad rotation. See https://support.google.com/admanager/answer/2880055.
   optional string publisher_provided_id = 79;
+
+  // Publisher first-party identifier scoped to a single site, app or vendor.
+  message PublisherFirstPartyId {
+    // Specifies how an ID is scoped and the type of requests it is used with.
+    enum IdType {
+      // A default value that should not be used.
+      UNKNOWN = 0;
+
+      // A site-scoped cookie for requests from web browsers.
+      SITE_SCOPED_COOKIE = 1;
+    }
+
+    // The type of the ID. This specifies how it is scoped and the type of
+    // requests it is used with.
+    optional IdType id_type = 1;
+
+    // The value of the ID.
+    optional string id = 2;
+  }
+  optional PublisherFirstPartyId publisher_first_party_id = 85;
 
   // A string that identifies the browser and type of device that sent the
   // request. Certain data may be redacted or replaced.
