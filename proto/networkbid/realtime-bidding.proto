@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.313
+// Protocol version: v.314
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2129,38 +2129,6 @@ message BidRequest {
     // billable_event_rate_adjustment.
     repeated BillableEventRateBidAdjustment billable_event_rate_bid_adjustment =
       65;
-
-    // Note: This feature is currently in beta testing for publishers
-    // and is subject to change.
-    // This message is populated when the request is for an individual cell
-    // within a multi-ad grid. It provides cell level information as well as
-    // information about the grid this cell belongs to in the AdSlot.
-    // Only native ads are supported for cells in a multi-ad grid at this time.
-    message MultiAdsCellInfo {
-      // The row this cell belongs to.
-      optional int32 cell_row = 1;
-
-      // The column this cell belongs to.
-      optional int32 cell_column = 2;
-
-      // Total number of rows in the grid for this cell.
-      optional int32 grid_rows = 3;
-
-      // Total number of columns in the grid for this cell.
-      optional int32 grid_columns = 4;
-
-      // Unique ID for the grid. It identifies a single grid on a single
-      // instance of a page and is the same for all cells within that grid. If a
-      // page has multiple grids, the grid_id for other grids would be
-      // different. It would also be different for the same grid in two
-      // different pageviews.
-      // This is distinct from the google_query_id, which will differ for every
-      // request for a cell in the grid.
-      optional int64 grid_id = 5;
-    }
-
-    // Deprecated. This field will be removed in Q1 2024.
-    optional MultiAdsCellInfo multi_ads_cell_info = 55 [deprecated = true];
 
     // Identifier of the OM SDK integration. For more info, see the OpenRTB
     // Advisory for Open Measurement SDK:
