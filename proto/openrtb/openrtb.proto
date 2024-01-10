@@ -594,7 +594,7 @@ message BidRequest {
     // creative in an app, where false = embedded, true = native.
     // Note that the Safari View Controller in iOS 9.x devices is considered
     // a native browser for purposes of this attribute.
-    // Not supported by Google.
+    // Supported by Google.
     optional bool clickbrowser = 16;
 
     // Indicates if the impression requires secure HTTPS URL creative

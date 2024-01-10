@@ -4219,7 +4219,7 @@ type BidRequest_Imp struct {
 	// creative in an app, where false = embedded, true = native.
 	// Note that the Safari View Controller in iOS 9.x devices is considered
 	// a native browser for purposes of this attribute.
-	// Not supported by Google.
+	// Supported by Google.
 	Clickbrowser *bool `protobuf:"varint,16,opt,name=clickbrowser" json:"clickbrowser,omitempty"`
 	// Indicates if the impression requires secure HTTPS URL creative
 	// assets and markup. If omitted, the secure state is unknown, but
