@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.314
+// Protocol version: v.315
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -27,6 +27,7 @@ message BidRequest {
     TAG_FOR_CHILD_DIRECTED_TREATMENT = 0;
   }
 
+  // Deprecated. This will be removed in March 2024.
   // When user_data_treatment is set, the user's cookie/id data is cleared from
   // the request and is not sent in callout.
   // The impacted fields are:
@@ -35,7 +36,7 @@ message BidRequest {
   //  * mobile.encrypted_advertising_id
   //  * mobile.encrypted_hashed_idfa
   //  * session_id
-  repeated UserDataTreatment user_data_treatment = 49;
+  repeated UserDataTreatment user_data_treatment = 49 [deprecated = true];
 
   // The Google ID for the user. This field is the unpadded web-safe base64
   // encoded version of a binary cookie id. See the "Base 64 Encoding with URL
