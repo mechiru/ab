@@ -6405,7 +6405,8 @@ type BidRequest_AdSlot struct {
 	// Historical click-through rate for ads served in the ad slot. This is
 	// expressed as a fraction in the range [0.0, 1.0]. The default value of
 	// -1.0 indicates that historical click-through rate data is not available.
-	// This figure does not include data aggregated from Google Ads.
+	// This figure does not include data aggregated from Google Ads. The
+	// click-through rate can vary for a given ad slot throughout the day.
 	ClickThroughRate *float32 `protobuf:"fixed32,25,opt,name=click_through_rate,json=clickThroughRate,def=-1" json:"click_through_rate,omitempty"`
 	// Historical completion rate for video ads served in the ad slot. This is
 	// expressed as a fraction in the range [0.0, 1.0]. The default value of
