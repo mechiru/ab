@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.162
+// Protocol version: v.163
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1100,6 +1100,22 @@ message BidRequestExt {
     // Learn more about data collection controls:
     // https://support.google.com/admanager/answer/11956152
     optional bool allow_user_data_collection = 7;
+
+    // Reasons why on-device storage access could be restricted during the
+    // delivery of a winning ad.
+    enum DeviceStorageRestrictionReason {
+      DEVICE_STORAGE_RESTRICTION_UNKNOWN = 0;
+
+      // This request is subject to user consent requirements to allow for
+      // device storage access for advertising use cases such as ads
+      // measurement, frequency capping, or profiling, but consent was
+      // insufficient or not provided.
+      INSUFFICIENT_USER_CONSENT = 1;
+    }
+
+    // Indicates the reason why access of local device storage during winning ad
+    // rendering and measurement is restricted.
+    optional DeviceStorageRestrictionReason storagerestrict = 8;
   }
   optional PrivacyTreatments privacy_treatments = 5;
 }
