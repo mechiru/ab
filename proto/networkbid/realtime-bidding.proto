@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.315
+// Protocol version: v.316
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -158,6 +158,23 @@ message BidRequest {
     // Learn more about data collection controls:
     // https://support.google.com/admanager/answer/11956152
     optional bool allow_user_data_collection = 7;
+
+    // Reasons why on-device storage access could be restricted during the
+    // delivery of a winning ad.
+    enum DeviceStorageRestrictionReason {
+      DEVICE_STORAGE_RESTRICTION_UNKNOWN = 0;
+
+      // This request is subject to user consent requirements to allow for
+      // device storage access for advertising use cases such as ads
+      // measurement, frequency capping, or profiling, but consent was
+      // insufficient or not provided.
+      INSUFFICIENT_USER_CONSENT = 1;
+    }
+
+    // Indicates the reason why access of local device storage during winning ad
+    // rendering and measurement is restricted.
+    optional DeviceStorageRestrictionReason device_storage_restriction_reason =
+      8;
   }
   optional PrivacyTreatments privacy_treatments = 71;
 
