@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.316
+// Protocol version: v.317
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1349,6 +1349,19 @@ message BidRequest {
     // See https://support.google.com/authorizedbuyers/answer/9928204 for more
     // information on LGPD.
     optional bool regs_lgpd = 54;
+
+    // Contains the Global Privacy Platform's consent string. See the Global
+    // Privacy Platform specification for more details:
+    // https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform
+    optional string gpp_consent_string = 81;
+
+    // Array of the section(s) of the GPP string which should be applied for
+    // this transaction. Generally will contain one and only one value, but
+    // there are edge cases (e.g. a CMP cannot determine a single section ID)
+    // where more than one may apply. GPP Section 3 (Header) and 4 (Signal
+    // Integrity) do not need to be included. See IAB-GPP spec for details:
+    // https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Sections/Section%20Information.md#section-ids
+    repeated int32 gpp_section_ids = 82 [packed = true];
 
     // The disallowed sensitive ad categories. See the
     // ad-sensitive-categories.txt file in the technical documentation for a
