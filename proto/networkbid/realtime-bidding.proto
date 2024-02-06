@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.317
+// Protocol version: v.318
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2294,6 +2294,46 @@ message BidRequest {
 
     // Buyer creative ID that was included in the bid response.
     optional string buyer_creative_id = 6;
+
+    // Possible types of bid response feedback objects.
+    enum FeedbackType {
+      FEEDBACK_TYPE_UNSPECIFIED = 0;
+
+      // Feedback for a bid that was submitted on a bid response.
+      BID_FEEDBACK = 1;
+
+      // Feedback for an interest group buyer submitted on a bid response to
+      // particpate in an interest group bidding component of the auction run
+      // using the Protected Audience API.
+      INTEREST_GROUP_BUYER_FEEDBACK = 2;
+    }
+
+    // The type of the BidResponseFeedback message. Google will send separate
+    // BidResponseFeedback objects for:
+    // a) Each bid submitted on a bid response
+    // b) Each buyer submitted on a bid response to particpate in an interest
+    // group bidding component of the auction run using the Protected Audience
+    // API.
+    optional FeedbackType feedback_type = 17;
+
+    // Origin of an interest group buyer that was included in the bid response.
+    // This field is populated only for feedback where a bidder opted in an
+    // interest group buyer to participate in the interest group bidding
+    // component of the overall auction run using the Protected Audience API.
+    // To learn more about origins, see https://www.rfc-editor.org/rfc/rfc6454.
+    // To learn more about interest group bidding and the Protected Audience
+    // API, see
+    // https://developers.google.com/authorized-buyers/rtb/fledge-origin-trial.
+    optional string buyer_origin = 18;
+
+    // The status code for the submitted interest group buyer. This field is
+    // only populated in the feedback for an interest group buyer that a bidder
+    // requested to enter into the interest group auction through the bid
+    // response. Individual creative status codes of bids submitted by the buyer
+    // in the on-device interest group auction are not available. See
+    // https://storage.googleapis.com/adx-rtb-dictionaries/interest-group-buyer-status-codes.txt
+    // for a list of interest group buyer status codes.
+    optional int32 interest_group_buyer_status_code = 19;
   }
   repeated BidResponseFeedback bid_response_feedback = 44;
 
