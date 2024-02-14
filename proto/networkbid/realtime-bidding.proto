@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.318
+// Protocol version: v.319
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -99,6 +99,21 @@ message BidRequest {
   // Information about privacy treatments that apply to an ad opportunity
   // offered through this request.
   message PrivacyTreatments {
+    // Generalization that can be applied to the BidRequest.ip field.
+    enum IpGeneralization {
+      // The BidRequest.ip field is truncated, /24 for IPv4 and /48 for IPv6.
+      // IPv4 addresses are truncated to 3-byte strings, representing the
+      // first three octets of an IP address. IPv6 addresses are truncated to
+      // 6-byte strings, representing the first 6 octets of an IP address.
+      IP_TRUNCATED = 0;
+
+      // The BidRequest.ip field is redacted.
+      IP_REDACTED = 2;
+    }
+
+    // Generalization for the BidRequest.ip field.
+    optional IpGeneralization ip = 1;
+
     // Generalization that can be applied to the user_agent and user_agent_data
     // fields.
     enum UserAgentGeneralization {
