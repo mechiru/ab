@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.164
+// Protocol version: v.165
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1077,6 +1077,21 @@ message BidRequestExt {
   // information about privacy treatments that apply to an ad opportunity
   // offered through this request.
   message PrivacyTreatments {
+    // Generalization that can be applied to an IP address field.
+    enum IpGeneralization {
+      // The IP address field is truncated: IPv4 to /24 or IPv6 to /48.
+      // The truncated octets are replaced by zeros so the field still parses
+      // as a valid IP address, for example "xxx.yyy.zzz.0" for IPv4.
+      IP_TRUNCATED = 0;
+
+      // The IP address field is redacted.
+      IP_REDACTED = 2;
+    }
+
+    // Generalization applied to the IP address field populated in the request
+    // (either BidRequest.device.ip or BidRequest.device.ipv6).
+    optional IpGeneralization ip = 1;
+
     // Generalization that can be applied to the BidRequest.device.ua and
     // BidRequest.device.sua fields.
     enum UserAgentGeneralization {
