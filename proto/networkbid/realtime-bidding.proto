@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.319
+// Protocol version: v.320
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -129,22 +129,6 @@ message BidRequest {
     // Generalization that was applied to the user_agent and user_agent_data
     // fields, if any.
     optional UserAgentGeneralization user_agent = 2;
-
-    // Generalization that can be applied to the user_agent_data field.
-    enum UserAgentDataGeneralization {
-      // The user_agent_data field is provided in full.
-      USER_AGENT_DATA_FULL = 0;
-
-      // The user_agent_data field is generalized, which can include limiting
-      // browser and OS version information to major versions only and other
-      // changes to protect user privacy.
-      USER_AGENT_DATA_COARSENED = 1;
-    }
-
-    // Deprecated. This will be removed in January 2024.
-    // Generalization that was applied to the user_agent_data field, if any.
-    optional UserAgentDataGeneralization user_agent_data = 3 [deprecated =
-      true];
 
     // Specifies the reasons that ads returned in response to this request
     // should not be personalized.
