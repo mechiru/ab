@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.320
+// Protocol version: v.321
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2439,6 +2439,81 @@ message BidRequest {
     FREQUENCY_CAPPING_SCOPE_SITE = 5;
   }
   optional FrequencyCappingScope frequency_capping_scope = 70;
+
+  // The Digital Services Act (DSA) transparency requirements. See
+  // https://support.google.com/admanager/answer/14335032.
+  message Dsa {
+    // Values indicating whether DSA declarations should be included in the bid
+    // response and, if so, whether or not the publisher is an Online Platform
+    // (OP) or Very Large Online Platform (VLOP), as defined by the DSA.
+    enum DsaSupport {
+      DSA_SUPPORT_UNKNOWN = 0;
+
+      // DSA declarations are not required in the bid response.
+      NOT_REQUIRED = 1;
+
+      // DSA declarations are supported, but not required in the bid response.
+      SUPPORTED = 2;
+
+      // DSA declarations are required in the bid response.
+      REQUIRED = 3;
+
+      // DSA declarations are required in the bid response and the publisher is
+      // an OP or VLOP.
+      REQUIRED_BY_ONLINE_PLATFORM = 4;
+    }
+
+    // Indicates if DSA declarations should be included in the bid response.
+    // Bids where DSA declarations are required but not included will not be
+    // accepted.
+    optional DsaSupport dsa_support = 1;
+
+    // Options describing a publisher's ability to render DSA transparency
+    // declarations.
+    enum PublisherRenderingSupport {
+      PUBLISHER_RENDERING_SUPPORT_UNKNOWN = 0;
+
+      // Publisher can't render.
+      PUBLISHER_UNABLE_TO_RENDER = 1;
+
+      // Publisher could render depending on the buyer's rendering capability as
+      // described in the BidResponse.ad.dsa_transparency.buyer_render field.
+      PUBLISHER_CAN_RENDER = 2;
+
+      // Publisher will render regardless of the buyer's rendering capability as
+      // described in the BidResponse.ad.dsa_transparency.buyer_render field.
+      PUBLISHER_WILL_RENDER = 3;
+    }
+
+    // Indicates if the publisher will render the DSA Transparency info. This
+    // will signal if the publisher is able to and intends to render the icon
+    // or other appropriate user-facing symbol and display the DSA transparency
+    // info to the end user.
+    optional PublisherRenderingSupport publisher_rendering_support = 2;
+
+    // Options describing if a publisher requires DSA transparency declarations.
+    enum DataToPublisher {
+      DATA_TO_PUBLISHER_UNKNOWN = 0;
+
+      // Do not send transparency data.
+      DO_NOT_SEND = 1;
+
+      // Optional to send transparency data.
+      OPTIONAL = 2;
+
+      // Send transparency data.
+      SEND = 3;
+    }
+
+    // Indicates whether the bidder should provide DSA transparency declarations
+    // in the bid response. A publisher may need this information for audit or
+    // other purposes, even if they will not render the transparency
+    // declarations themselves.
+    optional DataToPublisher data_to_publisher = 3;
+  }
+
+  // The Digital Services Act (DSA) transparency information requirements.
+  optional Dsa dsa = 86;
 }
 
 // This is the message that you return in response to a BidRequest. You may
@@ -3072,6 +3147,28 @@ message BidResponse {
     // Setting advertised_app_id field without this field will be treated as if
     // this field were set to OTHER.
     optional AppPromotionType app_promotion_type = 33;
+
+    // DSA Ad Transparency declarations. See
+    // https://support.google.com/admanager/answer/14335032.
+    message DsaTransparency {
+      // Free text string describing the name of the advertiser on whose behalf
+      // the ad is shown. Bids will not be accepted if this value is longer
+      // than 100 characters.
+      optional string displayed_on_behalf = 1;
+
+      // Free text string describing the advertiser who paid for the ad. Must
+      // always be included even if it's the same as what is listed in the
+      // displayed_on_behalf attribute. Bids will not be accepted if this value
+      // is longer than 100 characters.
+      optional string paying_entity = 2;
+
+      // Indicates that the buyer will render their own DSA transparency
+      // information inside the creative.
+      optional bool buyer_render = 3;
+    }
+
+    // DSA Ad Transparency information provided by the buyer.
+    optional DsaTransparency dsa_transparency = 39;
   }
   repeated Ad ad = 2;
 
