@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.166
+// Protocol version: v.167
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -783,6 +783,28 @@ message BidExt {
   //   ]
   // }
   optional string bid_group_id = 26;
+
+  // The Digital Services Act (DSA) transparency declarations. See
+  // https://support.google.com/admanager/answer/14335032.
+  message Dsa {
+    // Free text string describing the name of the advertiser on whose behalf
+    // the ad is shown. Bids will not be accepted if this value is longer
+    // than 100 characters.
+    optional string behalf = 1;
+
+    // Free text string describing the advertiser who paid for the ad. Must
+    // always be included even if it's the same as what is listed in the
+    // displayed_on_behalf attribute. Bids will not be accepted if this value
+    // is longer than 100 characters.
+    optional string paid = 2;
+
+    // Indicates that the buyer will render their own DSA transparency
+    // information inside the creative.
+    optional bool adrender = 3;
+  }
+
+  // DSA Ad Transparency information provided by the buyer.
+  optional Dsa dsa = 30;
 }
 
 message NativeRequestExt {
@@ -1284,6 +1306,81 @@ message RegsExt {
   // See https://support.google.com/authorizedbuyers/answer/9928204 for more
   // information on LGPD.
   optional bool lgpd = 2;
+
+  // The Digital Services Act (DSA) transparency requirements. See
+  // https://support.google.com/admanager/answer/14335032.
+  message Dsa {
+    // Values indicating whether DSA declarations should be included in the bid
+    // response and, if so, whether or not the publisher is an Online Platform
+    // (OP) or Very Large Online Platform (VLOP), as defined by the DSA.
+    enum DsaSupport {
+      DSA_SUPPORT_UNKNOWN = 0;
+
+      // DSA declarations are not required in the bid response.
+      NOT_REQUIRED = 1;
+
+      // DSA declarations are supported, but not required in the bid response.
+      SUPPORTED = 2;
+
+      // DSA declarations are required in the bid response.
+      REQUIRED = 3;
+
+      // DSA declarations are required in the bid response and the publisher is
+      // an OP or VLOP.
+      REQUIRED_BY_ONLINE_PLATFORM = 4;
+    }
+
+    // Indicates if DSA declarations should be included in the bid response.
+    // Bids where DSA declarations are required but not included will not be
+    // accepted.
+    optional DsaSupport dsarequired = 1;
+
+    // Options describing a publisher's ability to render DSA transparency
+    // declarations.
+    enum PublisherRenderingSupport {
+      PUBLISHER_RENDERING_SUPPORT_UNKNOWN = 0;
+
+      // Publisher can't render.
+      PUBLISHER_UNABLE_TO_RENDER = 1;
+
+      // Publisher could render depending on the buyer's rendering capability as
+      // described in the Bid.ext.dsa.adrender field.
+      PUBLISHER_CAN_RENDER = 2;
+
+      // Publisher will render regardless of the buyer's rendering capability as
+      // described in the Bid.ext.dsa.adrender field.
+      PUBLISHER_WILL_RENDER = 3;
+    }
+
+    // Indicates if the publisher will render the DSA Transparency info. This
+    // will signal if the publisher is able to and intends to render the icon
+    // or other appropriate user-facing symbol and display the DSA transparency
+    // info to the end user.
+    optional PublisherRenderingSupport pubrender = 2;
+
+    // Options describing if a publisher requires DSA transparency declarations.
+    enum DataToPublisher {
+      DATA_TO_PUBLISHER_UNKNOWN = 0;
+
+      // Do not send transparency data.
+      DO_NOT_SEND = 1;
+
+      // Optional to send transparency data.
+      OPTIONAL = 2;
+
+      // Send transparency data.
+      SEND = 3;
+    }
+
+    // Indicates whether the bidder should provide DSA transparency declarations
+    // in the bid response. A publisher may need this information for audit or
+    // other purposes, even if they will not render the transparency
+    // declarations themselves.
+    optional DataToPublisher datatopub = 3;
+  }
+
+  // The Digital Services Act (DSA) transparency information requirements.
+  optional Dsa dsa = 3;
 }
 
 message DealExt {
