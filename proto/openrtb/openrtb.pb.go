@@ -1288,7 +1288,8 @@ func (ExpandableDirection) EnumDescriptor() ([]byte, []int) {
 }
 
 // OpenRTB 2.0: The following table lists the various options for the
-// delivery of video content.
+// delivery of video content. These values are defined by the IAB -
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--delivery-methods-.
 type ContentDeliveryMethod int32
 
 const (
@@ -1299,7 +1300,8 @@ const (
 	// Example: on-demand movies, podcasts, or music.
 	ContentDeliveryMethod_PROGRESSIVE ContentDeliveryMethod = 2
 	// Content should be transferred completely prior to use/playback.
-	// Example: installable apps.
+	// Example: content downloaded to the user's device for offline
+	// consumption.
 	ContentDeliveryMethod_DOWNLOAD ContentDeliveryMethod = 3
 )
 
@@ -1433,14 +1435,22 @@ func (ContentContext) EnumDescriptor() ([]byte, []int) {
 
 // OpenRTB 2.0: The following table lists the options for content quality.
 // These values are defined by the IAB -
-// http://www.iab.net/media/file/long-form-video-final.pdf.
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--production-qualities-.
 type ProductionQuality int32
 
 const (
 	ProductionQuality_QUALITY_UNKNOWN ProductionQuality = 0
-	ProductionQuality_PROFESSIONAL    ProductionQuality = 1
-	ProductionQuality_PROSUMER        ProductionQuality = 2
-	ProductionQuality_USER_GENERATED  ProductionQuality = 3
+	// Content that is usually created or produced by media and entertainment
+	// companies using professional-grade equipment, talent, and production
+	// crews that hold or maintain the rights for distribution and syndication.
+	ProductionQuality_PROFESSIONAL ProductionQuality = 1
+	// Consumer or user-generated content that has professional or industrial
+	// qualities (e.g. shot with professional-grade equipment, using
+	// professional talent, etc.).
+	ProductionQuality_PROSUMER ProductionQuality = 2
+	// Publicly available video content that is created or produced by
+	// end users.
+	ProductionQuality_USER_GENERATED ProductionQuality = 3
 )
 
 // Enum value maps for ProductionQuality.
@@ -2068,13 +2078,18 @@ func (LossReason) EnumDescriptor() ([]byte, []int) {
 }
 
 // OpenRTB 2.4: The following table lists the types of feeds,
-// typically for audio.
+// typically for audio. These values are defined by the IAB -
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list--feed-types-.
 type FeedType int32
 
 const (
+	// Music streaming service.
 	FeedType_MUSIC_SERVICE FeedType = 1
-	FeedType_BROADCAST     FeedType = 2
-	FeedType_PODCAST       FeedType = 3
+	// Live content broadcast over the air but also available through online
+	// streaming.
+	FeedType_BROADCAST FeedType = 2
+	// Original, pre-recorded content distributed as episodes in a series.
+	FeedType_PODCAST FeedType = 3
 )
 
 // Enum value maps for FeedType.
@@ -6775,7 +6790,6 @@ type BidRequest_Imp_Video struct {
 	// Supported by Google.
 	Playbackend *PlaybackCessationMode `protobuf:"varint,27,opt,name=playbackend,enum=com.google.openrtb.PlaybackCessationMode" json:"playbackend,omitempty"`
 	// Supported delivery methods (for example, streaming, progressive).
-	// If none specified, assume all are supported.
 	// Supported by Google.
 	Delivery []ContentDeliveryMethod `protobuf:"varint,16,rep,packed,name=delivery,enum=com.google.openrtb.ContentDeliveryMethod" json:"delivery,omitempty"`
 	// Ad position on screen.

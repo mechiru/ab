@@ -374,7 +374,6 @@ message BidRequest {
       optional PlaybackCessationMode playbackend = 27;
 
       // Supported delivery methods (for example, streaming, progressive).
-      // If none specified, assume all are supported.
       // Supported by Google.
       repeated ContentDeliveryMethod delivery = 16 [packed = true];
 
@@ -2955,7 +2954,8 @@ enum ExpandableDirection {
 }
 
 // OpenRTB 2.0: The following table lists the various options for the
-// delivery of video content.
+// delivery of video content. These values are defined by the IAB -
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--delivery-methods-.
 enum ContentDeliveryMethod {
   // Content is transferred continuously by the network; clients receive
   // real-time content for playback while connected. Example: broadcast TV.
@@ -2966,7 +2966,8 @@ enum ContentDeliveryMethod {
   PROGRESSIVE = 2;
 
   // Content should be transferred completely prior to use/playback.
-  // Example: installable apps.
+  // Example: content downloaded to the user's device for offline
+  // consumption.
   DOWNLOAD = 3;
 }
 
@@ -2988,11 +2989,22 @@ enum ContentContext {
 
 // OpenRTB 2.0: The following table lists the options for content quality.
 // These values are defined by the IAB -
-// http://www.iab.net/media/file/long-form-video-final.pdf.
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--production-qualities-.
 enum ProductionQuality {
   QUALITY_UNKNOWN = 0;
+
+  // Content that is usually created or produced by media and entertainment
+  // companies using professional-grade equipment, talent, and production
+  // crews that hold or maintain the rights for distribution and syndication.
   PROFESSIONAL = 1;
+
+  // Consumer or user-generated content that has professional or industrial
+  // qualities (e.g. shot with professional-grade equipment, using
+  // professional talent, etc.).
   PROSUMER = 2;
+
+  // Publicly available video content that is created or produced by
+  // end users.
   USER_GENERATED = 3;
 }
 
@@ -3124,10 +3136,17 @@ enum LossReason {
 }
 
 // OpenRTB 2.4: The following table lists the types of feeds,
-// typically for audio.
+// typically for audio. These values are defined by the IAB -
+// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/AdCOM%20v1.0%20FINAL.md#list--feed-types-.
 enum FeedType {
+  // Music streaming service.
   MUSIC_SERVICE = 1;
+
+  // Live content broadcast over the air but also available through online
+  // streaming.
   BROADCAST = 2;
+
+  // Original, pre-recorded content distributed as episodes in a series.
   PODCAST = 3;
 }
 
