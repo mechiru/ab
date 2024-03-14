@@ -5638,7 +5638,9 @@ type BidRequest_Device struct {
 	// Not supported by Google.
 	Mccmnc *string `protobuf:"bytes,30,opt,name=mccmnc" json:"mccmnc,omitempty"`
 	// Network connection type.
-	// Not supported by Google.
+	//
+	// Google: For 5G connection type, we send CELL_4G instead of CELL_5G.
+	// Supported by Google.
 	Connectiontype *ConnectionType `protobuf:"varint,17,opt,name=connectiontype,enum=com.google.openrtb.ConnectionType" json:"connectiontype,omitempty"`
 	// ID sanctioned for advertiser use in the clear (meaning, not hashed).
 	// Supported by Google.

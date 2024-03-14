@@ -1464,7 +1464,9 @@ message BidRequest {
     optional string mccmnc = 30;
 
     // Network connection type.
-    // Not supported by Google.
+    //
+    // Google: For 5G connection type, we send CELL_4G instead of CELL_5G.
+    // Supported by Google.
     optional ConnectionType connectiontype = 17;
 
     // ID sanctioned for advertiser use in the clear (meaning, not hashed).
