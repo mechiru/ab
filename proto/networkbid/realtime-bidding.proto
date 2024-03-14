@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.321
+// Protocol version: v.322
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -665,6 +665,37 @@ message BidRequest {
     // authorization status, see:
     // https://developer.apple.com/documentation/apptrackingtransparency/attrackingmanager/authorizationstatus
     optional AuthorizationStatus app_tracking_authorization_status = 13;
+
+    // Possible types of the device's network connection.
+    enum ConnectionType {
+      CONNECTION_UNKNOWN = 0;
+
+      // Ethernet; Wired Connection
+      ETHERNET = 1;
+
+      // WiFi
+      WIFI = 2;
+
+      // Mobile Network - Unknown Generation
+      CELL_UNKNOWN = 3;
+
+      // Mobile Network - 2G
+      CELL_2G = 4;
+
+      // Mobile Network - 3G
+      CELL_3G = 5;
+
+      // Mobile Network - 4G
+      CELL_4G = 6;
+
+      // Mobile Network - 5G
+      CELL_5G = 7;
+    }
+
+    // The type of network to which the user's device is connected.
+    //
+    // For 5G connection type, we send CELL_4G instead of CELL_5G.
+    optional ConnectionType connection_type = 15 [default = CONNECTION_UNKNOWN];
   }
   optional Device device = 54;
 
