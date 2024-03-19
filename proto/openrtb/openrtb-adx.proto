@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.167
+// Protocol version: v.168
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1314,20 +1314,18 @@ message RegsExt {
     // response and, if so, whether or not the publisher is an Online Platform
     // (OP) or Very Large Online Platform (VLOP), as defined by the DSA.
     enum DsaSupport {
-      DSA_SUPPORT_UNKNOWN = 0;
-
       // DSA declarations are not required in the bid response.
-      NOT_REQUIRED = 1;
+      NOT_REQUIRED = 0;
 
       // DSA declarations are supported, but not required in the bid response.
-      SUPPORTED = 2;
+      SUPPORTED = 1;
 
       // DSA declarations are required in the bid response.
-      REQUIRED = 3;
+      REQUIRED = 2;
 
       // DSA declarations are required in the bid response and the publisher is
       // an OP or VLOP.
-      REQUIRED_BY_ONLINE_PLATFORM = 4;
+      REQUIRED_BY_ONLINE_PLATFORM = 3;
     }
 
     // Indicates if DSA declarations should be included in the bid response.
@@ -1338,18 +1336,16 @@ message RegsExt {
     // Options describing a publisher's ability to render DSA transparency
     // declarations.
     enum PublisherRenderingSupport {
-      PUBLISHER_RENDERING_SUPPORT_UNKNOWN = 0;
-
       // Publisher can't render.
-      PUBLISHER_UNABLE_TO_RENDER = 1;
+      PUBLISHER_UNABLE_TO_RENDER = 0;
 
       // Publisher could render depending on the buyer's rendering capability as
       // described in the Bid.ext.dsa.adrender field.
-      PUBLISHER_CAN_RENDER = 2;
+      PUBLISHER_CAN_RENDER = 1;
 
       // Publisher will render regardless of the buyer's rendering capability as
       // described in the Bid.ext.dsa.adrender field.
-      PUBLISHER_WILL_RENDER = 3;
+      PUBLISHER_WILL_RENDER = 2;
     }
 
     // Indicates if the publisher will render the DSA Transparency info. This
@@ -1360,16 +1356,14 @@ message RegsExt {
 
     // Options describing if a publisher requires DSA transparency declarations.
     enum DataToPublisher {
-      DATA_TO_PUBLISHER_UNKNOWN = 0;
-
       // Do not send transparency data.
-      DO_NOT_SEND = 1;
+      DO_NOT_SEND = 0;
 
       // Optional to send transparency data.
-      OPTIONAL = 2;
+      OPTIONAL = 1;
 
       // Send transparency data.
-      SEND = 3;
+      SEND = 2;
     }
 
     // Indicates whether the bidder should provide DSA transparency declarations
