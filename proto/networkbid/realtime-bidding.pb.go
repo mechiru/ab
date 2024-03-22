@@ -829,7 +829,14 @@ func (BidRequest_PrivacyTreatments_UserAgentGeneralization) EnumDescriptor() ([]
 }
 
 // Specifies the reasons that ads returned in response to this request
-// should not be personalized.
+// should not be personalized. This signal does not reflect user decisions
+// on surfaces including iOS App Tracking Transparency
+// (https://developer.apple.com/documentation/apptrackingtransparency) or
+// Android advertising ID
+// (https://support.google.com/googleplay/android-developer/answer/6048248).
+// See BidRequest.device.limit_ad_tracking and
+// BidRequest.device.app_tracking_authorization_status fields for more
+// information.
 type BidRequest_PrivacyTreatments_NonPersonalizedAdsReason int32
 
 const (
