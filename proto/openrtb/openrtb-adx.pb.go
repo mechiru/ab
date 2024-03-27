@@ -2318,8 +2318,8 @@ type BidExt struct {
 	// in the seatbid.bid.bundle field.
 	// If the advertised app is not specified, this field will be ignored.
 	//
-	// Setting seatbid.bid.bundle field without this field will be treated as if
-	// this field were set to OTHER.
+	// Setting BidResponse.seatbid.bid.bundle field without this field will be
+	// treated as if this field were set to OTHER.
 	AppPromotionType *BidExt_AppPromotionType `protobuf:"varint,28,opt,name=app_promotion_type,json=appPromotionType,enum=com.google.doubleclick.BidExt_AppPromotionType" json:"app_promotion_type,omitempty"`
 	// All bids with the same bid_group_id will be won or lost as a group.
 	// Bids must have a non-empty bid_group_id to allow an ad to be played
@@ -3366,6 +3366,62 @@ func (x *SourceExt) GetSchain() *SourceExt_SupplyChain {
 	return nil
 }
 
+type GeoExt struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The device's approximate geographic location. See the geo-table.csv table
+	// available at https://developers.google.com/authorized-buyers/rtb/data for
+	// a list of IDs. This field is provisional, intended only to help with
+	// migration from the Google Authorized Buyers protocol to OpenRTB; it will
+	// be removed in the future. The standard fields in BidRequest.device.geo
+	// should be used instead; they contain the same location as the
+	// geo_criteria_id and both are subject to the same privacy treatments.
+	// See Geotargeting Guide:
+	// https://developers.google.com/authorized-buyers/rtb/geotargeting
+	GeoCriteriaId *int32 `protobuf:"varint,1,opt,name=geo_criteria_id,json=geoCriteriaId" json:"geo_criteria_id,omitempty"`
+}
+
+func (x *GeoExt) Reset() {
+	*x = GeoExt{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_openrtb_adx_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeoExt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeoExt) ProtoMessage() {}
+
+func (x *GeoExt) ProtoReflect() protoreflect.Message {
+	mi := &file_openrtb_adx_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeoExt.ProtoReflect.Descriptor instead.
+func (*GeoExt) Descriptor() ([]byte, []int) {
+	return file_openrtb_adx_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GeoExt) GetGeoCriteriaId() int32 {
+	if x != nil && x.GeoCriteriaId != nil {
+		return *x.GeoCriteriaId
+	}
+	return 0
+}
+
 // A creative that is disallowed to bid on this impression due to Ad
 // Exchange policies or creative disapproval, excluded creative attributes,
 // excluded product or sensitive categories, allowed vendor types,
@@ -3382,7 +3438,7 @@ type ImpExt_ExcludedCreative struct {
 func (x *ImpExt_ExcludedCreative) Reset() {
 	*x = ImpExt_ExcludedCreative{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[15]
+		mi := &file_openrtb_adx_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3395,7 +3451,7 @@ func (x *ImpExt_ExcludedCreative) String() string {
 func (*ImpExt_ExcludedCreative) ProtoMessage() {}
 
 func (x *ImpExt_ExcludedCreative) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[15]
+	mi := &file_openrtb_adx_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3436,7 +3492,7 @@ type ImpExt_BuyerGeneratedRequestData struct {
 func (x *ImpExt_BuyerGeneratedRequestData) Reset() {
 	*x = ImpExt_BuyerGeneratedRequestData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[16]
+		mi := &file_openrtb_adx_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3449,7 +3505,7 @@ func (x *ImpExt_BuyerGeneratedRequestData) String() string {
 func (*ImpExt_BuyerGeneratedRequestData) ProtoMessage() {}
 
 func (x *ImpExt_BuyerGeneratedRequestData) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[16]
+	mi := &file_openrtb_adx_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3536,7 +3592,7 @@ const (
 func (x *ImpExt_BillableEventRateBidAdjustment) Reset() {
 	*x = ImpExt_BillableEventRateBidAdjustment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[17]
+		mi := &file_openrtb_adx_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3549,7 +3605,7 @@ func (x *ImpExt_BillableEventRateBidAdjustment) String() string {
 func (*ImpExt_BillableEventRateBidAdjustment) ProtoMessage() {}
 
 func (x *ImpExt_BillableEventRateBidAdjustment) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[17]
+	mi := &file_openrtb_adx_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3602,7 +3658,7 @@ type ImpExt_OpenBidding struct {
 func (x *ImpExt_OpenBidding) Reset() {
 	*x = ImpExt_OpenBidding{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[18]
+		mi := &file_openrtb_adx_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3615,7 +3671,7 @@ func (x *ImpExt_OpenBidding) String() string {
 func (*ImpExt_OpenBidding) ProtoMessage() {}
 
 func (x *ImpExt_OpenBidding) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[18]
+	mi := &file_openrtb_adx_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3669,7 +3725,7 @@ type ImpExt_SKAdNetworkRequest struct {
 func (x *ImpExt_SKAdNetworkRequest) Reset() {
 	*x = ImpExt_SKAdNetworkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[19]
+		mi := &file_openrtb_adx_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3682,7 +3738,7 @@ func (x *ImpExt_SKAdNetworkRequest) String() string {
 func (*ImpExt_SKAdNetworkRequest) ProtoMessage() {}
 
 func (x *ImpExt_SKAdNetworkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[19]
+	mi := &file_openrtb_adx_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3747,7 +3803,7 @@ type ImpExt_CreativeEnforcementSettings struct {
 func (x *ImpExt_CreativeEnforcementSettings) Reset() {
 	*x = ImpExt_CreativeEnforcementSettings{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[20]
+		mi := &file_openrtb_adx_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3760,7 +3816,7 @@ func (x *ImpExt_CreativeEnforcementSettings) String() string {
 func (*ImpExt_CreativeEnforcementSettings) ProtoMessage() {}
 
 func (x *ImpExt_CreativeEnforcementSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[20]
+	mi := &file_openrtb_adx_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3820,7 +3876,7 @@ type ImpExt_AdUnitMapping struct {
 func (x *ImpExt_AdUnitMapping) Reset() {
 	*x = ImpExt_AdUnitMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[21]
+		mi := &file_openrtb_adx_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3833,7 +3889,7 @@ func (x *ImpExt_AdUnitMapping) String() string {
 func (*ImpExt_AdUnitMapping) ProtoMessage() {}
 
 func (x *ImpExt_AdUnitMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[21]
+	mi := &file_openrtb_adx_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3877,7 +3933,7 @@ type ImpExt_BuyerGeneratedRequestData_SourceApp struct {
 func (x *ImpExt_BuyerGeneratedRequestData_SourceApp) Reset() {
 	*x = ImpExt_BuyerGeneratedRequestData_SourceApp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[22]
+		mi := &file_openrtb_adx_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3890,7 +3946,7 @@ func (x *ImpExt_BuyerGeneratedRequestData_SourceApp) String() string {
 func (*ImpExt_BuyerGeneratedRequestData_SourceApp) ProtoMessage() {}
 
 func (x *ImpExt_BuyerGeneratedRequestData_SourceApp) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[22]
+	mi := &file_openrtb_adx_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3931,7 +3987,7 @@ type ImpExt_AdUnitMapping_Keyval struct {
 func (x *ImpExt_AdUnitMapping_Keyval) Reset() {
 	*x = ImpExt_AdUnitMapping_Keyval{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[23]
+		mi := &file_openrtb_adx_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3944,7 +4000,7 @@ func (x *ImpExt_AdUnitMapping_Keyval) String() string {
 func (*ImpExt_AdUnitMapping_Keyval) ProtoMessage() {}
 
 func (x *ImpExt_AdUnitMapping_Keyval) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[23]
+	mi := &file_openrtb_adx_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3993,7 +4049,7 @@ type AppExt_InstalledSdk struct {
 func (x *AppExt_InstalledSdk) Reset() {
 	*x = AppExt_InstalledSdk{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[24]
+		mi := &file_openrtb_adx_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4006,7 +4062,7 @@ func (x *AppExt_InstalledSdk) String() string {
 func (*AppExt_InstalledSdk) ProtoMessage() {}
 
 func (x *AppExt_InstalledSdk) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[24]
+	mi := &file_openrtb_adx_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4065,7 +4121,7 @@ const (
 func (x *AppExt_InstalledSdk_Version) Reset() {
 	*x = AppExt_InstalledSdk_Version{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[25]
+		mi := &file_openrtb_adx_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4078,7 +4134,7 @@ func (x *AppExt_InstalledSdk_Version) String() string {
 func (*AppExt_InstalledSdk_Version) ProtoMessage() {}
 
 func (x *AppExt_InstalledSdk_Version) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[25]
+	mi := &file_openrtb_adx_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4134,7 +4190,7 @@ type BidExt_SdkRenderedAd struct {
 func (x *BidExt_SdkRenderedAd) Reset() {
 	*x = BidExt_SdkRenderedAd{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[26]
+		mi := &file_openrtb_adx_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4147,7 +4203,7 @@ func (x *BidExt_SdkRenderedAd) String() string {
 func (*BidExt_SdkRenderedAd) ProtoMessage() {}
 
 func (x *BidExt_SdkRenderedAd) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[26]
+	mi := &file_openrtb_adx_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4197,7 +4253,7 @@ type BidExt_EventNotificationToken struct {
 func (x *BidExt_EventNotificationToken) Reset() {
 	*x = BidExt_EventNotificationToken{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[27]
+		mi := &file_openrtb_adx_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4210,7 +4266,7 @@ func (x *BidExt_EventNotificationToken) String() string {
 func (*BidExt_EventNotificationToken) ProtoMessage() {}
 
 func (x *BidExt_EventNotificationToken) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[27]
+	mi := &file_openrtb_adx_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4286,7 +4342,7 @@ const (
 func (x *BidExt_FrequencyCap) Reset() {
 	*x = BidExt_FrequencyCap{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[28]
+		mi := &file_openrtb_adx_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4299,7 +4355,7 @@ func (x *BidExt_FrequencyCap) String() string {
 func (*BidExt_FrequencyCap) ProtoMessage() {}
 
 func (x *BidExt_FrequencyCap) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[28]
+	mi := &file_openrtb_adx_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4405,7 +4461,7 @@ type BidExt_SKAdNetworkResponse struct {
 func (x *BidExt_SKAdNetworkResponse) Reset() {
 	*x = BidExt_SKAdNetworkResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[29]
+		mi := &file_openrtb_adx_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4418,7 +4474,7 @@ func (x *BidExt_SKAdNetworkResponse) String() string {
 func (*BidExt_SKAdNetworkResponse) ProtoMessage() {}
 
 func (x *BidExt_SKAdNetworkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[29]
+	mi := &file_openrtb_adx_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4549,7 +4605,7 @@ type BidExt_Dsa struct {
 func (x *BidExt_Dsa) Reset() {
 	*x = BidExt_Dsa{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[30]
+		mi := &file_openrtb_adx_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4562,7 +4618,7 @@ func (x *BidExt_Dsa) String() string {
 func (*BidExt_Dsa) ProtoMessage() {}
 
 func (x *BidExt_Dsa) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[30]
+	mi := &file_openrtb_adx_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4622,7 +4678,7 @@ type BidExt_SdkRenderedAd_DeclaredAd struct {
 func (x *BidExt_SdkRenderedAd_DeclaredAd) Reset() {
 	*x = BidExt_SdkRenderedAd_DeclaredAd{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[31]
+		mi := &file_openrtb_adx_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4635,7 +4691,7 @@ func (x *BidExt_SdkRenderedAd_DeclaredAd) String() string {
 func (*BidExt_SdkRenderedAd_DeclaredAd) ProtoMessage() {}
 
 func (x *BidExt_SdkRenderedAd_DeclaredAd) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[31]
+	mi := &file_openrtb_adx_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4762,7 +4818,7 @@ const (
 func (x *BidExt_SKAdNetworkResponse_Fidelity) Reset() {
 	*x = BidExt_SKAdNetworkResponse_Fidelity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[32]
+		mi := &file_openrtb_adx_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4775,7 +4831,7 @@ func (x *BidExt_SKAdNetworkResponse_Fidelity) String() string {
 func (*BidExt_SKAdNetworkResponse_Fidelity) ProtoMessage() {}
 
 func (x *BidExt_SKAdNetworkResponse_Fidelity) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[32]
+	mi := &file_openrtb_adx_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4856,7 +4912,7 @@ const (
 func (x *BidExt_SKAdNetworkResponse_SKOverlay) Reset() {
 	*x = BidExt_SKAdNetworkResponse_SKOverlay{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[33]
+		mi := &file_openrtb_adx_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4869,7 +4925,7 @@ func (x *BidExt_SKAdNetworkResponse_SKOverlay) String() string {
 func (*BidExt_SKAdNetworkResponse_SKOverlay) ProtoMessage() {}
 
 func (x *BidExt_SKAdNetworkResponse_SKOverlay) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[33]
+	mi := &file_openrtb_adx_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4932,7 +4988,7 @@ const (
 func (x *BidExt_SKAdNetworkResponse_SKAdNetworkOptions) Reset() {
 	*x = BidExt_SKAdNetworkResponse_SKAdNetworkOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[34]
+		mi := &file_openrtb_adx_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4945,7 +5001,7 @@ func (x *BidExt_SKAdNetworkResponse_SKAdNetworkOptions) String() string {
 func (*BidExt_SKAdNetworkResponse_SKAdNetworkOptions) ProtoMessage() {}
 
 func (x *BidExt_SKAdNetworkResponse_SKAdNetworkOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[34]
+	mi := &file_openrtb_adx_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4984,7 +5040,7 @@ type SiteExt_UserActivation struct {
 func (x *SiteExt_UserActivation) Reset() {
 	*x = SiteExt_UserActivation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[35]
+		mi := &file_openrtb_adx_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4997,7 +5053,7 @@ func (x *SiteExt_UserActivation) String() string {
 func (*SiteExt_UserActivation) ProtoMessage() {}
 
 func (x *SiteExt_UserActivation) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[35]
+	mi := &file_openrtb_adx_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5121,7 +5177,7 @@ const (
 func (x *BidRequestExt_BidFeedback) Reset() {
 	*x = BidRequestExt_BidFeedback{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[36]
+		mi := &file_openrtb_adx_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5134,7 +5190,7 @@ func (x *BidRequestExt_BidFeedback) String() string {
 func (*BidRequestExt_BidFeedback) ProtoMessage() {}
 
 func (x *BidRequestExt_BidFeedback) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[36]
+	mi := &file_openrtb_adx_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5265,7 +5321,7 @@ type BidRequestExt_PrivacyTreatments struct {
 func (x *BidRequestExt_PrivacyTreatments) Reset() {
 	*x = BidRequestExt_PrivacyTreatments{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[37]
+		mi := &file_openrtb_adx_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5278,7 +5334,7 @@ func (x *BidRequestExt_PrivacyTreatments) String() string {
 func (*BidRequestExt_PrivacyTreatments) ProtoMessage() {}
 
 func (x *BidRequestExt_PrivacyTreatments) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[37]
+	mi := &file_openrtb_adx_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5341,7 +5397,7 @@ type BidRequestExt_BidFeedback_EventNotificationToken struct {
 func (x *BidRequestExt_BidFeedback_EventNotificationToken) Reset() {
 	*x = BidRequestExt_BidFeedback_EventNotificationToken{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[38]
+		mi := &file_openrtb_adx_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5354,7 +5410,7 @@ func (x *BidRequestExt_BidFeedback_EventNotificationToken) String() string {
 func (*BidRequestExt_BidFeedback_EventNotificationToken) ProtoMessage() {}
 
 func (x *BidRequestExt_BidFeedback_EventNotificationToken) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[38]
+	mi := &file_openrtb_adx_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5419,7 +5475,7 @@ type UserExt_ConsentedProvidersSettings struct {
 func (x *UserExt_ConsentedProvidersSettings) Reset() {
 	*x = UserExt_ConsentedProvidersSettings{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[39]
+		mi := &file_openrtb_adx_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5432,7 +5488,7 @@ func (x *UserExt_ConsentedProvidersSettings) String() string {
 func (*UserExt_ConsentedProvidersSettings) ProtoMessage() {}
 
 func (x *UserExt_ConsentedProvidersSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[39]
+	mi := &file_openrtb_adx_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5479,7 +5535,7 @@ type UserExt_ExtendedId struct {
 func (x *UserExt_ExtendedId) Reset() {
 	*x = UserExt_ExtendedId{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[40]
+		mi := &file_openrtb_adx_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5492,7 +5548,7 @@ func (x *UserExt_ExtendedId) String() string {
 func (*UserExt_ExtendedId) ProtoMessage() {}
 
 func (x *UserExt_ExtendedId) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[40]
+	mi := &file_openrtb_adx_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5536,7 +5592,7 @@ type UserExt_ExtendedId_ExtendedIdUid struct {
 func (x *UserExt_ExtendedId_ExtendedIdUid) Reset() {
 	*x = UserExt_ExtendedId_ExtendedIdUid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[41]
+		mi := &file_openrtb_adx_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5549,7 +5605,7 @@ func (x *UserExt_ExtendedId_ExtendedIdUid) String() string {
 func (*UserExt_ExtendedId_ExtendedIdUid) ProtoMessage() {}
 
 func (x *UserExt_ExtendedId_ExtendedIdUid) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[41]
+	mi := &file_openrtb_adx_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5598,7 +5654,7 @@ type RegsExt_Dsa struct {
 func (x *RegsExt_Dsa) Reset() {
 	*x = RegsExt_Dsa{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[42]
+		mi := &file_openrtb_adx_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5611,7 +5667,7 @@ func (x *RegsExt_Dsa) String() string {
 func (*RegsExt_Dsa) ProtoMessage() {}
 
 func (x *RegsExt_Dsa) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[42]
+	mi := &file_openrtb_adx_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5681,7 +5737,7 @@ const (
 func (x *DealExt_CreativeConstraints) Reset() {
 	*x = DealExt_CreativeConstraints{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[43]
+		mi := &file_openrtb_adx_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5694,7 +5750,7 @@ func (x *DealExt_CreativeConstraints) String() string {
 func (*DealExt_CreativeConstraints) ProtoMessage() {}
 
 func (x *DealExt_CreativeConstraints) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[43]
+	mi := &file_openrtb_adx_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5758,7 +5814,7 @@ type SourceExt_SupplyChain struct {
 func (x *SourceExt_SupplyChain) Reset() {
 	*x = SourceExt_SupplyChain{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[44]
+		mi := &file_openrtb_adx_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5771,7 +5827,7 @@ func (x *SourceExt_SupplyChain) String() string {
 func (*SourceExt_SupplyChain) ProtoMessage() {}
 
 func (x *SourceExt_SupplyChain) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[44]
+	mi := &file_openrtb_adx_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5855,7 +5911,7 @@ type SourceExt_SupplyChain_SupplyChainNode struct {
 func (x *SourceExt_SupplyChain_SupplyChainNode) Reset() {
 	*x = SourceExt_SupplyChain_SupplyChainNode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_openrtb_adx_proto_msgTypes[45]
+		mi := &file_openrtb_adx_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5868,7 +5924,7 @@ func (x *SourceExt_SupplyChain_SupplyChainNode) String() string {
 func (*SourceExt_SupplyChain_SupplyChainNode) ProtoMessage() {}
 
 func (x *SourceExt_SupplyChain_SupplyChainNode) ProtoReflect() protoreflect.Message {
-	mi := &file_openrtb_adx_proto_msgTypes[45]
+	mi := &file_openrtb_adx_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7035,107 +7091,110 @@ var file_openrtb_adx_proto_rawDesc = []byte{
 	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
 	0x65, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x68, 0x70, 0x18,
-	0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x68, 0x70, 0x2a, 0x4a, 0x0a, 0x17, 0x53, 0x4b, 0x41,
-	0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x46, 0x69, 0x64, 0x65, 0x6c, 0x69, 0x74, 0x79,
-	0x54, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x10, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x54, 0x48, 0x52,
-	0x4f, 0x55, 0x47, 0x48, 0x5f, 0x41, 0x44, 0x53, 0x10, 0x00, 0x12, 0x19, 0x0a, 0x15, 0x53, 0x54,
-	0x4f, 0x52, 0x45, 0x4b, 0x49, 0x54, 0x5f, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x45, 0x44, 0x5f,
-	0x41, 0x44, 0x53, 0x10, 0x01, 0x3a, 0x55, 0x0a, 0x03, 0x69, 0x6d, 0x70, 0x12, 0x22, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74,
-	0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x49, 0x6d, 0x70,
-	0x18, 0xf1, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b,
-	0x2e, 0x49, 0x6d, 0x70, 0x45, 0x78, 0x74, 0x52, 0x03, 0x69, 0x6d, 0x70, 0x3a, 0x55, 0x0a, 0x03,
-	0x61, 0x70, 0x70, 0x12, 0x22, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
-	0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x2e, 0x41, 0x70, 0x70, 0x18, 0xf3, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62,
-	0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x41, 0x70, 0x70, 0x45, 0x78, 0x74, 0x52, 0x03,
-	0x61, 0x70, 0x70, 0x3a, 0x6b, 0x0a, 0x0c, 0x62, 0x69, 0x64, 0x5f, 0x72, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
-	0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x18, 0xed, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63,
-	0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x45, 0x78, 0x74, 0x52, 0x0b, 0x62, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x3a, 0x5e, 0x0a, 0x03, 0x62, 0x69, 0x64, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x53, 0x65, 0x61, 0x74, 0x42, 0x69, 0x64,
-	0x2e, 0x42, 0x69, 0x64, 0x18, 0xf6, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63,
-	0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x45, 0x78, 0x74, 0x52, 0x03, 0x62, 0x69, 0x64,
-	0x3a, 0x6b, 0x0a, 0x0a, 0x6e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x5f, 0x65, 0x78, 0x74, 0x12, 0x21,
+	0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x68, 0x70, 0x22, 0x30, 0x0a, 0x06, 0x47, 0x65, 0x6f,
+	0x45, 0x78, 0x74, 0x12, 0x26, 0x0a, 0x0f, 0x67, 0x65, 0x6f, 0x5f, 0x63, 0x72, 0x69, 0x74, 0x65,
+	0x72, 0x69, 0x61, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x67, 0x65,
+	0x6f, 0x43, 0x72, 0x69, 0x74, 0x65, 0x72, 0x69, 0x61, 0x49, 0x64, 0x2a, 0x4a, 0x0a, 0x17, 0x53,
+	0x4b, 0x41, 0x64, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x46, 0x69, 0x64, 0x65, 0x6c, 0x69,
+	0x74, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x10, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x54,
+	0x48, 0x52, 0x4f, 0x55, 0x47, 0x48, 0x5f, 0x41, 0x44, 0x53, 0x10, 0x00, 0x12, 0x19, 0x0a, 0x15,
+	0x53, 0x54, 0x4f, 0x52, 0x45, 0x4b, 0x49, 0x54, 0x5f, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x45,
+	0x44, 0x5f, 0x41, 0x44, 0x53, 0x10, 0x01, 0x3a, 0x55, 0x0a, 0x03, 0x69, 0x6d, 0x70, 0x12, 0x22,
 	0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e,
-	0x72, 0x74, 0x62, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
-	0x6b, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x45,
-	0x78, 0x74, 0x52, 0x09, 0x6e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x74, 0x3a, 0x7f, 0x0a,
-	0x0d, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x73, 0x12, 0x2f,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e,
-	0x72, 0x74, 0x62, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x18,
-	0xe8, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e,
-	0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x45, 0x78, 0x74, 0x52,
-	0x0d, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x73, 0x3a, 0x6d,
-	0x0a, 0x09, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x12, 0x28, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
-	0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x50, 0x75, 0x62, 0x6c,
-	0x69, 0x73, 0x68, 0x65, 0x72, 0x18, 0xea, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65,
-	0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x45,
-	0x78, 0x74, 0x52, 0x09, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x3a, 0x59, 0x0a,
-	0x04, 0x73, 0x69, 0x74, 0x65, 0x12, 0x23, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
+	0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x49,
+	0x6d, 0x70, 0x18, 0xf1, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69,
+	0x63, 0x6b, 0x2e, 0x49, 0x6d, 0x70, 0x45, 0x78, 0x74, 0x52, 0x03, 0x69, 0x6d, 0x70, 0x3a, 0x55,
+	0x0a, 0x03, 0x61, 0x70, 0x70, 0x12, 0x22, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
 	0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x53, 0x69, 0x74, 0x65, 0x18, 0xf2, 0x07, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64,
-	0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x53, 0x69, 0x74, 0x65, 0x45,
-	0x78, 0x74, 0x52, 0x04, 0x73, 0x69, 0x74, 0x65, 0x3a, 0x67, 0x0a, 0x0b, 0x62, 0x69, 0x64, 0x5f,
-	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0xfa, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x41, 0x70, 0x70, 0x18, 0xf3, 0x07, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f,
+	0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x41, 0x70, 0x70, 0x45, 0x78, 0x74,
+	0x52, 0x03, 0x61, 0x70, 0x70, 0x3a, 0x6b, 0x0a, 0x0c, 0x62, 0x69, 0x64, 0x5f, 0x72, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
+	0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x18, 0xed, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c,
+	0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x45, 0x78, 0x74, 0x52, 0x0b, 0x62, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x3a, 0x5e, 0x0a, 0x03, 0x62, 0x69, 0x64, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42,
+	0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x53, 0x65, 0x61, 0x74, 0x42,
+	0x69, 0x64, 0x2e, 0x42, 0x69, 0x64, 0x18, 0xf6, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c,
+	0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x45, 0x78, 0x74, 0x52, 0x03, 0x62,
+	0x69, 0x64, 0x3a, 0x6b, 0x0a, 0x0a, 0x6e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x5f, 0x65, 0x78, 0x74,
+	0x12, 0x21, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70,
+	0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c,
+	0x69, 0x63, 0x6b, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x45, 0x78, 0x74, 0x52, 0x09, 0x6e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x45, 0x78, 0x74, 0x3a,
+	0x7f, 0x0a, 0x0d, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x73,
+	0x12, 0x2f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70,
+	0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x4e, 0x61, 0x74, 0x69, 0x76, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x65,
+	0x72, 0x18, 0xe8, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
+	0x6b, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x45, 0x78,
+	0x74, 0x52, 0x0d, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x65, 0x72, 0x73,
+	0x3a, 0x6d, 0x0a, 0x09, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x12, 0x28, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72,
+	0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x50, 0x75,
+	0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x18, 0xea, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24,
 	0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62,
-	0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x45, 0x78, 0x74, 0x52, 0x0a, 0x62, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x3a, 0x59, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x23, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
+	0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65,
+	0x72, 0x45, 0x78, 0x74, 0x52, 0x09, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x72, 0x3a,
+	0x59, 0x0a, 0x04, 0x73, 0x69, 0x74, 0x65, 0x12, 0x23, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x53, 0x69, 0x74, 0x65, 0x18, 0xf2, 0x07, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x53, 0x69, 0x74,
+	0x65, 0x45, 0x78, 0x74, 0x52, 0x04, 0x73, 0x69, 0x74, 0x65, 0x3a, 0x67, 0x0a, 0x0b, 0x62, 0x69,
+	0x64, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
 	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42,
-	0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x18, 0xef,
-	0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
-	0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x55,
-	0x73, 0x65, 0x72, 0x45, 0x78, 0x74, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x3a, 0x60, 0x0a, 0x04,
-	0x75, 0x69, 0x64, 0x73, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x2e, 0x45, 0x49, 0x44, 0x2e, 0x55, 0x49,
-	0x44, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
-	0x6b, 0x2e, 0x55, 0x49, 0x44, 0x45, 0x78, 0x74, 0x52, 0x04, 0x75, 0x69, 0x64, 0x73, 0x3a, 0x61,
-	0x0a, 0x06, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x25, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69,
-	0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x18,
-	0xaa, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e,
-	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74, 0x52, 0x06, 0x64, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x3a, 0x59, 0x0a, 0x04, 0x72, 0x65, 0x67, 0x73, 0x12, 0x23, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
-	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42,
-	0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x52, 0x65, 0x67, 0x73, 0x18, 0xe9,
-	0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
-	0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x52,
-	0x65, 0x67, 0x73, 0x45, 0x78, 0x74, 0x52, 0x04, 0x72, 0x65, 0x67, 0x73, 0x3a, 0x61, 0x0a, 0x04,
-	0x64, 0x65, 0x61, 0x6c, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x2e, 0x49, 0x6d, 0x70, 0x2e, 0x50, 0x6d, 0x70, 0x2e, 0x44, 0x65, 0x61,
-	0x6c, 0x18, 0xf2, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
-	0x6b, 0x2e, 0x44, 0x65, 0x61, 0x6c, 0x45, 0x78, 0x74, 0x52, 0x04, 0x64, 0x65, 0x61, 0x6c, 0x3a,
-	0x61, 0x0a, 0x06, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x25, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
-	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42,
-	0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65,
-	0x18, 0xa3, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
+	0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0xfa, 0x07, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x25, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f,
+	0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b, 0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x45, 0x78, 0x74, 0x52, 0x0a, 0x62, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x3a, 0x59, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x23, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
+	0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72,
+	0x18, 0xef, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
 	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b,
-	0x2e, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x45, 0x78, 0x74, 0x52, 0x06, 0x73, 0x6f, 0x75, 0x72,
-	0x63, 0x65, 0x42, 0x14, 0x42, 0x06, 0x41, 0x64, 0x78, 0x45, 0x78, 0x74, 0x5a, 0x0a, 0x2e, 0x2f,
-	0x3b, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
+	0x2e, 0x55, 0x73, 0x65, 0x72, 0x45, 0x78, 0x74, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x3a, 0x60,
+	0x0a, 0x04, 0x75, 0x69, 0x64, 0x73, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x2e, 0x45, 0x49, 0x44, 0x2e,
+	0x55, 0x49, 0x44, 0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c,
+	0x69, 0x63, 0x6b, 0x2e, 0x55, 0x49, 0x44, 0x45, 0x78, 0x74, 0x52, 0x04, 0x75, 0x69, 0x64, 0x73,
+	0x3a, 0x61, 0x0a, 0x06, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x25, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e,
+	0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63,
+	0x65, 0x18, 0xaa, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63,
+	0x6b, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x45, 0x78, 0x74, 0x52, 0x06, 0x64, 0x65, 0x76,
+	0x69, 0x63, 0x65, 0x3a, 0x59, 0x0a, 0x04, 0x72, 0x65, 0x67, 0x73, 0x12, 0x23, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
+	0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x52, 0x65, 0x67, 0x73,
+	0x18, 0xe9, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69, 0x63, 0x6b,
+	0x2e, 0x52, 0x65, 0x67, 0x73, 0x45, 0x78, 0x74, 0x52, 0x04, 0x72, 0x65, 0x67, 0x73, 0x3a, 0x61,
+	0x0a, 0x04, 0x64, 0x65, 0x61, 0x6c, 0x12, 0x2b, 0x2e, 0x63, 0x6f, 0x6d, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62, 0x2e, 0x42, 0x69, 0x64, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x49, 0x6d, 0x70, 0x2e, 0x50, 0x6d, 0x70, 0x2e, 0x44,
+	0x65, 0x61, 0x6c, 0x18, 0xf2, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c,
+	0x69, 0x63, 0x6b, 0x2e, 0x44, 0x65, 0x61, 0x6c, 0x45, 0x78, 0x74, 0x52, 0x04, 0x64, 0x65, 0x61,
+	0x6c, 0x3a, 0x61, 0x0a, 0x06, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x25, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
+	0x2e, 0x42, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x53, 0x6f, 0x75, 0x72,
+	0x63, 0x65, 0x18, 0xa3, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x6f, 0x6d, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x64, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x63, 0x6c, 0x69,
+	0x63, 0x6b, 0x2e, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x45, 0x78, 0x74, 0x52, 0x06, 0x73, 0x6f,
+	0x75, 0x72, 0x63, 0x65, 0x42, 0x14, 0x42, 0x06, 0x41, 0x64, 0x78, 0x45, 0x78, 0x74, 0x5a, 0x0a,
+	0x2e, 0x2f, 0x3b, 0x6f, 0x70, 0x65, 0x6e, 0x72, 0x74, 0x62,
 }
 
 var (
@@ -7151,7 +7210,7 @@ func file_openrtb_adx_proto_rawDescGZIP() []byte {
 }
 
 var file_openrtb_adx_proto_enumTypes = make([]protoimpl.EnumInfo, 27)
-var file_openrtb_adx_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
+var file_openrtb_adx_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_openrtb_adx_proto_goTypes = []interface{}{
 	(SKAdNetworkFidelityType)(0),                                        // 0: com.google.doubleclick.SKAdNetworkFidelityType
 	(ImpExt_AmpAdRequirementType)(0),                                    // 1: com.google.doubleclick.ImpExt.AmpAdRequirementType
@@ -7195,135 +7254,136 @@ var file_openrtb_adx_proto_goTypes = []interface{}{
 	(*RegsExt)(nil),                                          // 39: com.google.doubleclick.RegsExt
 	(*DealExt)(nil),                                          // 40: com.google.doubleclick.DealExt
 	(*SourceExt)(nil),                                        // 41: com.google.doubleclick.SourceExt
-	(*ImpExt_ExcludedCreative)(nil),                          // 42: com.google.doubleclick.ImpExt.ExcludedCreative
-	(*ImpExt_BuyerGeneratedRequestData)(nil),                 // 43: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData
-	(*ImpExt_BillableEventRateBidAdjustment)(nil),            // 44: com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment
-	(*ImpExt_OpenBidding)(nil),                               // 45: com.google.doubleclick.ImpExt.OpenBidding
-	(*ImpExt_SKAdNetworkRequest)(nil),                        // 46: com.google.doubleclick.ImpExt.SKAdNetworkRequest
-	(*ImpExt_CreativeEnforcementSettings)(nil),               // 47: com.google.doubleclick.ImpExt.CreativeEnforcementSettings
-	(*ImpExt_AdUnitMapping)(nil),                             // 48: com.google.doubleclick.ImpExt.AdUnitMapping
-	(*ImpExt_BuyerGeneratedRequestData_SourceApp)(nil),       // 49: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
-	(*ImpExt_AdUnitMapping_Keyval)(nil),                      // 50: com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
-	(*AppExt_InstalledSdk)(nil),                              // 51: com.google.doubleclick.AppExt.InstalledSdk
-	(*AppExt_InstalledSdk_Version)(nil),                      // 52: com.google.doubleclick.AppExt.InstalledSdk.Version
-	(*BidExt_SdkRenderedAd)(nil),                             // 53: com.google.doubleclick.BidExt.SdkRenderedAd
-	(*BidExt_EventNotificationToken)(nil),                    // 54: com.google.doubleclick.BidExt.EventNotificationToken
-	(*BidExt_FrequencyCap)(nil),                              // 55: com.google.doubleclick.BidExt.FrequencyCap
-	(*BidExt_SKAdNetworkResponse)(nil),                       // 56: com.google.doubleclick.BidExt.SKAdNetworkResponse
-	(*BidExt_Dsa)(nil),                                       // 57: com.google.doubleclick.BidExt.Dsa
-	(*BidExt_SdkRenderedAd_DeclaredAd)(nil),                  // 58: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
-	(*BidExt_SKAdNetworkResponse_Fidelity)(nil),              // 59: com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
-	(*BidExt_SKAdNetworkResponse_SKOverlay)(nil),             // 60: com.google.doubleclick.BidExt.SKAdNetworkResponse.SKOverlay
-	(*BidExt_SKAdNetworkResponse_SKAdNetworkOptions)(nil),    // 61: com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
-	(*SiteExt_UserActivation)(nil),                           // 62: com.google.doubleclick.SiteExt.UserActivation
-	(*BidRequestExt_BidFeedback)(nil),                        // 63: com.google.doubleclick.BidRequestExt.BidFeedback
-	(*BidRequestExt_PrivacyTreatments)(nil),                  // 64: com.google.doubleclick.BidRequestExt.PrivacyTreatments
-	(*BidRequestExt_BidFeedback_EventNotificationToken)(nil), // 65: com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
-	(*UserExt_ConsentedProvidersSettings)(nil),               // 66: com.google.doubleclick.UserExt.ConsentedProvidersSettings
-	(*UserExt_ExtendedId)(nil),                               // 67: com.google.doubleclick.UserExt.ExtendedId
-	(*UserExt_ExtendedId_ExtendedIdUid)(nil),                 // 68: com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
-	(*RegsExt_Dsa)(nil),                                      // 69: com.google.doubleclick.RegsExt.Dsa
-	(*DealExt_CreativeConstraints)(nil),                      // 70: com.google.doubleclick.DealExt.CreativeConstraints
-	(*SourceExt_SupplyChain)(nil),                            // 71: com.google.doubleclick.SourceExt.SupplyChain
-	(*SourceExt_SupplyChain_SupplyChainNode)(nil),            // 72: com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
-	(*NativeResponse)(nil),                                   // 73: com.google.openrtb.NativeResponse
-	(CreativeMarkupType)(0),                                  // 74: com.google.openrtb.CreativeMarkupType
-	(*BidRequest_Imp)(nil),                                   // 75: com.google.openrtb.BidRequest.Imp
-	(*BidRequest_App)(nil),                                   // 76: com.google.openrtb.BidRequest.App
-	(*BidResponse)(nil),                                      // 77: com.google.openrtb.BidResponse
-	(*BidResponse_SeatBid_Bid)(nil),                          // 78: com.google.openrtb.BidResponse.SeatBid.Bid
-	(*NativeRequest)(nil),                                    // 79: com.google.openrtb.NativeRequest
-	(*NativeResponse_EventTracker)(nil),                      // 80: com.google.openrtb.NativeResponse.EventTracker
-	(*BidRequest_Publisher)(nil),                             // 81: com.google.openrtb.BidRequest.Publisher
-	(*BidRequest_Site)(nil),                                  // 82: com.google.openrtb.BidRequest.Site
-	(*BidRequest)(nil),                                       // 83: com.google.openrtb.BidRequest
-	(*BidRequest_User)(nil),                                  // 84: com.google.openrtb.BidRequest.User
-	(*BidRequest_User_EID_UID)(nil),                          // 85: com.google.openrtb.BidRequest.User.EID.UID
-	(*BidRequest_Device)(nil),                                // 86: com.google.openrtb.BidRequest.Device
-	(*BidRequest_Regs)(nil),                                  // 87: com.google.openrtb.BidRequest.Regs
-	(*BidRequest_Imp_Pmp_Deal)(nil),                          // 88: com.google.openrtb.BidRequest.Imp.Pmp.Deal
-	(*BidRequest_Source)(nil),                                // 89: com.google.openrtb.BidRequest.Source
+	(*GeoExt)(nil),                                           // 42: com.google.doubleclick.GeoExt
+	(*ImpExt_ExcludedCreative)(nil),                          // 43: com.google.doubleclick.ImpExt.ExcludedCreative
+	(*ImpExt_BuyerGeneratedRequestData)(nil),                 // 44: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData
+	(*ImpExt_BillableEventRateBidAdjustment)(nil),            // 45: com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment
+	(*ImpExt_OpenBidding)(nil),                               // 46: com.google.doubleclick.ImpExt.OpenBidding
+	(*ImpExt_SKAdNetworkRequest)(nil),                        // 47: com.google.doubleclick.ImpExt.SKAdNetworkRequest
+	(*ImpExt_CreativeEnforcementSettings)(nil),               // 48: com.google.doubleclick.ImpExt.CreativeEnforcementSettings
+	(*ImpExt_AdUnitMapping)(nil),                             // 49: com.google.doubleclick.ImpExt.AdUnitMapping
+	(*ImpExt_BuyerGeneratedRequestData_SourceApp)(nil),       // 50: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
+	(*ImpExt_AdUnitMapping_Keyval)(nil),                      // 51: com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
+	(*AppExt_InstalledSdk)(nil),                              // 52: com.google.doubleclick.AppExt.InstalledSdk
+	(*AppExt_InstalledSdk_Version)(nil),                      // 53: com.google.doubleclick.AppExt.InstalledSdk.Version
+	(*BidExt_SdkRenderedAd)(nil),                             // 54: com.google.doubleclick.BidExt.SdkRenderedAd
+	(*BidExt_EventNotificationToken)(nil),                    // 55: com.google.doubleclick.BidExt.EventNotificationToken
+	(*BidExt_FrequencyCap)(nil),                              // 56: com.google.doubleclick.BidExt.FrequencyCap
+	(*BidExt_SKAdNetworkResponse)(nil),                       // 57: com.google.doubleclick.BidExt.SKAdNetworkResponse
+	(*BidExt_Dsa)(nil),                                       // 58: com.google.doubleclick.BidExt.Dsa
+	(*BidExt_SdkRenderedAd_DeclaredAd)(nil),                  // 59: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
+	(*BidExt_SKAdNetworkResponse_Fidelity)(nil),              // 60: com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
+	(*BidExt_SKAdNetworkResponse_SKOverlay)(nil),             // 61: com.google.doubleclick.BidExt.SKAdNetworkResponse.SKOverlay
+	(*BidExt_SKAdNetworkResponse_SKAdNetworkOptions)(nil),    // 62: com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
+	(*SiteExt_UserActivation)(nil),                           // 63: com.google.doubleclick.SiteExt.UserActivation
+	(*BidRequestExt_BidFeedback)(nil),                        // 64: com.google.doubleclick.BidRequestExt.BidFeedback
+	(*BidRequestExt_PrivacyTreatments)(nil),                  // 65: com.google.doubleclick.BidRequestExt.PrivacyTreatments
+	(*BidRequestExt_BidFeedback_EventNotificationToken)(nil), // 66: com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
+	(*UserExt_ConsentedProvidersSettings)(nil),               // 67: com.google.doubleclick.UserExt.ConsentedProvidersSettings
+	(*UserExt_ExtendedId)(nil),                               // 68: com.google.doubleclick.UserExt.ExtendedId
+	(*UserExt_ExtendedId_ExtendedIdUid)(nil),                 // 69: com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
+	(*RegsExt_Dsa)(nil),                                      // 70: com.google.doubleclick.RegsExt.Dsa
+	(*DealExt_CreativeConstraints)(nil),                      // 71: com.google.doubleclick.DealExt.CreativeConstraints
+	(*SourceExt_SupplyChain)(nil),                            // 72: com.google.doubleclick.SourceExt.SupplyChain
+	(*SourceExt_SupplyChain_SupplyChainNode)(nil),            // 73: com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
+	(*NativeResponse)(nil),                                   // 74: com.google.openrtb.NativeResponse
+	(CreativeMarkupType)(0),                                  // 75: com.google.openrtb.CreativeMarkupType
+	(*BidRequest_Imp)(nil),                                   // 76: com.google.openrtb.BidRequest.Imp
+	(*BidRequest_App)(nil),                                   // 77: com.google.openrtb.BidRequest.App
+	(*BidResponse)(nil),                                      // 78: com.google.openrtb.BidResponse
+	(*BidResponse_SeatBid_Bid)(nil),                          // 79: com.google.openrtb.BidResponse.SeatBid.Bid
+	(*NativeRequest)(nil),                                    // 80: com.google.openrtb.NativeRequest
+	(*NativeResponse_EventTracker)(nil),                      // 81: com.google.openrtb.NativeResponse.EventTracker
+	(*BidRequest_Publisher)(nil),                             // 82: com.google.openrtb.BidRequest.Publisher
+	(*BidRequest_Site)(nil),                                  // 83: com.google.openrtb.BidRequest.Site
+	(*BidRequest)(nil),                                       // 84: com.google.openrtb.BidRequest
+	(*BidRequest_User)(nil),                                  // 85: com.google.openrtb.BidRequest.User
+	(*BidRequest_User_EID_UID)(nil),                          // 86: com.google.openrtb.BidRequest.User.EID.UID
+	(*BidRequest_Device)(nil),                                // 87: com.google.openrtb.BidRequest.Device
+	(*BidRequest_Regs)(nil),                                  // 88: com.google.openrtb.BidRequest.Regs
+	(*BidRequest_Imp_Pmp_Deal)(nil),                          // 89: com.google.openrtb.BidRequest.Imp.Pmp.Deal
+	(*BidRequest_Source)(nil),                                // 90: com.google.openrtb.BidRequest.Source
 }
 var file_openrtb_adx_proto_depIdxs = []int32{
-	42, // 0: com.google.doubleclick.ImpExt.excluded_creatives:type_name -> com.google.doubleclick.ImpExt.ExcludedCreative
+	43, // 0: com.google.doubleclick.ImpExt.excluded_creatives:type_name -> com.google.doubleclick.ImpExt.ExcludedCreative
 	1,  // 1: com.google.doubleclick.ImpExt.ampad:type_name -> com.google.doubleclick.ImpExt.AmpAdRequirementType
-	43, // 2: com.google.doubleclick.ImpExt.buyer_generated_request_data:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData
-	44, // 3: com.google.doubleclick.ImpExt.billable_event_rate_bid_adjustment:type_name -> com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment
-	45, // 4: com.google.doubleclick.ImpExt.open_bidding:type_name -> com.google.doubleclick.ImpExt.OpenBidding
-	46, // 5: com.google.doubleclick.ImpExt.skadn:type_name -> com.google.doubleclick.ImpExt.SKAdNetworkRequest
-	47, // 6: com.google.doubleclick.ImpExt.creative_enforcement_settings:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings
+	44, // 2: com.google.doubleclick.ImpExt.buyer_generated_request_data:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData
+	45, // 3: com.google.doubleclick.ImpExt.billable_event_rate_bid_adjustment:type_name -> com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment
+	46, // 4: com.google.doubleclick.ImpExt.open_bidding:type_name -> com.google.doubleclick.ImpExt.OpenBidding
+	47, // 5: com.google.doubleclick.ImpExt.skadn:type_name -> com.google.doubleclick.ImpExt.SKAdNetworkRequest
+	48, // 6: com.google.doubleclick.ImpExt.creative_enforcement_settings:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings
 	2,  // 7: com.google.doubleclick.ImpExt.auction_environment:type_name -> com.google.doubleclick.ImpExt.AuctionEnvironment
 	2,  // 8: com.google.doubleclick.ImpExt.ae:type_name -> com.google.doubleclick.ImpExt.AuctionEnvironment
-	48, // 9: com.google.doubleclick.ImpExt.ad_unit_mapping:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping
-	51, // 10: com.google.doubleclick.AppExt.installed_sdk:type_name -> com.google.doubleclick.AppExt.InstalledSdk
+	49, // 9: com.google.doubleclick.ImpExt.ad_unit_mapping:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping
+	52, // 10: com.google.doubleclick.AppExt.installed_sdk:type_name -> com.google.doubleclick.AppExt.InstalledSdk
 	7,  // 11: com.google.doubleclick.BidExt.exchange_deal_type:type_name -> com.google.doubleclick.BidExt.ExchangeDealType
-	53, // 12: com.google.doubleclick.BidExt.sdk_rendered_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd
-	54, // 13: com.google.doubleclick.BidExt.event_notification_token:type_name -> com.google.doubleclick.BidExt.EventNotificationToken
-	55, // 14: com.google.doubleclick.BidExt.fcap:type_name -> com.google.doubleclick.BidExt.FrequencyCap
-	56, // 15: com.google.doubleclick.BidExt.skadn:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse
+	54, // 12: com.google.doubleclick.BidExt.sdk_rendered_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd
+	55, // 13: com.google.doubleclick.BidExt.event_notification_token:type_name -> com.google.doubleclick.BidExt.EventNotificationToken
+	56, // 14: com.google.doubleclick.BidExt.fcap:type_name -> com.google.doubleclick.BidExt.FrequencyCap
+	57, // 15: com.google.doubleclick.BidExt.skadn:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse
 	8,  // 16: com.google.doubleclick.BidExt.app_promotion_type:type_name -> com.google.doubleclick.BidExt.AppPromotionType
-	57, // 17: com.google.doubleclick.BidExt.dsa:type_name -> com.google.doubleclick.BidExt.Dsa
+	58, // 17: com.google.doubleclick.BidExt.dsa:type_name -> com.google.doubleclick.BidExt.Dsa
 	10, // 18: com.google.doubleclick.NativeRequestExt.style_layout_type:type_name -> com.google.doubleclick.NativeRequestExt.LayoutType
 	11, // 19: com.google.doubleclick.EventTrackerExt.context:type_name -> com.google.doubleclick.EventTrackerExt.Context
 	12, // 20: com.google.doubleclick.SiteExt.amp:type_name -> com.google.doubleclick.SiteExt.AmpPage
 	13, // 21: com.google.doubleclick.SiteExt.page_visibility:type_name -> com.google.doubleclick.SiteExt.VisibilityState
-	62, // 22: com.google.doubleclick.SiteExt.uact:type_name -> com.google.doubleclick.SiteExt.UserActivation
+	63, // 22: com.google.doubleclick.SiteExt.uact:type_name -> com.google.doubleclick.SiteExt.UserActivation
 	14, // 23: com.google.doubleclick.SiteExt.ntype:type_name -> com.google.doubleclick.SiteExt.NavigationType
-	63, // 24: com.google.doubleclick.BidRequestExt.bid_feedback:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback
+	64, // 24: com.google.doubleclick.BidRequestExt.bid_feedback:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback
 	15, // 25: com.google.doubleclick.BidRequestExt.fcap_scope:type_name -> com.google.doubleclick.BidRequestExt.FrequencyCappingScope
-	64, // 26: com.google.doubleclick.BidRequestExt.privacy_treatments:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments
-	66, // 27: com.google.doubleclick.UserExt.consented_providers_settings:type_name -> com.google.doubleclick.UserExt.ConsentedProvidersSettings
-	67, // 28: com.google.doubleclick.UserExt.eids:type_name -> com.google.doubleclick.UserExt.ExtendedId
-	69, // 29: com.google.doubleclick.RegsExt.dsa:type_name -> com.google.doubleclick.RegsExt.Dsa
+	65, // 26: com.google.doubleclick.BidRequestExt.privacy_treatments:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments
+	67, // 27: com.google.doubleclick.UserExt.consented_providers_settings:type_name -> com.google.doubleclick.UserExt.ConsentedProvidersSettings
+	68, // 28: com.google.doubleclick.UserExt.eids:type_name -> com.google.doubleclick.UserExt.ExtendedId
+	70, // 29: com.google.doubleclick.RegsExt.dsa:type_name -> com.google.doubleclick.RegsExt.Dsa
 	24, // 30: com.google.doubleclick.DealExt.deal_type:type_name -> com.google.doubleclick.DealExt.DealType
 	25, // 31: com.google.doubleclick.DealExt.creative_source:type_name -> com.google.doubleclick.DealExt.CreativeSourceType
-	70, // 32: com.google.doubleclick.DealExt.creative_constraints:type_name -> com.google.doubleclick.DealExt.CreativeConstraints
-	71, // 33: com.google.doubleclick.SourceExt.schain:type_name -> com.google.doubleclick.SourceExt.SupplyChain
-	49, // 34: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.source_app:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
+	71, // 32: com.google.doubleclick.DealExt.creative_constraints:type_name -> com.google.doubleclick.DealExt.CreativeConstraints
+	72, // 33: com.google.doubleclick.SourceExt.schain:type_name -> com.google.doubleclick.SourceExt.SupplyChain
+	50, // 34: com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.source_app:type_name -> com.google.doubleclick.ImpExt.BuyerGeneratedRequestData.SourceApp
 	3,  // 35: com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment.creative_type:type_name -> com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment.CreativeType
-	51, // 36: com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment.sdk:type_name -> com.google.doubleclick.AppExt.InstalledSdk
+	52, // 36: com.google.doubleclick.ImpExt.BillableEventRateBidAdjustment.sdk:type_name -> com.google.doubleclick.AppExt.InstalledSdk
 	0,  // 37: com.google.doubleclick.ImpExt.SKAdNetworkRequest.fidelities:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
 	4,  // 38: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.policy_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PolicyEnforcement
 	5,  // 39: com.google.doubleclick.ImpExt.CreativeEnforcementSettings.publisher_blocks_enforcement:type_name -> com.google.doubleclick.ImpExt.CreativeEnforcementSettings.PublisherBlocksEnforcement
-	50, // 40: com.google.doubleclick.ImpExt.AdUnitMapping.keyvals:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
+	51, // 40: com.google.doubleclick.ImpExt.AdUnitMapping.keyvals:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.Keyval
 	6,  // 41: com.google.doubleclick.ImpExt.AdUnitMapping.format:type_name -> com.google.doubleclick.ImpExt.AdUnitMapping.FormatType
-	52, // 42: com.google.doubleclick.AppExt.InstalledSdk.sdk_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
-	52, // 43: com.google.doubleclick.AppExt.InstalledSdk.adapter_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
-	58, // 44: com.google.doubleclick.BidExt.SdkRenderedAd.declared_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
+	53, // 42: com.google.doubleclick.AppExt.InstalledSdk.sdk_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
+	53, // 43: com.google.doubleclick.AppExt.InstalledSdk.adapter_version:type_name -> com.google.doubleclick.AppExt.InstalledSdk.Version
+	59, // 44: com.google.doubleclick.BidExt.SdkRenderedAd.declared_ad:type_name -> com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd
 	9,  // 45: com.google.doubleclick.BidExt.FrequencyCap.time_unit:type_name -> com.google.doubleclick.BidExt.FrequencyCap.TimeUnit
-	59, // 46: com.google.doubleclick.BidExt.SKAdNetworkResponse.fidelities:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
-	60, // 47: com.google.doubleclick.BidExt.SKAdNetworkResponse.skoverlay:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKOverlay
-	61, // 48: com.google.doubleclick.BidExt.SKAdNetworkResponse.skadn_opts:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
-	73, // 49: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd.native_response:type_name -> com.google.openrtb.NativeResponse
+	60, // 46: com.google.doubleclick.BidExt.SKAdNetworkResponse.fidelities:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity
+	61, // 47: com.google.doubleclick.BidExt.SKAdNetworkResponse.skoverlay:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKOverlay
+	62, // 48: com.google.doubleclick.BidExt.SKAdNetworkResponse.skadn_opts:type_name -> com.google.doubleclick.BidExt.SKAdNetworkResponse.SKAdNetworkOptions
+	74, // 49: com.google.doubleclick.BidExt.SdkRenderedAd.DeclaredAd.native_response:type_name -> com.google.openrtb.NativeResponse
 	0,  // 50: com.google.doubleclick.BidExt.SKAdNetworkResponse.Fidelity.fidelity:type_name -> com.google.doubleclick.SKAdNetworkFidelityType
-	65, // 51: com.google.doubleclick.BidRequestExt.BidFeedback.event_notification_token:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
+	66, // 51: com.google.doubleclick.BidRequestExt.BidFeedback.event_notification_token:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback.EventNotificationToken
 	16, // 52: com.google.doubleclick.BidRequestExt.BidFeedback.feedbacktype:type_name -> com.google.doubleclick.BidRequestExt.BidFeedback.FeedbackType
 	17, // 53: com.google.doubleclick.BidRequestExt.PrivacyTreatments.ip:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.IpGeneralization
 	18, // 54: com.google.doubleclick.BidRequestExt.PrivacyTreatments.user_agent:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.UserAgentGeneralization
 	19, // 55: com.google.doubleclick.BidRequestExt.PrivacyTreatments.non_personalized_ads_reason:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.NonPersonalizedAdsReason
 	20, // 56: com.google.doubleclick.BidRequestExt.PrivacyTreatments.storagerestrict:type_name -> com.google.doubleclick.BidRequestExt.PrivacyTreatments.DeviceStorageRestrictionReason
-	68, // 57: com.google.doubleclick.UserExt.ExtendedId.uids:type_name -> com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
+	69, // 57: com.google.doubleclick.UserExt.ExtendedId.uids:type_name -> com.google.doubleclick.UserExt.ExtendedId.ExtendedIdUid
 	21, // 58: com.google.doubleclick.RegsExt.Dsa.dsarequired:type_name -> com.google.doubleclick.RegsExt.Dsa.DsaSupport
 	22, // 59: com.google.doubleclick.RegsExt.Dsa.pubrender:type_name -> com.google.doubleclick.RegsExt.Dsa.PublisherRenderingSupport
 	23, // 60: com.google.doubleclick.RegsExt.Dsa.datatopub:type_name -> com.google.doubleclick.RegsExt.Dsa.DataToPublisher
-	74, // 61: com.google.doubleclick.DealExt.CreativeConstraints.mtypes:type_name -> com.google.openrtb.CreativeMarkupType
+	75, // 61: com.google.doubleclick.DealExt.CreativeConstraints.mtypes:type_name -> com.google.openrtb.CreativeMarkupType
 	26, // 62: com.google.doubleclick.DealExt.CreativeConstraints.skippability:type_name -> com.google.doubleclick.DealExt.CreativeConstraints.SkippabilityConstraint
-	72, // 63: com.google.doubleclick.SourceExt.SupplyChain.nodes:type_name -> com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
-	75, // 64: com.google.doubleclick.imp:extendee -> com.google.openrtb.BidRequest.Imp
-	76, // 65: com.google.doubleclick.app:extendee -> com.google.openrtb.BidRequest.App
-	77, // 66: com.google.doubleclick.bid_response:extendee -> com.google.openrtb.BidResponse
-	78, // 67: com.google.doubleclick.bid:extendee -> com.google.openrtb.BidResponse.SeatBid.Bid
-	79, // 68: com.google.doubleclick.native_ext:extendee -> com.google.openrtb.NativeRequest
-	80, // 69: com.google.doubleclick.eventtrackers:extendee -> com.google.openrtb.NativeResponse.EventTracker
-	81, // 70: com.google.doubleclick.publisher:extendee -> com.google.openrtb.BidRequest.Publisher
-	82, // 71: com.google.doubleclick.site:extendee -> com.google.openrtb.BidRequest.Site
-	83, // 72: com.google.doubleclick.bid_request:extendee -> com.google.openrtb.BidRequest
-	84, // 73: com.google.doubleclick.user:extendee -> com.google.openrtb.BidRequest.User
-	85, // 74: com.google.doubleclick.uids:extendee -> com.google.openrtb.BidRequest.User.EID.UID
-	86, // 75: com.google.doubleclick.device:extendee -> com.google.openrtb.BidRequest.Device
-	87, // 76: com.google.doubleclick.regs:extendee -> com.google.openrtb.BidRequest.Regs
-	88, // 77: com.google.doubleclick.deal:extendee -> com.google.openrtb.BidRequest.Imp.Pmp.Deal
-	89, // 78: com.google.doubleclick.source:extendee -> com.google.openrtb.BidRequest.Source
+	73, // 63: com.google.doubleclick.SourceExt.SupplyChain.nodes:type_name -> com.google.doubleclick.SourceExt.SupplyChain.SupplyChainNode
+	76, // 64: com.google.doubleclick.imp:extendee -> com.google.openrtb.BidRequest.Imp
+	77, // 65: com.google.doubleclick.app:extendee -> com.google.openrtb.BidRequest.App
+	78, // 66: com.google.doubleclick.bid_response:extendee -> com.google.openrtb.BidResponse
+	79, // 67: com.google.doubleclick.bid:extendee -> com.google.openrtb.BidResponse.SeatBid.Bid
+	80, // 68: com.google.doubleclick.native_ext:extendee -> com.google.openrtb.NativeRequest
+	81, // 69: com.google.doubleclick.eventtrackers:extendee -> com.google.openrtb.NativeResponse.EventTracker
+	82, // 70: com.google.doubleclick.publisher:extendee -> com.google.openrtb.BidRequest.Publisher
+	83, // 71: com.google.doubleclick.site:extendee -> com.google.openrtb.BidRequest.Site
+	84, // 72: com.google.doubleclick.bid_request:extendee -> com.google.openrtb.BidRequest
+	85, // 73: com.google.doubleclick.user:extendee -> com.google.openrtb.BidRequest.User
+	86, // 74: com.google.doubleclick.uids:extendee -> com.google.openrtb.BidRequest.User.EID.UID
+	87, // 75: com.google.doubleclick.device:extendee -> com.google.openrtb.BidRequest.Device
+	88, // 76: com.google.doubleclick.regs:extendee -> com.google.openrtb.BidRequest.Regs
+	89, // 77: com.google.doubleclick.deal:extendee -> com.google.openrtb.BidRequest.Imp.Pmp.Deal
+	90, // 78: com.google.doubleclick.source:extendee -> com.google.openrtb.BidRequest.Source
 	27, // 79: com.google.doubleclick.imp:type_name -> com.google.doubleclick.ImpExt
 	28, // 80: com.google.doubleclick.app:type_name -> com.google.doubleclick.AppExt
 	29, // 81: com.google.doubleclick.bid_response:type_name -> com.google.doubleclick.BidResponseExt
@@ -7534,7 +7594,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_ExcludedCreative); i {
+			switch v := v.(*GeoExt); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7546,7 +7606,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_BuyerGeneratedRequestData); i {
+			switch v := v.(*ImpExt_ExcludedCreative); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7558,7 +7618,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_BillableEventRateBidAdjustment); i {
+			switch v := v.(*ImpExt_BuyerGeneratedRequestData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7570,7 +7630,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_OpenBidding); i {
+			switch v := v.(*ImpExt_BillableEventRateBidAdjustment); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7582,7 +7642,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_SKAdNetworkRequest); i {
+			switch v := v.(*ImpExt_OpenBidding); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7594,7 +7654,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_CreativeEnforcementSettings); i {
+			switch v := v.(*ImpExt_SKAdNetworkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7606,7 +7666,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_AdUnitMapping); i {
+			switch v := v.(*ImpExt_CreativeEnforcementSettings); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7618,7 +7678,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_BuyerGeneratedRequestData_SourceApp); i {
+			switch v := v.(*ImpExt_AdUnitMapping); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7630,7 +7690,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ImpExt_AdUnitMapping_Keyval); i {
+			switch v := v.(*ImpExt_BuyerGeneratedRequestData_SourceApp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7642,7 +7702,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AppExt_InstalledSdk); i {
+			switch v := v.(*ImpExt_AdUnitMapping_Keyval); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7654,7 +7714,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AppExt_InstalledSdk_Version); i {
+			switch v := v.(*AppExt_InstalledSdk); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7666,7 +7726,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SdkRenderedAd); i {
+			switch v := v.(*AppExt_InstalledSdk_Version); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7678,7 +7738,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_EventNotificationToken); i {
+			switch v := v.(*BidExt_SdkRenderedAd); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7690,7 +7750,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_FrequencyCap); i {
+			switch v := v.(*BidExt_EventNotificationToken); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7702,7 +7762,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SKAdNetworkResponse); i {
+			switch v := v.(*BidExt_FrequencyCap); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7714,7 +7774,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_Dsa); i {
+			switch v := v.(*BidExt_SKAdNetworkResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7726,7 +7786,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SdkRenderedAd_DeclaredAd); i {
+			switch v := v.(*BidExt_Dsa); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7738,7 +7798,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SKAdNetworkResponse_Fidelity); i {
+			switch v := v.(*BidExt_SdkRenderedAd_DeclaredAd); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7750,7 +7810,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SKAdNetworkResponse_SKOverlay); i {
+			switch v := v.(*BidExt_SKAdNetworkResponse_Fidelity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7762,7 +7822,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidExt_SKAdNetworkResponse_SKAdNetworkOptions); i {
+			switch v := v.(*BidExt_SKAdNetworkResponse_SKOverlay); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7774,7 +7834,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SiteExt_UserActivation); i {
+			switch v := v.(*BidExt_SKAdNetworkResponse_SKAdNetworkOptions); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7786,7 +7846,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidRequestExt_BidFeedback); i {
+			switch v := v.(*SiteExt_UserActivation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7798,7 +7858,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidRequestExt_PrivacyTreatments); i {
+			switch v := v.(*BidRequestExt_BidFeedback); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7810,7 +7870,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BidRequestExt_BidFeedback_EventNotificationToken); i {
+			switch v := v.(*BidRequestExt_PrivacyTreatments); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7822,7 +7882,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserExt_ConsentedProvidersSettings); i {
+			switch v := v.(*BidRequestExt_BidFeedback_EventNotificationToken); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7834,7 +7894,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserExt_ExtendedId); i {
+			switch v := v.(*UserExt_ConsentedProvidersSettings); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7846,7 +7906,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserExt_ExtendedId_ExtendedIdUid); i {
+			switch v := v.(*UserExt_ExtendedId); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7858,7 +7918,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RegsExt_Dsa); i {
+			switch v := v.(*UserExt_ExtendedId_ExtendedIdUid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7870,7 +7930,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DealExt_CreativeConstraints); i {
+			switch v := v.(*RegsExt_Dsa); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7882,7 +7942,7 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SourceExt_SupplyChain); i {
+			switch v := v.(*DealExt_CreativeConstraints); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7894,6 +7954,18 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 		file_openrtb_adx_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SourceExt_SupplyChain); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_openrtb_adx_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SourceExt_SupplyChain_SupplyChainNode); i {
 			case 0:
 				return &v.state
@@ -7906,10 +7978,10 @@ func file_openrtb_adx_proto_init() {
 			}
 		}
 	}
-	file_openrtb_adx_proto_msgTypes[16].OneofWrappers = []interface{}{
+	file_openrtb_adx_proto_msgTypes[17].OneofWrappers = []interface{}{
 		(*ImpExt_BuyerGeneratedRequestData_SourceApp_)(nil),
 	}
-	file_openrtb_adx_proto_msgTypes[31].OneofWrappers = []interface{}{
+	file_openrtb_adx_proto_msgTypes[32].OneofWrappers = []interface{}{
 		(*BidExt_SdkRenderedAd_DeclaredAd_HtmlSnippet)(nil),
 		(*BidExt_SdkRenderedAd_DeclaredAd_VideoUrl)(nil),
 		(*BidExt_SdkRenderedAd_DeclaredAd_VideoVastXml)(nil),
@@ -7921,7 +7993,7 @@ func file_openrtb_adx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_openrtb_adx_proto_rawDesc,
 			NumEnums:      27,
-			NumMessages:   46,
+			NumMessages:   47,
 			NumExtensions: 15,
 			NumServices:   0,
 		},

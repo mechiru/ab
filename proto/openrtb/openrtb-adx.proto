@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.168
+// Protocol version: v.169
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -733,8 +733,8 @@ message BidExt {
   // in the seatbid.bid.bundle field.
   // If the advertised app is not specified, this field will be ignored.
   //
-  // Setting seatbid.bid.bundle field without this field will be treated as if
-  // this field were set to OTHER.
+  // Setting BidResponse.seatbid.bid.bundle field without this field will be
+  // treated as if this field were set to OTHER.
   optional AppPromotionType app_promotion_type = 28;
 
   // All bids with the same bid_group_id will be won or lost as a group.
@@ -1584,6 +1584,19 @@ message SourceExt {
   // Deprecated. This will be removed in December 2023. Use the standard field
   // schain instead.
   optional SupplyChain schain = 3;
+}
+
+message GeoExt {
+  // The device's approximate geographic location. See the geo-table.csv table
+  // available at https://developers.google.com/authorized-buyers/rtb/data for
+  // a list of IDs. This field is provisional, intended only to help with
+  // migration from the Google Authorized Buyers protocol to OpenRTB; it will
+  // be removed in the future. The standard fields in BidRequest.device.geo
+  // should be used instead; they contain the same location as the
+  // geo_criteria_id and both are subject to the same privacy treatments.
+  // See Geotargeting Guide:
+  // https://developers.google.com/authorized-buyers/rtb/geotargeting
+  optional int32 geo_criteria_id = 1;
 }
 extend .com.google.openrtb.BidRequest.Imp {
   // Extension key for AdX Imp.ext.

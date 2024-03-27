@@ -6720,10 +6720,11 @@ type BidRequest_Imp_Video struct {
 	//
 	// Deprecated: Marked as deprecated in openrtb.proto.
 	Placement *VideoPlacementType `protobuf:"varint,26,opt,name=placement,enum=com.google.openrtb.VideoPlacementType" json:"placement,omitempty"`
-	// Video placement type for the impression.
+	// Video placement type declared by the publisher for this impression.
 	// Introduced in OpenRTB 2.6 to reflect updated industry definitions
 	// around different types of video ad placements. This field supersedes
-	// the Video.placement field.
+	// the Video.placement field. May be unset if the publisher did not
+	// declare a video placement type.
 	// Supported by Google.
 	Plcmt *Plcmt `protobuf:"varint,35,opt,name=plcmt,enum=com.google.openrtb.Plcmt,def=0" json:"plcmt,omitempty"`
 	// Indicates if the impression must be linear or nonlinear. If none

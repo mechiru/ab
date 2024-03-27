@@ -288,10 +288,11 @@ message BidRequest {
       // Supported by Google.
       optional VideoPlacementType placement = 26 [deprecated = true];
 
-      // Video placement type for the impression.
+      // Video placement type declared by the publisher for this impression.
       // Introduced in OpenRTB 2.6 to reflect updated industry definitions
       // around different types of video ad placements. This field supersedes
-      // the Video.placement field.
+      // the Video.placement field. May be unset if the publisher did not
+      // declare a video placement type.
       // Supported by Google.
       optional Plcmt plcmt = 35 [default = PLCMT_UNKNOWN];
 
