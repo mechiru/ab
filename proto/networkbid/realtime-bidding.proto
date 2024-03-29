@@ -1494,12 +1494,13 @@ message BidRequest {
         // you must bid at least fixed_cpm_micros (in micros of the bidding
         // currency) in order to participate in the deal. If you win, you will
         // be charged fixed_cpm_micros. For deal_type=PRIVATE_AUCTION or
-        // deal_type=AUCTION_PACKAGE you must bid at least fixed_cpm_micros.
-        // Bidding higher CPM than fixed_cpm_micros will increase your chance
-        // to win when deal_type=PRIVATE_AUCTION or deal_type=AUCTION_PACKAGE,
-        // however it will not increase your chance to win for other types of
-        // deals.
-        // The bidding currency is determined by:
+        // deal_type=AUCTION_PACKAGE or deal_type=MARKETPLACE_PACKAGE, you must
+        // bid at least fixed_cpm_micros. Bidding higher CPM than
+        // fixed_cpm_micros will increase your chance to win when
+        // deal_type=PRIVATE_AUCTION or deal_type=AUCTION_PACKAGE or
+        // deal_type=MARKETPLACE_PACKAGE, however it will not increase your
+        // chance to win for other types of deals. The bidding currency is
+        // determined by:
         // 1. The bidder-level currency, if configured.
         // 2. Otherwise, the currency of the buyer accounts indicated by the
         // billing IDs in the billing_id field.
