@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.322
+// Protocol version: v.323
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -184,8 +184,7 @@ message BidRequest {
   }
   optional PrivacyTreatments privacy_treatments = 71;
 
-  // First party data segments that describe the content or audience. Each
-  // SegmentData object represents a different data source.
+  // Data segments that describe the content or audience.
   message SegmentData {
     // Exchange-specific name for the signal provider.
     optional string name = 1;
@@ -198,14 +197,17 @@ message BidRequest {
     }
     repeated Segment segment = 2;
 
-    // Taxonomy types that are registered centrally. Used to define the
-    // namespace and semantic meaning of the segment IDs. For more information
-    // about these taxonomies, see:
-    // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/segtax.md#enumeration-of-taxonomies
+    // Identifies the taxonomy that the segment IDs belong to.
     enum TaxonomyType {
       TAXONOMY_TYPE_UNKNOWN = 0;
+
+      // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Audience%20Taxonomies/Audience%20Taxonomy%201.1.tsv
       IAB_AUDIENCE_1_1 = 4;
+
+      // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%202.2.tsv
       IAB_CONTENT_2_2 = 6;
+
+      // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%203.0.tsv
       IAB_CONTENT_3_0 = 7;
     }
 

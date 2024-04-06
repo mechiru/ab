@@ -967,17 +967,17 @@ func (BidRequest_PrivacyTreatments_DeviceStorageRestrictionReason) EnumDescripto
 	return file_realtime_bidding_proto_rawDescGZIP(), []int{0, 1, 3}
 }
 
-// Taxonomy types that are registered centrally. Used to define the
-// namespace and semantic meaning of the segment IDs. For more information
-// about these taxonomies, see:
-// https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/segtax.md#enumeration-of-taxonomies
+// Identifies the taxonomy that the segment IDs belong to.
 type BidRequest_SegmentData_TaxonomyType int32
 
 const (
 	BidRequest_SegmentData_TAXONOMY_TYPE_UNKNOWN BidRequest_SegmentData_TaxonomyType = 0
-	BidRequest_SegmentData_IAB_AUDIENCE_1_1      BidRequest_SegmentData_TaxonomyType = 4
-	BidRequest_SegmentData_IAB_CONTENT_2_2       BidRequest_SegmentData_TaxonomyType = 6
-	BidRequest_SegmentData_IAB_CONTENT_3_0       BidRequest_SegmentData_TaxonomyType = 7
+	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Audience%20Taxonomies/Audience%20Taxonomy%201.1.tsv
+	BidRequest_SegmentData_IAB_AUDIENCE_1_1 BidRequest_SegmentData_TaxonomyType = 4
+	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%202.2.tsv
+	BidRequest_SegmentData_IAB_CONTENT_2_2 BidRequest_SegmentData_TaxonomyType = 6
+	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%203.0.tsv
+	BidRequest_SegmentData_IAB_CONTENT_3_0 BidRequest_SegmentData_TaxonomyType = 7
 )
 
 // Enum value maps for BidRequest_SegmentData_TaxonomyType.
@@ -5349,8 +5349,7 @@ func (x *BidRequest_PrivacyTreatments) GetDeviceStorageRestrictionReason() BidRe
 	return BidRequest_PrivacyTreatments_DEVICE_STORAGE_RESTRICTION_UNKNOWN
 }
 
-// First party data segments that describe the content or audience. Each
-// SegmentData object represents a different data source.
+// Data segments that describe the content or audience.
 type BidRequest_SegmentData struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
