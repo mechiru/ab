@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.169
+// Protocol version: v.170
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1271,6 +1271,22 @@ message UIDExt {
   // The source type of the UID. See details at
   // https://developers.google.com/authorized-buyers/rtb/openrtb-guide#uid-stype
   optional string stype = 1;
+}
+
+message DataExt {
+  // Identifies the taxonomy that the segment IDs belong to.
+  // Google supports the following taxonomies:
+  // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Audience%20Taxonomies/Audience%20Taxonomy%201.1.tsv
+  // IAB Tech Lab Audience Taxonomy 1.1 = 4
+  // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%202.2.tsv
+  // IAB Tech Lab Content Taxonomy 2.2 = 6
+  // https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%203.0.tsv
+  // IAB Tech Lab Content Taxonomy 3.0 = 7
+  // https://github.com/patcg-individual-drafts/topics/blob/main/taxonomy_v1.md
+  // Chromium Topics API = 600
+  // https://github.com/patcg-individual-drafts/topics/blob/main/taxonomy_v2.md
+  // Chromium Topics API V2 = 601
+  optional int32 segtax = 1;
 }
 
 message DeviceExt {
