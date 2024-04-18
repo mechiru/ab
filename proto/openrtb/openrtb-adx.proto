@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.170
+// Protocol version: v.171
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1614,6 +1614,14 @@ message GeoExt {
   // https://developers.google.com/authorized-buyers/rtb/geotargeting
   optional int32 geo_criteria_id = 1;
 }
+
+message VideoExt {
+  // Video placement type inferred by Google for this impression. This field
+  // is always filled and can be different from  BidRequest.imp.video.plcmt (the
+  // publisher-declared placement type).
+  optional .com.google.openrtb.Plcmt inferredplcmt = 3 [default =
+    PLCMT_UNKNOWN];
+}
 extend .com.google.openrtb.BidRequest.Imp {
   // Extension key for AdX Imp.ext.
   optional ImpExt imp = 1009;
@@ -1672,6 +1680,10 @@ extend .com.google.openrtb.BidRequest.Imp.Pmp.Deal {
 extend .com.google.openrtb.BidRequest.Source {
   // Extension key for Source.ext
   optional SourceExt source = 1059;
+}
+extend .com.google.openrtb.BidRequest.Imp.Video {
+  // Extension key for Video.ext
+  optional VideoExt video = 1031;
 }
 
 // SKAdNetwork API starting from version 2.2 supports multiple ad
