@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.323
+// Protocol version: v.324
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -924,11 +924,17 @@ message BidRequest {
       PLCMT_NO_CONTENT_STANDALONE = 4;
     }
 
-    // Video placement type for the impression.
+    // Video placement type declared by the publisher for this impression.
     // Equivalent to the Video.plcmt field introduced in OpenRTB 2.6 to reflect
     // updated industry definitions around different types of video ad
-    // placements. This field supersedes the Video.placement field.
+    // placements. This field supersedes the Video.placement field. May be unset
+    // if the publisher did not declare a video placement type.
     optional Plcmt plcmt = 23 [default = PLCMT_UNKNOWN];
+
+    // Video placement type inferred by Google for this impression. This field
+    // is always filled and can be different from BidRequest.video.plcmt (the
+    // publisher-declared placement type).
+    optional Plcmt inferred_plcmt = 24 [default = PLCMT_UNKNOWN];
 
     // The URL of the page that the publisher gives Google to describe the video
     // content, with parameters removed.
