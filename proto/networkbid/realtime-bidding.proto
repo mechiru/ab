@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.324
+// Protocol version: v.325
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -445,10 +445,11 @@ message BidRequest {
   // property).
   optional string publisher_id = 56;
 
+  // Deprecated. This field will be removed in Q2 2024.
   // The seller network id. See seller-network-ids.txt file in the technical
   // documentation for a list of ids. This is only set if the site is not
   // anonymous and the publisher allows site targeting.
-  optional int32 seller_network_id = 41;
+  optional int32 seller_network_id = 41 [deprecated = true];
 
   // Id for the partner that provides this inventory. This is only set when
   // seller_network_id is also set and further partner information beyond the
