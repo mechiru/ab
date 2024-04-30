@@ -2,4 +2,4 @@ module github.com/mechiru/ab/proto/networkbid
 
 go 1.18
 
-require google.golang.org/protobuf v1.33.0
+require google.golang.org/protobuf v1.34.0
