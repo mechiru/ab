@@ -3432,7 +3432,7 @@ type BidRequest struct {
 	// on this impression. IDs of seats and knowledge of the buyer's customers to
 	// which they refer must be coordinated between bidders and the exchange a
 	// priori. Omission implies no seat restrictions.
-	// Not supported by Google.
+	// Supported by Google.
 	Wseat []string `protobuf:"bytes,9,rep,name=wseat" json:"wseat,omitempty"`
 	// Indicates if Exchange can verify that the impressions offered
 	// represent all of the impressions available in context (for example, all on
@@ -3471,7 +3471,7 @@ type BidRequest struct {
 	// coordinated between bidders and the exchange a priori.
 	// At most, only one of wseat and bseat should be used in the
 	// same request. Omission of both implies no seat restrictions.
-	// Not supported by Google.
+	// Supported by Google.
 	Bseat []string `protobuf:"bytes,17,rep,name=bseat" json:"bseat,omitempty"`
 	// Allowed list of languages for creatives using ISO-639-1-alpha-2.
 	// Omission implies no specific restrictions, but buyers would be
@@ -7848,7 +7848,7 @@ type BidRequest_Imp_Pmp_Deal struct {
 	// can bid on this deal. IDs of seats and knowledge of the buyer's
 	// customers to which they refer must be coordinated between bidders and
 	// the exchange a priori. Omission implies no seat restrictions.
-	// Not supported by Google.
+	// Supported by Google.
 	Wseat []string `protobuf:"bytes,4,rep,name=wseat" json:"wseat,omitempty"`
 	// Array of advertiser domains (for example, advertiser.com) allowed to
 	// bid on this deal. Omission implies no advertiser restrictions.

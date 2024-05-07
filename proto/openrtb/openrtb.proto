@@ -657,7 +657,7 @@ message BidRequest {
         // can bid on this deal. IDs of seats and knowledge of the buyer's
         // customers to which they refer must be coordinated between bidders and
         // the exchange a priori. Omission implies no seat restrictions.
-        // Not supported by Google.
+        // Supported by Google.
         repeated string wseat = 4;
 
         // Array of advertiser domains (for example, advertiser.com) allowed to
@@ -1750,7 +1750,7 @@ message BidRequest {
   // on this impression. IDs of seats and knowledge of the buyer's customers to
   // which they refer must be coordinated between bidders and the exchange a
   // priori. Omission implies no seat restrictions.
-  // Not supported by Google.
+  // Supported by Google.
   repeated string wseat = 9;
 
   // Indicates if Exchange can verify that the impressions offered
@@ -1797,7 +1797,7 @@ message BidRequest {
   // coordinated between bidders and the exchange a priori.
   // At most, only one of wseat and bseat should be used in the
   // same request. Omission of both implies no seat restrictions.
-  // Not supported by Google.
+  // Supported by Google.
   repeated string bseat = 17;
 
   // Allowed list of languages for creatives using ISO-639-1-alpha-2.
