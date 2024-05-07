@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.325
+// Protocol version: v.326
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -1618,10 +1618,39 @@ message BidRequest {
         // Creative constraints for this deal. If this is not set, bidders
         // should refer to the BidRequest-level setting of each field.
         optional CreativeConstraints creative_constraints = 17;
+
+        // If non-empty, this field contains a list of seat IDs in the bidder's
+        // namespace set by media planners that are allowed by the publisher to
+        // bid on this deal. All seat IDs not included in this list are blocked
+        // from bidding on this deal. Bids on this deal on behalf of other
+        // seats, as indicated by the BidResponse.ad.adslot.seat_id field, and
+        // bids with no seat ID will be filtered before the auction. If this
+        // field is empty, there are no restrictions on the seat IDs that can
+        // bid on this deal.
+        repeated string allowed_seat_ids = 18;
       }
       repeated DirectDeal direct_deal = 6;
     }
     repeated MatchingAdData matching_ad_data = 9;
+
+    // If non-empty, this field contains a list of seat IDs in the bidder's
+    // namespace set by media planners that are blocked by the publisher. Any
+    // bids on behalf of a blocked seat, as indicated by the
+    // BidResponse.ad.adslot.seat_id field, will be filtered before the auction.
+    // If this field is non-empty, allowed_seat_ids will be empty. If this field
+    // and allowed_seat_ids are both empty, there are no seat ID restrictions
+    // for this request.
+    repeated string blocked_seat_ids = 67;
+
+    // If non-empty, this field contains a list of seat IDs in the bidder's
+    // namespace set by media planners that are allowed by the publisher. All
+    // seat IDs not included in this list are blocked. Bids on behalf of other
+    // seats, as indicated by the BidResponse.ad.adslot.seat_id field, and bids
+    // with no seat ID will be filtered before the auction. If this field is
+    // non-empty, blocked_seat_ids will be empty. If this field and
+    // blocked_seat_ids are both empty, there are no seat ID restrictions for
+    // this request.
+    repeated string allowed_seat_ids = 68;
 
     // The publisher settings list ids that apply to this slot. See the RTB
     // Publisher Settings guide at
