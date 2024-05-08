@@ -6041,8 +6041,10 @@ type BidRequest_Data struct {
 	unknownFields   protoimpl.UnknownFields
 	extensionFields protoimpl.ExtensionFields
 
-	// Exchange-specific ID for the data provider.
-	// Not supported by Google.
+	// The Google assigned ID of the data provider. Only set for Data segments
+	// from Publisher Provided Signals. For the list of data providers, see
+	// https://storage.googleapis.com/adx-rtb-dictionaries/data_providers.txt.
+	// Supported by Google.
 	Id *string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
 	// Exchange-specific name for the data provider.
 	// Not supported by Google.

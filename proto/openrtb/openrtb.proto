@@ -1591,8 +1591,10 @@ message BidRequest {
   // Google: This is used to send Publisher Provided Signals and Topics to
   // bidders.
   message Data {
-    // Exchange-specific ID for the data provider.
-    // Not supported by Google.
+    // The Google assigned ID of the data provider. Only set for Data segments
+    // from Publisher Provided Signals. For the list of data providers, see
+    // https://storage.googleapis.com/adx-rtb-dictionaries/data_providers.txt.
+    // Supported by Google.
     optional string id = 1;
 
     // Exchange-specific name for the data provider.
