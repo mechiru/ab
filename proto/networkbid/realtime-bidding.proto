@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.326
+// Protocol version: v.327
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -186,6 +186,11 @@ message BidRequest {
 
   // Data segments that describe the content or audience.
   message SegmentData {
+    // The Google assigned ID of the data provider. For the list of data
+    // providers, see
+    // https://storage.googleapis.com/adx-rtb-dictionaries/data_providers.txt.
+    optional string id = 5;
+
     // Exchange-specific name for the signal provider.
     optional string name = 1;
 
