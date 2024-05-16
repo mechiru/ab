@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.171
+// Protocol version: v.172
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1265,6 +1265,10 @@ message UserExt {
   // Data made available by the publisher, such as secure signals.
   // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/2.x_official_extensions/eids.md
   repeated ExtendedId eids = 5;
+
+  // The amount of time, in seconds, since the ID in `BidRequest.user.id` was
+  // created.
+  optional int32 idage = 7;
 }
 
 message UIDExt {
@@ -1680,6 +1684,10 @@ extend .com.google.openrtb.BidRequest.Imp.Pmp.Deal {
 extend .com.google.openrtb.BidRequest.Source {
   // Extension key for Source.ext
   optional SourceExt source = 1059;
+}
+extend .com.google.openrtb.BidRequest.Geo {
+  // Extension key for Geo.ext
+  optional GeoExt geo = 1004;
 }
 extend .com.google.openrtb.BidRequest.Imp.Video {
   // Extension key for Video.ext
