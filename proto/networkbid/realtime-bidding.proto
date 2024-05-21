@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.327
+// Protocol version: v.328
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -66,6 +66,11 @@ message BidRequest {
   // session_id may only be used for frequency capping, competitive exclusions
   // or related purposes.
   optional string session_id = 65;
+
+  // Time in seconds since the first ad request in a given app or site session.
+  // The session is reset after a sufficiently long break in user activity.
+  // Currently, the field is only supported for mobile app requests.
+  optional int32 session_duration_seconds = 83;
 
   // A pseudonymized identifier created and controlled by the publisher for use
   // in frequency capping, audience segmentation and targeting, and sequential
