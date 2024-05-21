@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.172
+// Protocol version: v.173
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1265,6 +1265,17 @@ message UserExt {
   // Data made available by the publisher, such as secure signals.
   // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/2.x_official_extensions/eids.md
   repeated ExtendedId eids = 5;
+
+  // Describes a user session in a given app or site. The session is reset after
+  // a sufficiently long break in user activity.
+  message Session {
+    // Time in seconds since the first ad request in the session. Currently the
+    // session duration is only supported for mobile app requests.
+    optional int32 duration = 1;
+  }
+
+  // The current user session.
+  optional Session session = 6;
 
   // The amount of time, in seconds, since the ID in `BidRequest.user.id` was
   // created.
