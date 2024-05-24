@@ -568,7 +568,7 @@ message BidRequest {
     // Version of ad mediation partner, SDK technology, or player responsible
     // for rendering ad (typically video or mobile). Used by some ad servers
     // to customize ad code by partner. Recommended for video and/or apps.
-    // Not supported by Google.
+    // Supported by Google.
     optional string displaymanagerver = 5;
 
     // true = the ad is interstitial or full screen, false = not interstitial.

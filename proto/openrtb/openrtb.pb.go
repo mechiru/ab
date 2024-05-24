@@ -4213,7 +4213,7 @@ type BidRequest_Imp struct {
 	// Version of ad mediation partner, SDK technology, or player responsible
 	// for rendering ad (typically video or mobile). Used by some ad servers
 	// to customize ad code by partner. Recommended for video and/or apps.
-	// Not supported by Google.
+	// Supported by Google.
 	Displaymanagerver *string `protobuf:"bytes,5,opt,name=displaymanagerver" json:"displaymanagerver,omitempty"`
 	// true = the ad is interstitial or full screen, false = not interstitial.
 	// Supported by Google.
