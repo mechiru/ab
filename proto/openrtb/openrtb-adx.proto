@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.173
+// Protocol version: v.174
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1680,6 +1680,10 @@ extend .com.google.openrtb.BidRequest.User {
 extend .com.google.openrtb.BidRequest.User.EID.UID {
   // Extension key for the AdX User.eids.uids.ext.
   optional UIDExt uids = 1001;
+}
+extend .com.google.openrtb.BidRequest.Data {
+  // Extension key for the AdX Data.ext
+  optional DataExt data = 1000;
 }
 extend .com.google.openrtb.BidRequest.Device {
   optional DeviceExt device = 1066;
