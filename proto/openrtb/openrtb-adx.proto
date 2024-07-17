@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.174
+// Protocol version: v.175
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -805,6 +805,17 @@ message BidExt {
 
   // DSA Ad Transparency information provided by the buyer.
   optional Dsa dsa = 30;
+
+  // The URLs that the user could be directed to when clicking on this ad. Do
+  // not include URLs for intermediate calls to an ad server that are unrelated
+  // to the final landing page. All bids must declare either a click URL using
+  // this field, the advertiser domain in the `BidResponse.seatbid.bid.adomain`
+  // field, or both. We recommend that bidders use this field, possibly in
+  // addition to `BidResponse.seatbid.bid.adomain`, for more accurate
+  // enforcement of publisher and user protections, for instance so that your
+  // bid is not incorrectly filtered.
+  // This field maps to BidResponse.ad.click_through_url.
+  repeated string clickurl = 32;
 }
 
 message NativeRequestExt {
