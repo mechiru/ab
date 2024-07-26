@@ -134,7 +134,8 @@ message BidRequest {
       // Not supported by Google.
       repeated BannerAdType btype = 5 [packed = true];
 
-      // Blocked creative attributes.
+      // Blocked creative attributes. See the full list of available attributes:
+      // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
       // Supported by Google.
       repeated CreativeAttribute battr = 6 [packed = true];
 
@@ -337,7 +338,8 @@ message BidRequest {
       // Not supported by Google.
       optional double mincpmpersec = 34;
 
-      // Blocked creative attributes.
+      // Blocked creative attributes. See the full list of available attributes:
+      // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
       // Supported by Google.
       repeated CreativeAttribute battr = 10 [packed = true];
 
@@ -497,7 +499,8 @@ message BidRequest {
       // Not supported by Google.
       optional double mincpmpersec = 30;
 
-      // Blocked creative attributes.
+      // Blocked creative attributes. See the full list of available attributes:
+      // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
       // Supported by Google.
       repeated CreativeAttribute battr = 7 [packed = true];
 
@@ -725,7 +728,8 @@ message BidRequest {
       // If an API is not explicitly listed, it is assumed not to be supported.
       repeated APIFramework api = 3 [packed = true];
 
-      // Blocked creative attributes.
+      // Blocked creative attributes. See the full list of available attributes:
+      // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
       repeated CreativeAttribute battr = 4 [packed = true];
       extensions 100 to 9999;
     }

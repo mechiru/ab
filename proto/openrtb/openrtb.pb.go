@@ -6433,7 +6433,8 @@ type BidRequest_Imp_Banner struct {
 	// Blocked banner ad types.
 	// Not supported by Google.
 	Btype []BannerAdType `protobuf:"varint,5,rep,packed,name=btype,enum=com.google.openrtb.BannerAdType" json:"btype,omitempty"`
-	// Blocked creative attributes.
+	// Blocked creative attributes. See the full list of available attributes:
+	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
 	// Supported by Google.
 	Battr []CreativeAttribute `protobuf:"varint,6,rep,packed,name=battr,enum=com.google.openrtb.CreativeAttribute" json:"battr,omitempty"`
 	// Allowlist of content MIME types supported. Popular MIME types include,
@@ -6764,7 +6765,8 @@ type BidRequest_Imp_Video struct {
 	// of bids an advertiser may submit.
 	// Not supported by Google.
 	Mincpmpersec *float64 `protobuf:"fixed64,34,opt,name=mincpmpersec" json:"mincpmpersec,omitempty"`
-	// Blocked creative attributes.
+	// Blocked creative attributes. See the full list of available attributes:
+	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
 	// Supported by Google.
 	Battr []CreativeAttribute `protobuf:"varint,10,rep,packed,name=battr,enum=com.google.openrtb.CreativeAttribute" json:"battr,omitempty"`
 	// Maximum extended video ad duration, if extension is allowed.
@@ -7185,7 +7187,8 @@ type BidRequest_Imp_Audio struct {
 	// of bids an advertiser may submit.
 	// Not supported by Google.
 	Mincpmpersec *float64 `protobuf:"fixed64,30,opt,name=mincpmpersec" json:"mincpmpersec,omitempty"`
-	// Blocked creative attributes.
+	// Blocked creative attributes. See the full list of available attributes:
+	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
 	// Supported by Google.
 	Battr []CreativeAttribute `protobuf:"varint,7,rep,packed,name=battr,enum=com.google.openrtb.CreativeAttribute" json:"battr,omitempty"`
 	// Maximum extended video ad duration, if extension is allowed.
@@ -7546,7 +7549,8 @@ type BidRequest_Imp_Native struct {
 	// List of supported API frameworks for this impression.
 	// If an API is not explicitly listed, it is assumed not to be supported.
 	Api []APIFramework `protobuf:"varint,3,rep,packed,name=api,enum=com.google.openrtb.APIFramework" json:"api,omitempty"`
-	// Blocked creative attributes.
+	// Blocked creative attributes. See the full list of available attributes:
+	// https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/main/AdCOM%20v1.0%20FINAL.md#list--creative-attributes-
 	Battr []CreativeAttribute `protobuf:"varint,4,rep,packed,name=battr,enum=com.google.openrtb.CreativeAttribute" json:"battr,omitempty"`
 }
 
