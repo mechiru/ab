@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.175
+// Protocol version: v.176
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1647,6 +1647,12 @@ message VideoExt {
   // publisher-declared placement type).
   optional .com.google.openrtb.Plcmt inferredplcmt = 3 [default =
     PLCMT_UNKNOWN];
+
+  // If true, the video is embedded on a page outside the publisher's domain.
+  // When this is set, BidRequest.{app/site}.content.producer.domain points to
+  // the domain of the content producer, and the BidRequest.{app/site}.page
+  // field is the page in which the video is embedded.
+  optional bool embeddedoffsite = 4;
 }
 extend .com.google.openrtb.BidRequest.Imp {
   // Extension key for AdX Imp.ext.
