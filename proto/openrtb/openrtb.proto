@@ -772,9 +772,44 @@ message BidRequest {
       extensions 100 to 9999;
     }
 
-    // An array of Metric object (Section 3.2.5).
+    // An array of Metric object.
     // Supported by Google.
     repeated Metric metric = 17;
+
+    // Details on automatic ad slot refreshes: frequency, triggers, and refresh
+    // count since last page load for this specific slot.
+    message Refresh {
+      // Information on how often and what triggers an ad slot being refreshed.
+      message RefSettings {
+        // The type of the declared auto refresh. Refer to List: Auto Refresh
+        // Trigger in AdCOM 1.0:
+        // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/develop/AdCOM%20v1.0%20FINAL.md#list-auto-refresh-triggers-.
+        // Supported by Google.
+        optional int32 reftype = 1;
+
+        // The minimum refresh interval in seconds. This applies to all refresh
+        // types. This is the (uninterrupted) time the ad creative will be
+        // rendered before refreshing to the next creative. If the field is
+        // absent, the exposure time is unknown. This field does not account for
+        // viewability or external factors such as a user leaving a page.
+        // Supported by Google.
+        optional int32 minint = 2;
+      }
+
+      // Describes the mechanics of how an ad placement automatically refreshes.
+      // Supported by Google.
+      repeated RefSettings refsettings = 1;
+
+      // The number of times this ad slot had been refreshed since last page
+      // load.
+      // Supported by Google.
+      optional int32 count = 2;
+      extensions 100 to 9999;
+    }
+
+    // Details about ad slots being refreshed automatically.
+    // Supported by Google.
+    optional Refresh refresh = 20;
     extensions 100 to 9999;
   }
 
