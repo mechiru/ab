@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.328
+// Protocol version: v.329
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -128,7 +128,7 @@ message BidRequest {
       // The user_agent and user_agent_data fields are generalized, which can
       // include limiting browser and OS version information to major versions
       // only and other changes to protect user privacy.
-      USER_AGENT_COARSENED = 1;
+      USER_AGENT_COARSE = 1;
     }
 
     // Generalization that was applied to the user_agent and user_agent_data
