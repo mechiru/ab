@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.177
+// Protocol version: v.178
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1541,6 +1541,13 @@ message DealExt {
   // Creative constraints for this deal. If this is not set, bidders should
   // refer to the BidRequest-level setting of each field.
   optional CreativeConstraints creative_constraints = 5;
+
+  // Indicates the eligible billing IDs for this deal. If this list is not
+  // empty, the billing ID selected in `BidResponse.seatbid.bid.ext.billing_id`
+  // must be one of these IDs when submitting a bid on this deal. If this list
+  // is empty, then the bid on this deal can be attributed to any of the billing
+  // IDs in `BidRequest.imp.ext.billing_id`.
+  repeated int64 billing_id = 6 [packed = true];
 }
 
 message SourceExt {
