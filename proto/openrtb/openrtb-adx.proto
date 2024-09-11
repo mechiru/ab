@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.178
+// Protocol version: v.179
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -398,6 +398,28 @@ message AppExt {
   // app-ads.txt file will be hosted here. More detail at
   // http://iabtechlab.com/wp-content/uploads/2021/03/ctv-app-ads-explainer-guide.pdf
   optional string inventorypartnerdomain = 2;
+}
+
+message BannerExt {
+  // Indicates the acceptable ad width and height ranges for impressions which
+  // support flexible ad sizes.
+  message FlexSlot {
+    // The minimum acceptable ad width in device-independent pixels (DIPS).
+    optional int32 wmin = 1;
+
+    // The maximum acceptable ad width in device-independent pixels (DIPS).
+    optional int32 wmax = 2;
+
+    // The minimum acceptable ad height in device-independent pixels (DIPS).
+    optional int32 hmin = 3;
+
+    // The maximum acceptable ad height in device-independent pixels (DIPS).
+    optional int32 hmax = 4;
+  }
+
+  // This field contains information about a banner impression's flexible ad
+  // size ranges, if supported, and is unset otherwise.
+  optional FlexSlot flexslot = 2;
 }
 
 // Ad Exchange extensions for the BidResponse object.
@@ -1668,6 +1690,9 @@ extend .com.google.openrtb.BidRequest.Imp {
 extend .com.google.openrtb.BidRequest.App {
   // Extension key for AdX App.ext.
   optional AppExt app = 1011;
+}
+extend .com.google.openrtb.BidRequest.Imp.Banner {
+  optional BannerExt banner_ext = 1014;
 }
 extend .com.google.openrtb.BidResponse {
   // Extension key for AdX BidResponse.ext.
