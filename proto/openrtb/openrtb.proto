@@ -1925,13 +1925,13 @@ message BidRequest {
         // inventory transacted under the given seller_ID. This value is
         // optional and should NOT be included if it exists in the
         // advertising system’s sellers.json file.
-        // Not supported by Google.
+        // Supported for SupplyChain nodes upstream of Google if available.
         optional string name = 4;
 
         // The business domain name of the entity represented by this
         // node. This value is optional and should NOT be included if it
         // exists in the advertising system’s sellers.json file.
-        // Not supported by Google.
+        // Supported for SupplyChain nodes upstream of Google if available.
         optional string domain = 5;
 
         // Indicates whether this node will be involved in the flow of payment

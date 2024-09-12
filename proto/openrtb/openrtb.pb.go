@@ -8862,12 +8862,12 @@ type BidRequest_Source_SupplyChain_SupplyChainNode struct {
 	// inventory transacted under the given seller_ID. This value is
 	// optional and should NOT be included if it exists in the
 	// advertising system’s sellers.json file.
-	// Not supported by Google.
+	// Supported for SupplyChain nodes upstream of Google if available.
 	Name *string `protobuf:"bytes,4,opt,name=name" json:"name,omitempty"`
 	// The business domain name of the entity represented by this
 	// node. This value is optional and should NOT be included if it
 	// exists in the advertising system’s sellers.json file.
-	// Not supported by Google.
+	// Supported for SupplyChain nodes upstream of Google if available.
 	Domain *string `protobuf:"bytes,5,opt,name=domain" json:"domain,omitempty"`
 	// Indicates whether this node will be involved in the flow of payment
 	// for the inventory. When set to true, the advertising system in the
