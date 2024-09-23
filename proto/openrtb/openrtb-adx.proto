@@ -11,6 +11,11 @@ import "google/protobuf/struct.proto";
 //
 // Ad Exchange extensions for the Imp object.
 message ImpExt {
+  // The eligible billing IDs to which a billable impression can be attributed.
+  // A billing ID for attributing an impression resulting from a winning bid can
+  // be specified in `BidResponse.seatbid.bid.ext.billing_id`. These billing IDs
+  // can represent the bidder's matching pretargeting configurations, the
+  // bidder's deal billing ID, or eligible child seats.
   // [AdX: BidRequest.AdSlot.MatchingAdData.billing_id]
   repeated int64 billing_id = 1;
 

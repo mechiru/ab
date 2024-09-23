@@ -1904,6 +1904,11 @@ type ImpExt struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The eligible billing IDs to which a billable impression can be attributed.
+	// A billing ID for attributing an impression resulting from a winning bid can
+	// be specified in `BidResponse.seatbid.bid.ext.billing_id`. These billing IDs
+	// can represent the bidder's matching pretargeting configurations, the
+	// bidder's deal billing ID, or eligible child seats.
 	// [AdX: BidRequest.AdSlot.MatchingAdData.billing_id]
 	BillingId []int64 `protobuf:"varint,1,rep,name=billing_id,json=billingId" json:"billing_id,omitempty"`
 	// [AdX: BidRequest.publisher_settings_list_id]
