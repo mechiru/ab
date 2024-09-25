@@ -588,8 +588,8 @@ message BidRequest {
     // Supported by Google.
     optional double bidfloor = 8 [default = 0];
 
-    // Currency specified using ISO-4217 alpha codes. This may be different
-    // from bid currency returned by bidder if this is allowed by the exchange.
+    // The currency in which the bid floor is expressed. Specified using
+    // ISO 4217 alpha codes.
     // Supported by Google.
     optional string bidfloorcur = 9 [default = "USD"];
 
@@ -646,13 +646,12 @@ message BidRequest {
         // Supported by Google.
         required string id = 1;
 
-        // Minimum bid for this impression expressed in CPM.
+        // Minimum bid for this deal expressed in CPM.
         // Supported by Google.
         optional double bidfloor = 2 [default = 0];
 
-        // Currency specified using ISO-4217 alpha codes. This may be different
-        // from bid currency returned by bidder if this is allowed
-        // by the exchange.
+        // The currency in which the deal floor is expressed. Specified using
+        // ISO 4217 alpha codes.
         // Supported by Google.
         optional string bidfloorcur = 3 [default = "USD"];
 

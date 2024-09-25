@@ -4226,8 +4226,8 @@ type BidRequest_Imp struct {
 	// Minimum bid for this impression expressed in CPM.
 	// Supported by Google.
 	Bidfloor *float64 `protobuf:"fixed64,8,opt,name=bidfloor,def=0" json:"bidfloor,omitempty"`
-	// Currency specified using ISO-4217 alpha codes. This may be different
-	// from bid currency returned by bidder if this is allowed by the exchange.
+	// The currency in which the bid floor is expressed. Specified using
+	// ISO 4217 alpha codes.
 	// Supported by Google.
 	Bidfloorcur *string `protobuf:"bytes,9,opt,name=bidfloorcur,def=USD" json:"bidfloorcur,omitempty"`
 	// Indicates the type of browser opened upon clicking the
@@ -7915,12 +7915,11 @@ type BidRequest_Imp_Pmp_Deal struct {
 	// REQUIRED by the OpenRTB specification.
 	// Supported by Google.
 	Id *string `protobuf:"bytes,1,req,name=id" json:"id,omitempty"`
-	// Minimum bid for this impression expressed in CPM.
+	// Minimum bid for this deal expressed in CPM.
 	// Supported by Google.
 	Bidfloor *float64 `protobuf:"fixed64,2,opt,name=bidfloor,def=0" json:"bidfloor,omitempty"`
-	// Currency specified using ISO-4217 alpha codes. This may be different
-	// from bid currency returned by bidder if this is allowed
-	// by the exchange.
+	// The currency in which the deal floor is expressed. Specified using
+	// ISO 4217 alpha codes.
 	// Supported by Google.
 	Bidfloorcur *string `protobuf:"bytes,3,opt,name=bidfloorcur,def=USD" json:"bidfloorcur,omitempty"`
 	// Allowlist of buyer seats (for example, advertisers, agencies) that
