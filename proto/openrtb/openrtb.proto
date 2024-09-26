@@ -1182,8 +1182,9 @@ message BidRequest {
     // Not supported by Google.
     repeated string pagecat = 6;
 
-    // Application version.
-    // Not supported by Google.
+    // Version of the application specified in the bundle field (for example,
+    // "2.0.1").
+    // Supported by Google.
     optional string ver = 7;
 
     // A platform-specific application identifier intended to be

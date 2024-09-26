@@ -5161,8 +5161,9 @@ type BidRequest_App struct {
 	// The taxonomy to be used is defined by the cattax field.
 	// Not supported by Google.
 	Pagecat []string `protobuf:"bytes,6,rep,name=pagecat" json:"pagecat,omitempty"`
-	// Application version.
-	// Not supported by Google.
+	// Version of the application specified in the bundle field (for example,
+	// "2.0.1").
+	// Supported by Google.
 	Ver *string `protobuf:"bytes,7,opt,name=ver" json:"ver,omitempty"`
 	// A platform-specific application identifier intended to be
 	// unique to the app and independent of the exchange. On Android,
