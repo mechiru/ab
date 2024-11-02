@@ -1,7 +1,7 @@
 syntax = "proto2";
 option go_package = "./;networkbid";
 package com.google.protos.adx;
-// Protocol version: v.329
+// Protocol version: v.331
 import "google/protobuf/struct.proto";
 
 // This is the message that Google uses to request bids. A BidRequest
@@ -2526,6 +2526,16 @@ message BidRequest {
     FREQUENCY_CAPPING_SCOPE_SITE = 5;
   }
   optional FrequencyCappingScope frequency_capping_scope = 70;
+
+  // Contains labels indicating the experiment or control groups that are
+  // active for this request. Work with your account manager to opt in to an
+  // experiment. The exact set of experiments available, their meaning, and
+  // whether there is any action required from the bidder varies from experiment
+  // to experiment and will be communicated separately.
+  //
+  // If empty, then this request is not part of any experiment or control group,
+  // or your bidder is not participating in any experiments.
+  repeated string experiment_ids = 78;
 
   // The Digital Services Act (DSA) transparency requirements. See
   // https://support.google.com/admanager/answer/14335032.
