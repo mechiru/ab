@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.179
+// Protocol version: v.180
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -1221,6 +1221,16 @@ message BidRequestExt {
     optional DeviceStorageRestrictionReason storagerestrict = 8;
   }
   optional PrivacyTreatments privacy_treatments = 5;
+
+  // Contains labels indicating the experiment or control groups that are
+  // active for this request. Work with your account manager to opt in to an
+  // experiment. The exact set of experiments available, their meaning, and
+  // whether there is any action required from the bidder varies from experiment
+  // to experiment and will be communicated separately.
+  //
+  // If empty, then this request is not part of any experiment or control group,
+  // or your bidder is not participating in any experiments.
+  repeated string expids = 6;
 }
 
 message UserExt {
