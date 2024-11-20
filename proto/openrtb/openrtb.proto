@@ -352,11 +352,11 @@ message BidRequest {
       optional int32 maxextended = 11;
 
       // Minimum bit rate in Kbps.
-      // Not supported by Google.
+      // Supported by Google.
       optional int32 minbitrate = 12;
 
       // Maximum bit rate in Kbps.
-      // Not supported by Google.
+      // Supported by Google.
       optional int32 maxbitrate = 13;
 
       // Indicates if letter-boxing of 4:3 content into a 16:9 window is

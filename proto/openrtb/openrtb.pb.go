@@ -6756,10 +6756,10 @@ type BidRequest_Imp_Video struct {
 	// Not supported by Google.
 	Maxextended *int32 `protobuf:"varint,11,opt,name=maxextended" json:"maxextended,omitempty"`
 	// Minimum bit rate in Kbps.
-	// Not supported by Google.
+	// Supported by Google.
 	Minbitrate *int32 `protobuf:"varint,12,opt,name=minbitrate" json:"minbitrate,omitempty"`
 	// Maximum bit rate in Kbps.
-	// Not supported by Google.
+	// Supported by Google.
 	Maxbitrate *int32 `protobuf:"varint,13,opt,name=maxbitrate" json:"maxbitrate,omitempty"`
 	// Indicates if letter-boxing of 4:3 content into a 16:9 window is
 	// allowed.
