@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.180
+// Protocol version: v.181
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -406,6 +406,36 @@ message AppExt {
 }
 
 message BannerExt {
+  // Describes collapsible banner inventory
+  // (https://support.google.com/admanager/answer/14002717).
+  //
+  // A buyer can bid into a collapsible banner slot with either a
+  // traditional banner ad or a collapsible banner ad. A traditional banner
+  // ad needs to match one of the allowed sizes specified in
+  // BidRequest.imp.banner.format.{w, h}.
+  //
+  // A collapsible banner ad needs to support two sized layouts, one for
+  // collapsed state, one for expanded state. The final ad experience
+  // is rendered by Google, including a collapse/expand button. The ad always
+  // starts in the expanded state and can be collapsed by the user afterwards.
+  // Specify BidResponse.seatbid.bid.ext.clpad when returning
+  // a collapsible banner ad in the response.
+  message CollapsibleAdSlot {
+    // Maximum width of the collapsible banner ad in device independent
+    // pixels (DIPS). If a collapsible creative in the response has a greater
+    // width in the expanded state, it will be filtered before the auction.
+    optional int32 wmax = 1;
+
+    // Maximum height of the collapsible banner ad in device independent
+    // pixels (DIPS). If a collapsible creative in the response has a greater
+    // height in the expanded state, it will be filtered before the auction.
+    optional int32 hmax = 2;
+  }
+
+  // Contains information about a banner ad slot's collapsibility,
+  // if supported, and is unset otherwise.
+  optional CollapsibleAdSlot clpadslot = 1;
+
   // Indicates the acceptable ad width and height ranges for impressions which
   // support flexible ad sizes.
   message FlexSlot {
@@ -832,6 +862,32 @@ message BidExt {
 
   // DSA Ad Transparency information provided by the buyer.
   optional Dsa dsa = 30;
+
+  // Collapsible banner ad information. In collapsible banner format, the
+  // ad will start in an expanded state and can be manually collapsed by
+  // the user. To learn more about collapsible banner ads, see:
+  // https://support.google.com/admanager/answer/14002717?hl=en.
+  message CollapsibleAd {
+    // Width of the creative in the expanded state in device independent
+    // pixels (DIPS). The width of the creative in the collapsed state
+    // is represented by BidResponse.seatbid.bid.w. If wexp is greater
+    // than BidRequest.imp.banner.ext.clpadslot.wmax, the ad will be
+    // filtered before the auction.
+    optional int32 wexp = 1;
+
+    // Height of the creative in the expanded state in device independent
+    // pixels (DIPS). The height of the creative in the collapsed state
+    // is represented by BidResponse.seatbid.bid.h. If hexp is greater than
+    // BidRequest.imp.banner.ext.clpadslot.hmax, the ad will be filtered before
+    // the auction.
+    optional int32 hexp = 2;
+  }
+
+  // If bidding on a collapsible banner ad slot
+  // (see: BidRequest.imp.banner.ext.clpadslot), you may populate this
+  // if you want to place a bid with a collapsible banner ad. If not set,
+  // the bid will be rendered as a traditional banner ad.
+  optional CollapsibleAd clpad = 31;
 
   // The URLs that the user could be directed to when clicking on this ad. Do
   // not include URLs for intermediate calls to an ad server that are unrelated
