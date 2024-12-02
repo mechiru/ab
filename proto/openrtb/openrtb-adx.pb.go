@@ -2361,10 +2361,10 @@ type BidExt struct {
 	// third party buyer and must be passed to Google unaltered in the bid
 	// response.
 	ThirdPartyBuyerToken *string `protobuf:"bytes,14,opt,name=third_party_buyer_token,json=thirdPartyBuyerToken" json:"third_party_buyer_token,omitempty"`
-	// Buyer declared ID which will be used to break down spend and invalid
-	// traffic metrics in IVT transparency reporting in Query Tool. Note that IDs
-	// with fewer than 1000 impressions will not be used to break down metrics.
-	// IDs longer than 64 bytes will be ignored.
+	// Buyer declared ID which will be used to break down cost transparency
+	// metrics in Reporting. Note that IDs with fewer than 1000 impressions will
+	// not be used to break down metrics. IDs longer than 64 bytes will be
+	// ignored.
 	BuyerReportingId *string                `protobuf:"bytes,17,opt,name=buyer_reporting_id,json=buyerReportingId" json:"buyer_reporting_id,omitempty"`
 	Fcap             []*BidExt_FrequencyCap `protobuf:"bytes,18,rep,name=fcap" json:"fcap,omitempty"`
 	// [AdX: BidResponse.Ad.skadn]

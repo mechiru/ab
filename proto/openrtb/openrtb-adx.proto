@@ -574,10 +574,10 @@ message BidExt {
   // response.
   optional string third_party_buyer_token = 14;
 
-  // Buyer declared ID which will be used to break down spend and invalid
-  // traffic metrics in IVT transparency reporting in Query Tool. Note that IDs
-  // with fewer than 1000 impressions will not be used to break down metrics.
-  // IDs longer than 64 bytes will be ignored.
+  // Buyer declared ID which will be used to break down cost transparency
+  // metrics in Reporting. Note that IDs with fewer than 1000 impressions will
+  // not be used to break down metrics. IDs longer than 64 bytes will be
+  // ignored.
   optional string buyer_reporting_id = 17;
 
   // Experimental feature; may be subject to change. See
