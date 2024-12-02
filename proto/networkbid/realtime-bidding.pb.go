@@ -10453,10 +10453,10 @@ type BidResponse_Ad_AdSlot struct {
 	// The seat ID in the bidder's namespace representing the seat on whose
 	// behalf this bid was made.
 	SeatId *string `protobuf:"bytes,25,opt,name=seat_id,json=seatId" json:"seat_id,omitempty"`
-	// Buyer declared ID which will be used to break down spend and invalid
-	// traffic metrics in IVT transparency reporting in Query Tool. Note that
-	// IDs with fewer than 1000 impressions will not be used to break down
-	// metrics. IDs longer than 64 bytes will be ignored.
+	// Buyer declared ID which will be used to break down cost transparency
+	// metrics in Reporting. Note that IDs with fewer than 1000 impressions
+	// will not be used to break down metrics. IDs longer than 64 bytes will
+	// be ignored.
 	BuyerReportingId *string `protobuf:"bytes,8,opt,name=buyer_reporting_id,json=buyerReportingId" json:"buyer_reporting_id,omitempty"`
 	// Token used to identify end third party buyer information if an
 	// exchange as an open bidder is an intermediary. This is obtained from

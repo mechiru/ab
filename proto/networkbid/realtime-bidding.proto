@@ -2871,10 +2871,10 @@ message BidResponse {
       // behalf this bid was made.
       optional string seat_id = 25;
 
-      // Buyer declared ID which will be used to break down spend and invalid
-      // traffic metrics in IVT transparency reporting in Query Tool. Note that
-      // IDs with fewer than 1000 impressions will not be used to break down
-      // metrics. IDs longer than 64 bytes will be ignored.
+      // Buyer declared ID which will be used to break down cost transparency
+      // metrics in Reporting. Note that IDs with fewer than 1000 impressions
+      // will not be used to break down metrics. IDs longer than 64 bytes will
+      // be ignored.
       optional string buyer_reporting_id = 8;
 
       // Token used to identify end third party buyer information if an
