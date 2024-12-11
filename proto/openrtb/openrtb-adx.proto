@@ -1,6 +1,6 @@
 syntax = "proto2";
 option go_package = "./;openrtb";
-// Protocol version: v.181
+// Protocol version: v.183
 import "openrtb.proto";
 option java_outer_classname = "AdxExt";
 package com.google.doubleclick;
@@ -82,7 +82,7 @@ message ImpExt {
     // The source of the signal when this request is from an app.
     message SourceApp {
       // Identifier for the SDK that generated this data. It will match the id
-      // in AppExt.InstalledSdk.id.
+      // in BidRequest.app.ext.installed_sdk.id.
       optional string id = 1;
     }
 
@@ -222,12 +222,16 @@ message ImpExt {
       // Baseline policy for all ads serving through any of Google's ads
       // platform products. Learn more at:
       // https://support.google.com/platformspolicy/answer/3013851.
+      // The status of the creatives with platform policies can be found at
+      // the platformPolicyCompliance field through the Creative API.
       POLICY_ENFORCEMENT_PLATFORM_POLICY = 1;
 
       // Policy for ads serving through Google's ad network. This includes the
       // baseline policy for all ads serving through any of Google's ads
       // platform products. Learn more at:
       // https://support.google.com/authorizedbuyers/answer/1325008.
+      // The status of the creatives with platform policies can be found at
+      // the platformPolicyCompliance field through the Creative API.
       POLICY_ENFORCEMENT_NETWORK_AND_PLATFORM_POLICY = 2;
     }
     optional PolicyEnforcement policy_enforcement = 1;
@@ -398,8 +402,8 @@ message AppExt {
   }
   repeated InstalledSdk installed_sdk = 1;
 
-  // The domain of the partner (of the app owner) with ownership
-  // of some portion of ad inventory on the app. The partner's ads.txt or
+  // The domain of the partner (of the site/app owner) with ownership of some
+  // portion of ad inventory on the site/app. The partner's ads.txt or
   // app-ads.txt file will be hosted here. More detail at
   // http://iabtechlab.com/wp-content/uploads/2021/03/ctv-app-ads-explainer-guide.pdf
   optional string inventorypartnerdomain = 2;
@@ -501,10 +505,12 @@ message BidExt {
   optional string amp_ad_url = 6;
 
   // An ad that will be rendered by an SDK known to the buyer. This can only
-  // be used when the BidRequest included an AppExt.InstalledSdk submessage.
+  // be used when the BidRequest included a
+  // BidRequest.app.ext.installed_sdk submessage.
   message SdkRenderedAd {
-    // The identifier for the SDK that will render the ad. Must match an
-    // AppExt.InstalledSdk.id sent in the corresponding bid request.
+    // The identifier for the SDK that will render the ad. Must match a
+    // BidRequest.app.ext.installed_sdk.id sent in the corresponding bid
+    // request.
     optional string id = 1;
 
     // Data to pass to the SDK in order to render the ad. This data is opaque
@@ -1049,21 +1055,22 @@ message BidRequestExt {
     // technical documentation for a list of ids.
     optional int32 creative_status_code = 2;
 
-    // If the bid won the auction, this is the price paid in your account
+    // Deprecated. This field is not populated and will be removed after March,
+    // 2025. If the bid won the auction, this is the price paid in your account
     // currency. If the bid participated in the auction but was out-bid, this
     // is the CPM that should have been exceeded in order to win. This is not
     // set if the bid was filtered prior to the auction, if the publisher or
     // winning bidder has opted out of price feedback or if your account has
     // opted out of sharing winning prices with other bidders. For first-price
     // auctions, minimum_bid_to_win is populated instead of this field.
-    optional double price = 3;
+    optional double price = 3 [deprecated = true];
 
-    // The minimum bid value necessary to have the auction, in your account
+    // The minimum bid value necessary to have won the auction, in your account
     // currency. If your bid won the auction, this is the second highest bid
-    // that was not filtered (including the floor price). If your bid did not
-    // win the auction, this is the winning candidate's bid. This field will
-    // only be populated if your bid participated in a first-price auction, and
-    // will not be populated if your bid was filtered prior to the auction.
+    // that was not filtered (including the floor price). If your bid didn't win
+    // the auction, this is the winning candidate's bid. This field will only be
+    // populated if your bid participated in a first-price auction, and will not
+    // be populated if your bid was filtered prior to the auction.
     optional double minimum_bid_to_win = 6;
 
     // The minimum bid value necessary to have won the server-side component of
@@ -1348,27 +1355,9 @@ message UserExt {
   // vendors listed in the consent string.
   optional string consent = 2;
 
-  // Extended data, such as secure signals, that allows buyers to use data made
-  // available by the publisher in real-time bidding. This object can contain
-  // one or more UIDs from a single source or a technology provider.
-  message ExtendedId {
-    // Source or technology provider responsible for the set of included data.
-    optional string source = 1;
-
-    // This object contains a single data item, such as a secure signal,
-    // provided as part of extended identifiers.
-    message ExtendedIdUid {
-      // The data value, such as a secure signal.
-      optional string id = 1;
-    }
-
-    // Array of ExtendedIdUid objects from the given source.
-    repeated ExtendedIdUid uids = 2;
-  }
-
   // Data made available by the publisher, such as secure signals.
   // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/2.x_official_extensions/eids.md
-  repeated ExtendedId eids = 5;
+  repeated .com.google.openrtb.BidRequest.User.EID eids = 5;
 
   // Describes a user session in a given app or site. The session is reset after
   // a sufficiently long break in user activity.
@@ -1417,7 +1406,7 @@ message DeviceExt {
   optional string session_id = 1;
 
   // (iOS Only) An integer passed to represent the app's app tracking
-  // authorization status, where 0 = not determined 1 = restricted 2 = denied
+  // authorization status, where 0 = not determined, 1 = restricted, 2 = denied,
   // 3 = authorized. This value is retrieved from ATTrackingManager and
   // provided as is. See
   // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/extensions/community_extensions/skadnetwork.md#bid-request-1
@@ -1655,77 +1644,6 @@ message SourceExt {
   // Open Measurement SDK:
   // https://github.com/InteractiveAdvertisingBureau/AdCOM/blob/master/OpenRTB%20support%20for%20OMSDK.md#openrtb-and-adcom.
   optional string omidpv = 2;
-
-  // OpenRTB SupplyChain object. For more information, see
-  // https://github.com/InteractiveAdvertisingBureau/openrtb/blob/master/supplychainobject.md.
-  message SupplyChain {
-    // Indicates whether the chain contains all nodes involved in the
-    // transaction leading back to the owner of the site, app or other medium
-    // of the inventory, where 0 = no, 1 = yes.
-    optional int32 complete = 1;
-
-    message SupplyChainNode {
-      // The canonical domain name of the SSP, Exchange, Header Wrapper, etc
-      // system that bidders connect to. This may be the operational domain
-      // of the system, if that is different than the parent corporate domain,
-      // to facilitate WHOIS and reverse IP lookups to establish clear
-      // ownership of the delegate system. This should be the same value as
-      // used to identify sellers in an ads.txt file if one exists.
-      optional string asi = 1;
-
-      // The identifier associated with the seller or reseller account within
-      // the advertising system. This must contain the same value used in
-      // OpenRTB bid requests in the field specified
-      // by the SSP/exchange. Typically, in OpenRTB, this is publisher.id. For
-      // OpenDirect it is typically the publisher's organization ID. Should be
-      // limited to 64 characters in length.
-      optional string sid = 2;
-
-      // The OpenRTB RequestId of the request as issued by this seller.
-      optional string rid = 3;
-
-      // The name of the company (the legal entity) that is paid for inventory
-      // transacted under the given seller_id. This value is optional and
-      // should NOT be included if it exists in the advertising system's
-      // sellers.json file.
-      optional string name = 4;
-
-      // The business domain name of the entity represented by this node.
-      // This value is optional and should NOT be included if it exists in
-      // the advertising system's sellers.json file.
-      optional string domain = 5;
-
-      // Indicates whether this node will be involved in the flow of payment
-      // for the inventory. When set to 1, the advertising system in the asi
-      // field pays the seller in the sid field, who is responsible for paying
-      // the previous node in the chain. When set to 0, this node is not
-      // involved in the flow of payment for the inventory. For version 1.0 of
-      // SupplyChain, this property should always be 1. It is explicitly
-      // required to be included as it is expected that future versions of the
-      // specification will introduce non-payment handling nodes.
-      // Implementers should ensure that they support this field and propagate
-      // it onwards when constructing SupplyChain objects in bid requests sent
-      // to a downstream advertising system.
-      optional int32 hp = 6;
-    }
-
-    // Array of SupplyChainNode objects in the order of the chain.
-    // In a complete supply chain, the first node represents the initial
-    // advertising system and seller ID involved in the transaction, for
-    // example, the owner of the site, app, or other medium. In an incomplete
-    // supply chain, it represents the first known node. The last node
-    // represents the entity sending this bid request.
-    repeated SupplyChainNode nodes = 2;
-
-    // Version of the supply chain specification in use, in the format of
-    // "major.minor". For example, for version 1.0 of the spec,
-    // use the string "1.0".
-    optional string ver = 3;
-  }
-
-  // Deprecated. This will be removed in December 2023. Use the standard field
-  // schain instead.
-  optional SupplyChain schain = 3;
 }
 
 message GeoExt {
@@ -1743,7 +1661,7 @@ message GeoExt {
 
 message VideoExt {
   // Video placement type inferred by Google for this impression. This field
-  // is always filled and can be different from  BidRequest.imp.video.plcmt (the
+  // is always filled and can be different from BidRequest.imp.video.plcmt (the
   // publisher-declared placement type).
   optional .com.google.openrtb.Plcmt inferredplcmt = 3 [default =
     PLCMT_UNKNOWN];
