@@ -1901,8 +1901,6 @@ func (DealExt_CreativeConstraints_SkippabilityConstraint) EnumDescriptor() ([]by
 }
 
 // Protocol buffer for Ad Exchange OpenRTB specification.
-//
-// Ad Exchange extensions for the Imp object.
 type ImpExt struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The eligible billing IDs to which a billable impression can be attributed.
@@ -2266,7 +2264,6 @@ func (x *BannerExt) GetFlexslot() *BannerExt_FlexSlot {
 	return nil
 }
 
-// Ad Exchange extensions for the BidResponse object.
 type BidResponseExt struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// [AdX: BidResponse.processing_time_ms]
@@ -2312,7 +2309,6 @@ func (x *BidResponseExt) GetProcessingTimeMs() int32 {
 	return 0
 }
 
-// Ad Exchange extensions for the Bid object.
 type BidExt struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// [AdX: BidResponse.Ad.impression_tracking_url]
@@ -6235,16 +6231,12 @@ var file_openrtb_adx_proto_extTypes = []protoimpl.ExtensionInfo{
 
 // Extension fields to BidRequest_Imp.
 var (
-	// Extension key for AdX Imp.ext.
-	//
 	// optional com.google.doubleclick.ImpExt imp = 1009;
 	E_Imp = &file_openrtb_adx_proto_extTypes[0]
 )
 
 // Extension fields to BidRequest_App.
 var (
-	// Extension key for AdX App.ext.
-	//
 	// optional com.google.doubleclick.AppExt app = 1011;
 	E_App = &file_openrtb_adx_proto_extTypes[1]
 )
@@ -6257,80 +6249,60 @@ var (
 
 // Extension fields to BidResponse.
 var (
-	// Extension key for AdX BidResponse.ext.
-	//
 	// optional com.google.doubleclick.BidResponseExt bid_response = 1005;
 	E_BidResponse = &file_openrtb_adx_proto_extTypes[3]
 )
 
 // Extension fields to BidResponse_SeatBid_Bid.
 var (
-	// Extension key for AdX Bid.ext.
-	//
 	// optional com.google.doubleclick.BidExt bid = 1014;
 	E_Bid = &file_openrtb_adx_proto_extTypes[4]
 )
 
 // Extension fields to NativeRequest.
 var (
-	// Extension key for the AdX Native.ext.
-	//
 	// optional com.google.doubleclick.NativeRequestExt native_ext = 1001;
 	E_NativeExt = &file_openrtb_adx_proto_extTypes[5]
 )
 
 // Extension fields to NativeResponse_EventTracker.
 var (
-	// Extension key for the AdX EventTracker.ext.
-	//
 	// optional com.google.doubleclick.EventTrackerExt eventtrackers = 1000;
 	E_Eventtrackers = &file_openrtb_adx_proto_extTypes[6]
 )
 
 // Extension fields to BidRequest_Publisher.
 var (
-	// Extension key for the AdX Publisher.ext
-	//
 	// optional com.google.doubleclick.PublisherExt publisher = 1002;
 	E_Publisher = &file_openrtb_adx_proto_extTypes[7]
 )
 
 // Extension fields to BidRequest_Site.
 var (
-	// Extension key for the Adx Site.ext
-	//
 	// optional com.google.doubleclick.SiteExt site = 1010;
 	E_Site = &file_openrtb_adx_proto_extTypes[8]
 )
 
 // Extension fields to BidRequest.
 var (
-	// Extension key for the Adx BidRequest.ext
-	//
 	// optional com.google.doubleclick.BidRequestExt bid_request = 1018;
 	E_BidRequest = &file_openrtb_adx_proto_extTypes[9]
 )
 
 // Extension fields to BidRequest_User.
 var (
-	// Extension key for the Adx User.ext
-	//
 	// optional com.google.doubleclick.UserExt user = 1007;
 	E_User = &file_openrtb_adx_proto_extTypes[10]
 )
 
 // Extension fields to BidRequest_User_EID_UID.
 var (
-	// Extension key for the AdX User.eids.uids.ext.
-	//
 	// optional com.google.doubleclick.UIDExt uids = 1001;
 	E_Uids = &file_openrtb_adx_proto_extTypes[11]
 )
 
 // Extension fields to BidRequest_Data.
 var (
-	// Extension key for the AdX Data.ext
-	//
 	// optional com.google.doubleclick.DataExt data = 1000;
 	E_Data = &file_openrtb_adx_proto_extTypes[12]
 )
@@ -6343,40 +6315,30 @@ var (
 
 // Extension fields to BidRequest_Regs.
 var (
-	// Extension key for the Adx Regs.ext
-	//
 	// optional com.google.doubleclick.RegsExt regs = 1001;
 	E_Regs = &file_openrtb_adx_proto_extTypes[14]
 )
 
 // Extension fields to BidRequest_Imp_Pmp_Deal.
 var (
-	// Extension key for AdX Deal.ext.
-	//
 	// optional com.google.doubleclick.DealExt deal = 1010;
 	E_Deal = &file_openrtb_adx_proto_extTypes[15]
 )
 
 // Extension fields to BidRequest_Source.
 var (
-	// Extension key for Source.ext
-	//
 	// optional com.google.doubleclick.SourceExt source = 1059;
 	E_Source = &file_openrtb_adx_proto_extTypes[16]
 )
 
 // Extension fields to BidRequest_Geo.
 var (
-	// Extension key for Geo.ext
-	//
 	// optional com.google.doubleclick.GeoExt geo = 1004;
 	E_Geo = &file_openrtb_adx_proto_extTypes[17]
 )
 
 // Extension fields to BidRequest_Imp_Video.
 var (
-	// Extension key for Video.ext
-	//
 	// optional com.google.doubleclick.VideoExt video = 1031;
 	E_Video = &file_openrtb_adx_proto_extTypes[18]
 )
